@@ -1,4 +1,4 @@
-<svg class="id-map" viewBox="0 29 793 288" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+<svg class="id-map" viewBox="-10 24 813 288" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
     <defs>
         <style>
             .map-island { fill: #0C0A09; stroke: none; }
