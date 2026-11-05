@@ -7,6 +7,7 @@ use App\Models\Kos;
 use App\Models\Pemesanan;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class HomePageTest extends TestCase
@@ -111,7 +112,7 @@ class HomePageTest extends TestCase
     {
         $kos = Kos::factory()->create([
             'nama' => $nama,
-            'slug' => \Illuminate\Support\Str::slug($nama),
+            'slug' => Str::slug($nama),
             'kota' => $kota,
             'is_active' => $aktif,
         ]);
@@ -273,5 +274,20 @@ class HomePageTest extends TestCase
             ->assertOk()
             ->assertSee('Hubungi admin')
             ->assertSee('mailto:admin@kelolakos.test', false);
+    }
+
+    public function test_homepage_has_accessible_labels_and_no_inline_handlers(): void
+    {
+        $this->buatKos('Kos Melati', 'Yogyakarta', [
+            'A5' => ['kosong', 950000],
+        ]);
+
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('aria-label="Buka menu"', false)
+            ->assertSee('aria-label="Yogyakarta, 1 kos, 1 kamar kosong"', false)
+            ->assertDontSee('onclick=', false)
+            ->assertDontSee('onsubmit=', false)
+            ->assertDontSee('<script>', false);
     }
 }

@@ -769,8 +769,15 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-        .pin-dot, .pin-ring, .pin-tip {
-            transition: none;
+        html {
+            scroll-behavior: auto;
+        }
+
+        .public-shell *,
+        .public-shell *::before,
+        .public-shell *::after {
+            animation: none !important;
+            transition: none !important;
         }
     }
 
@@ -985,6 +992,14 @@
     }
 
     @media (max-width: 620px) {
+        .hero-section,
+        .section-shell,
+        .section-dark,
+        .section-cta {
+            padding-left: 18px;
+            padding-right: 18px;
+        }
+
         .rooms-grid {
             grid-template-columns: 1fr;
         }
