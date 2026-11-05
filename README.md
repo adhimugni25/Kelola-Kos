@@ -1,58 +1,231 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# KelolaKos
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi manajemen kos-kosan multi-tenant berbasis Laravel. Satu instalasi melayani banyak
+kos; setiap pengurus hanya melihat data kosnya sendiri, penghuni hanya melihat tagihan dan
+sewa miliknya, dan super admin mengelola kos serta akun pengurus.
 
-## About Laravel
+Proyek ini dibuat untuk tugas mata kuliah Keamanan Siber dengan penekanan pada alur bisnis
+yang lengkap, isolasi data antar-tenant, dan penerapan kontrol keamanan yang dapat diuji.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Fitur
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Publik
+- Landing page dan halaman profil kos `/k/{slug}`.
+- Daftar kamar kosong beserta harga dan fasilitas.
+- Registrasi dan login untuk calon penghuni.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Penghuni
+- Mengajukan sewa kamar dan membatalkan pengajuan yang masih menunggu.
+- Melihat tagihan, rincian biaya, dan status pembayaran.
+- Mengunggah bukti transfer (JPG/PNG/PDF, maksimal 2 MB) ke penyimpanan privat.
+- Melihat riwayat pembayaran dan alasan penolakan dari pengurus.
 
-## Learning Laravel
+### Pengurus
+- Dashboard keterisian kamar, pendapatan bulan berjalan, tagihan belum lunas, dan
+  pembayaran yang menunggu verifikasi.
+- CRUD kamar dengan unggah foto dan isolasi data per kos.
+- Menyetujui/menolak pengajuan sewa, menyelesaikan masa sewa, dan mengelola tagihan.
+- Membuat tagihan bulanan secara massal (idempoten) atau manual per penyewa.
+- Memverifikasi atau menolak bukti pembayaran; keputusan tercatat di `audit_logs`.
+- Mengelola rekening/e-wallet yang ditampilkan ke penghuni.
+- Laporan pendapatan berbasis kas dengan filter tanggal, grafik Chart.js, ekspor CSV, dan PDF.
+- Impor CSV untuk kamar dan penghuni aktif beserta template unduhan.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Super admin
+- CRUD data kos dan akun pengurus.
+- Mengaktifkan/menonaktifkan akun serta mereset kata sandi pengurus.
+- Statistik ringkas platform.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Teknologi
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+- PHP 8.3+ (diuji pada PHP 8.5) dan Laravel 13.
+- MySQL 8 untuk pengembangan; SQLite in-memory untuk pengujian.
+- Tailwind CSS 4 dan Vite.
+- Chart.js (di-bundle lewat Vite, bukan CDN) dan dompdf.
+- PHPUnit 12.
 
-## Agentic Development
+## Kebutuhan sistem
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+- PHP 8.3 atau lebih baru dengan ekstensi `pdo`, `mbstring`, `openssl`, `fileinfo`, `gd`.
+- Composer 2.
+- Node.js 20+ dan npm.
+- MySQL 8 (atau MariaDB yang kompatibel).
+- Laragon opsional untuk pengembangan di Windows.
+
+## Instalasi lokal
 
 ```bash
-composer require laravel/boost --dev
+git clone https://github.com/adhimugni25/Kelola-Kos.git
+cd Kelola-Kos
 
-php artisan boost:install
+composer install
+cp .env.example .env          # Windows: copy .env.example .env
+php artisan key:generate
+
+# Buat database MySQL bernama kelolakos, lalu sesuaikan DB_* di .env
+php artisan migrate --seed
+php artisan storage:link
+
+npm install
+npm run build
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Jalankan aplikasi:
 
-## Contributing
+```bash
+php artisan serve
+# atau melalui Laragon: http://kelola-kos.test
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Alternatif, `composer run setup` menjalankan instalasi dasar (tanpa seeding).
 
-## Code of Conduct
+## Akun demo
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Seeder membuat dua kos, 12 kamar, enam penghuni, dan tiga bulan riwayat tagihan. Seluruh
+akun demo memakai kata sandi `Password123!` dan **hanya untuk lingkungan lokal/demo**.
 
-## Security Vulnerabilities
+| Peran | Email |
+|---|---|
+| Pengurus Kos Melati | `pengurus.melati@kelolakos.test` |
+| Pengurus Kos Anggrek | `pengurus.anggrek@kelolakos.test` |
+| Penghuni | `budi.santoso@kelolakos.test` |
+| Penghuni | `siti.aminah@kelolakos.test` |
+| Penghuni | `dewi.lestari@kelolakos.test` |
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Super admin tidak dibuat oleh seeder. Buat lewat perintah interaktif agar kata sandinya
+tidak tersimpan di kode:
 
-## License
+```bash
+php artisan user:create-super-admin admin@kelolakos.test
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Variabel lingkungan
+
+Salin `.env.example` lalu isi nilainya. Variabel penting (nilai rahasia tidak pernah
+di-commit):
+
+| Variabel | Keterangan |
+|---|---|
+| `APP_NAME`, `APP_ENV`, `APP_KEY`, `APP_DEBUG`, `APP_URL` | Identitas dan mode aplikasi. Produksi: `APP_ENV=production`, `APP_DEBUG=false`. |
+| `APP_TIMEZONE`, `APP_LOCALE`, `APP_FAKER_LOCALE` | Zona waktu dan lokalisasi (`Asia/Jakarta`, `id`, `id_ID`). |
+| `DB_CONNECTION`, `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` | Koneksi database. |
+| `SESSION_DRIVER`, `SESSION_LIFETIME`, `SESSION_SECURE_COOKIE`, `SESSION_SAME_SITE` | Sesi database, idle 30 menit, cookie `Secure` wajib aktif di HTTPS. |
+| `CACHE_STORE`, `QUEUE_CONNECTION` | Penyimpanan cache dan antrean. |
+| `FILESYSTEM_DISK` | Disk default; bukti pembayaran selalu memakai disk privat `bukti`. |
+| `MAIL_*` | Pengiriman email (opsional pada demo). |
+| `VITE_APP_NAME` | Nama aplikasi untuk aset frontend. |
+
+## Menjalankan pengujian
+
+```bash
+php artisan test --compact
+```
+
+Pengujian memakai SQLite in-memory sehingga tidak menyentuh database pengembangan. Untuk
+menjalankan sebagian test:
+
+```bash
+php artisan test --filter=SecurityHardeningTest --compact
+php artisan test tests/Feature/Import --compact
+```
+
+Perintah pendukung:
+
+```bash
+vendor/bin/pint --dirty --format agent   # format kode PHP
+composer audit                           # audit dependensi PHP
+npm audit                                # audit dependensi JavaScript
+```
+
+## Struktur singkat
+
+```
+app/
+  Http/Controllers/        controller per peran dan fitur
+  Http/Middleware/         SecurityHeaders, EnsureRole, BatasiMasaSesi
+  Http/Requests/           validasi form
+  Models/                  model Eloquent + TenantScope
+  Policies/                otorisasi per model
+  Services/                BookingService, BillingService, PaymentService, ReportService, ImportService
+  Support/                 TenantScope dan ImportResult
+database/
+  migrations/              skema basis data
+  factories/               data uji
+  seeders/                 data demo realistis
+resources/views/           tampilan Blade (bahasa Indonesia)
+tests/Feature/             test fitur per domain
+docs/superpowers/          spesifikasi dan rencana kerja
+docs/ai-usage.md           ringkasan penggunaan AI
+```
+
+## Keamanan yang diterapkan
+
+- Kata sandi di-hash dengan bcrypt (cost 12) melalui cast `hashed`.
+- Validasi input memakai Form Request; query memakai Eloquent binding, bukan `DB::raw`
+  dengan input pengguna.
+- Output Blade memakai `{{ }}`. Satu-satunya `{!! !!}` adalah JSON grafik yang sudah
+  di-encode dengan `JSON_HEX_TAG` dan tidak berisi input pengguna mentah.
+- CSP tanpa `unsafe-inline` pada `script-src`; HSTS dikirim hanya pada permintaan HTTPS.
+- CSRF aktif pada seluruh form; POST tanpa token menghasilkan 419.
+- Rate limit: login 5/menit per email+IP, registrasi 3/menit, unggah bukti 10/menit,
+  impor CSV 3/jam.
+- Isolasi tenant melalui global scope `kos_id`, Policy, dan pengecekan kepemilikan di
+  controller/service.
+- Bukti pembayaran disimpan di disk privat dan hanya dapat diakses pemilik atau pengurus
+  kos terkait.
+- Unggah file divalidasi MIME, ekstensi, dan ukuran; nama file diacak.
+- Sesi: `HttpOnly`, `SameSite=Lax`, idle 30 menit, batas absolut 12 jam.
+- Audit log untuk login, verifikasi pembayaran, dan impor data.
+- `composer audit` dan `npm audit` bersih tanpa kerentanan yang diketahui.
+
+Catatan CSP: `style-src` masih memuat `'unsafe-inline'` sebagai kompromi agar komponen
+antarmuka dan Chart.js tidak rusak saat demo; `script-src` tetap ketat.
+
+## Alur demo yang disarankan
+
+1. Login sebagai super admin, buat kos dan akun pengurus.
+2. Login sebagai pengurus, tambahkan kamar (atau impor CSV).
+3. Buka halaman publik kos dan ajukan sewa sebagai calon penghuni.
+4. Setujui pengajuan; tagihan pertama dibuat otomatis oleh `BookingService`.
+5. Buat tagihan bulan berjalan; penghuni mengunggah bukti transfer.
+6. Verifikasi pembayaran; tagihan berubah menjadi lunas dan audit log tercatat.
+7. Buka dashboard dan laporan; unduh CSV/PDF.
+
+## Deployment
+
+Checklist produksi:
+
+```bash
+composer install --no-dev --optimize-autoloader
+npm ci
+npm run build
+
+# Konfigurasi produksi pada .env
+# APP_ENV=production, APP_DEBUG=false, APP_URL=https://domain-anda
+# SESSION_SECURE_COOKIE=true, DB_* sesuai server
+
+php artisan key:generate
+php artisan migrate --force
+php artisan storage:link
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+
+php artisan user:create-super-admin admin@domain-anda
+```
+
+Setelah deploy:
+
+- Arahkan document root ke folder `public/`.
+- Aktifkan HTTPS dan redirect HTTP → HTTPS (termasuk konfigurasi trusted proxy bila di
+  balik reverse proxy).
+- Pastikan `storage/` dan `bootstrap/cache/` dapat ditulis oleh web server.
+- Uji `securityheaders.com` (target A) dan SSL Labs (target A).
+- Jalankan `composer audit` dan `npm audit`.
+- Ekspor database sebelum demo sebagai cadangan.
+
+## Dokumentasi tambahan
+
+- Spesifikasi: [docs/superpowers/specs/2026-11-04-kelolakos-design.md](docs/superpowers/specs/2026-11-04-kelolakos-design.md)
+- Rencana implementasi: [docs/superpowers/plans/2026-11-04-kelolakos-mvp.md](docs/superpowers/plans/2026-11-04-kelolakos-mvp.md)
+- Penggunaan AI: [docs/ai-usage.md](docs/ai-usage.md)
