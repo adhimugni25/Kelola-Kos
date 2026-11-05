@@ -32,9 +32,9 @@ Token: sudah ada di `resources/css/app.css` (`ink`, `stone-*`, `gold`, dll).
 - Modify: `resources/views/layouts/app.blade.php`, `resources/css/app.css`
 - Test: test feature peran yang ada tetap hijau.
 
-- [ ] Header memakai `.app-header` + token, tanpa emerald.
-- [ ] Label brand + role user + tombol Keluar.
-- [ ] Alert sukses/gagal memakai token (bukan emerald).
+- [x] Header memakai `.app-header` + token, tanpa emerald.
+- [x] Label brand + role user + tombol Keluar.
+- [x] Alert sukses/gagal memakai token (bukan emerald).
 
 ### Task 3: Area penghuni
 
