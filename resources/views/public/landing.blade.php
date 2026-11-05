@@ -9,6 +9,7 @@
 @section('content')
     @include('public.partials.home.hero')
     @include('public.partials.home.map')
+    @include('public.partials.home.rooms')
 @endsection
 
 

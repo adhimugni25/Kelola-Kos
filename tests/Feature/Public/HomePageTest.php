@@ -111,6 +111,7 @@ class HomePageTest extends TestCase
     {
         $kos = Kos::factory()->create([
             'nama' => $nama,
+            'slug' => \Illuminate\Support\Str::slug($nama),
             'kota' => $kota,
             'is_active' => $aktif,
         ]);
@@ -212,5 +213,35 @@ class HomePageTest extends TestCase
             ->assertSee('Jaringan sedang tumbuh')
             ->assertSee('Kota Fiktif')
             ->assertDontSee('id="p-kota-fiktif"', false);
+    }
+
+    public function test_homepage_lists_available_rooms_with_placeholder_photo(): void
+    {
+        $this->buatKos('Kos Melati', 'Yogyakarta', [
+            'A1' => ['terisi', 900000],
+            'A5' => ['kosong', 950000],
+        ]);
+
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('kamar kosong')
+            ->assertSee('A5')
+            ->assertSee('Kos Melati')
+            ->assertSee('Tersedia')
+            ->assertSee('Rp950.000')
+            ->assertSee('Foto kamar belum tersedia')
+            ->assertSee('/k/kos-melati', false)
+            ->assertDontSee('A1');
+    }
+
+    public function test_homepage_shows_rooms_empty_state(): void
+    {
+        $this->buatKos('Kos Melati', 'Yogyakarta', [
+            'A1' => ['terisi', 900000],
+        ]);
+
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('Belum ada kamar kosong');
     }
 }
