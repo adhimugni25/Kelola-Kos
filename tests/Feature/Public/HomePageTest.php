@@ -147,4 +147,23 @@ class HomePageTest extends TestCase
         });
         $response->assertViewHas('kotaTanpaPeta', fn ($kota) => $kota->contains('Kota Fiktif'));
     }
+
+    public function test_homepage_hero_uses_real_data_instead_of_search_form(): void
+    {
+        $this->buatKos('Kos Melati', 'Yogyakarta', [
+            'A6' => ['kosong', 1050000],
+        ]);
+
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('Cari kamar.')
+            ->assertSee('Satu tempat.')
+            ->assertSee('Lihat kamar')
+            ->assertSee('Untuk pengurus')
+            ->assertSee('href="#kamar"', false)
+            ->assertSee('href="#pengurus"', false)
+            ->assertSee('Rp1,05 jt')
+            ->assertSee('Rp1.050.000')
+            ->assertDontSee('<input type="search"', false);
+    }
 }

@@ -3,5 +3,6 @@
 @section('title', 'KelolaKos — Kelola kos lebih rapi')
 
 @section('content')
-    <div id="beranda"></div>
+    @include('public.partials.home.hero')
 @endsection
+
