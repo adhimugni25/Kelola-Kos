@@ -126,4 +126,25 @@ class HomePageTest extends TestCase
 
         return $kos;
     }
+
+    public function test_homepage_builds_map_data_and_lists_unknown_cities(): void
+    {
+        $this->buatKos('Kos Melati', 'Yogyakarta', ['A1' => ['kosong', 950000]]);
+        $this->buatKos('Kos Anggrek', 'Yogyakarta', ['B1' => ['kosong', 1200000]]);
+        $this->buatKos('Kos Kenanga', 'Jakarta', ['C1' => ['kosong', 800000]]);
+        $this->buatKos('Kos Antah', 'Kota Fiktif', ['D1' => ['kosong', 700000]]);
+
+        $response = $this->get('/');
+
+        $response->assertOk();
+        $response->assertViewHas('jumlahKota', 3);
+        $response->assertViewHas('kotaUtama', 'Indonesia');
+        $response->assertViewHas('petaKota', function ($peta): bool {
+            return $peta->count() === 2
+                && $peta->first()['kota'] === 'Yogyakarta'
+                && $peta->first()['jumlah_kos'] === 2
+                && $peta->first()['jumlah_kosong'] === 2;
+        });
+        $response->assertViewHas('kotaTanpaPeta', fn ($kota) => $kota->contains('Kota Fiktif'));
+    }
 }

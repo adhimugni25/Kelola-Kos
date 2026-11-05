@@ -53,6 +53,16 @@ class HomeController extends Controller
             ->limit(3)
             ->get();
 
+        $petaKota = \App\Support\KotaPeta::rangkum($kosAktif);
+
+        $kotaTanpaPeta = $kosAktif
+            ->pluck('kota')
+            ->filter()
+            ->reject(fn (string $kota): bool => \App\Support\KotaPeta::koordinat($kota) !== null)
+            ->unique(fn (string $kota): string => \App\Support\KotaPeta::normalisasi($kota))
+            ->sort()
+            ->values();
+
         return view('public.landing', [
             'jumlahKota' => $jumlahKota,
             'jumlahKos' => $jumlahKos,
@@ -63,6 +73,8 @@ class HomeController extends Controller
             'hargaMax' => $hargaMax,
             'kamarKosong' => $kamarKosong,
             'kotaUtama' => $kotaUtama,
+            'petaKota' => $petaKota,
+            'kotaTanpaPeta' => $kotaTanpaPeta,
         ]);
     }
 }
