@@ -53,7 +53,7 @@
                 @if ($pembayaran->status === 'menunggu')
                     <div class="mt-4 flex flex-wrap items-start gap-4 border-t border-slate-100 pt-4">
                         <form method="POST" action="{{ route('pengurus.pembayaran.terima', $pembayaran) }}"
-                              onsubmit="return confirm('Terima pembayaran ini? Tagihan akan ditandai lunas.')">
+                              data-konfirmasi="Terima pembayaran ini? Tagihan akan ditandai lunas.">
                             @csrf
                             <button type="submit" class="rounded-md bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700">
                                 Terima

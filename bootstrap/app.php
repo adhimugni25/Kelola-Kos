@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\BatasiMasaSesi;
 use App\Http\Middleware\EnsureRole;
 use App\Http\Middleware\SecurityHeaders;
 use Illuminate\Foundation\Application;
@@ -15,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->append(SecurityHeaders::class);
+        $middleware->web(append: [BatasiMasaSesi::class]);
 
         $middleware->alias([
             'role' => EnsureRole::class,

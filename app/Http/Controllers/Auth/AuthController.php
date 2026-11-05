@@ -30,6 +30,7 @@ class AuthController extends Controller
         }
 
         $request->session()->regenerate();
+        $request->session()->put('login_at', now()->timestamp);
 
         $user = Auth::user();
         $user->forceFill(['last_login_at' => now()])->save();
@@ -54,6 +55,7 @@ class AuthController extends Controller
 
         Auth::login($user);
         $request->session()->regenerate();
+        $request->session()->put('login_at', now()->timestamp);
 
         return redirect()->route('penghuni.dashboard');
     }

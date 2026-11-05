@@ -53,7 +53,7 @@
                         <td class="px-4 py-3 text-right">
                             <a href="{{ route('pengurus.kamar.edit', $kamar) }}" class="text-emerald-700 hover:underline">Ubah</a>
                             <form method="POST" action="{{ route('pengurus.kamar.destroy', $kamar) }}" class="inline"
-                                  onsubmit="return confirm('Hapus kamar ini?')">
+                                  data-konfirmasi="Hapus kamar ini?">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="ml-3 text-red-600 hover:underline">Hapus</button>

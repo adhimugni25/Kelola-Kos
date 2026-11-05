@@ -82,7 +82,7 @@
                         </form>
 
                         <form method="POST" action="{{ route('pengurus.metode-pembayaran.destroy', $metode) }}"
-                              onsubmit="return confirm('Hapus metode pembayaran ini?')">
+                              data-konfirmasi="Hapus metode pembayaran ini?">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-red-600 hover:underline">Hapus</button>

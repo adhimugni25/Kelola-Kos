@@ -1,5 +1,13 @@
 import Chart from 'chart.js/auto';
 
+document.querySelectorAll('form[data-konfirmasi]').forEach((formulir) => {
+    formulir.addEventListener('submit', (peristiwa) => {
+        if (!window.confirm(formulir.dataset.konfirmasi)) {
+            peristiwa.preventDefault();
+        }
+    });
+});
+
 const kanvas = document.getElementById('grafik-pendapatan');
 const sumberData = document.getElementById('data-pendapatan');
 

@@ -59,7 +59,7 @@
                             @if ($tagihan->status === 'belum_bayar')
                                 <a href="{{ route('pengurus.tagihan.edit', $tagihan) }}" class="text-emerald-700 hover:underline">Ubah</a>
                                 <form method="POST" action="{{ route('pengurus.tagihan.batal', $tagihan) }}" class="inline"
-                                      onsubmit="return confirm('Batalkan tagihan ini?')">
+                                      data-konfirmasi="Batalkan tagihan ini?">
                                     @csrf
                                     <button type="submit" class="ml-3 text-red-600 hover:underline">Batalkan</button>
                                 </form>
