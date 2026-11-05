@@ -534,7 +534,7 @@
 
     .map-canvas {
         position: relative;
-        aspect-ratio: 793 / 288;
+        width: 100%;
         border-radius: var(--radius-kos-lg);
         overflow: hidden;
         background: #FAFAF9;
@@ -542,10 +542,9 @@
     }
 
     .id-map {
-        position: absolute;
-        inset: 0;
+        display: block;
         width: 100%;
-        height: 100%;
+        height: auto;
     }
 
     .map-island {
