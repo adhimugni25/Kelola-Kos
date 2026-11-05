@@ -24,7 +24,7 @@
                 @include('public.partials.home.indonesia-map')
 
                 @foreach ($petaKota as $kota)
-                    <div class="pin-slot" style="left: {{ $kota['x'] }}%; top: {{ $kota['y'] }}%;">
+                    <div class="pin-slot" style="left: {{ $kota['x'] }}%; top: calc(11.5% + {{ $kota['y'] }}% * 0.775);">
                         <input class="pin-input" type="radio" name="kos-map"
                                id="p-{{ $kota['slug'] }}" @checked($loop->first)>
                         <label class="pin" for="p-{{ $kota['slug'] }}"
@@ -37,7 +37,7 @@
                 @endforeach
             </div>
 
-            <aside class="map-side" aria-live="polite">
+            <aside class="map-side" aria-live="polite" style="display: none;">
                 @foreach ($petaKota as $kota)
                     <article class="map-info" data-kota="{{ $kota['slug'] }}"
                              data-default="{{ $loop->first ? 'true' : 'false' }}">
