@@ -19,16 +19,17 @@
         </div>
     @else
         <fieldset class="map-panel">
-            <legend class="sr-only">Pilih kota untuk melihat kos</legend>
+            <legend class="sr-only">Peta jaringan kos mitra</legend>
             <div class="map-canvas">
                 @include('public.partials.home.indonesia-map')
 
                 @foreach ($petaKota as $kota)
-                    <div class="pin-slot" style="left: calc(1.2% + {{ $kota['x'] }}% * 0.976); top: calc(8.3% + {{ $kota['y'] }}% * 0.798);">
+                    <div class="pin-slot" style="left: {{ $kota['x'] }}%; top: {{ $kota['y'] }}%;">
                         <input class="pin-input" type="radio" name="kos-map"
-                               id="p-{{ $kota['slug'] }}" @checked($loop->first)>
+                               id="p-{{ $kota['slug'] }}" value="{{ $kota['slug'] }}" @checked($loop->first)>
                         <label class="pin" for="p-{{ $kota['slug'] }}"
                                aria-label="{{ $kota['kota'] }}, {{ $kota['jumlah_kos'] }} kos, {{ $kota['jumlah_kosong'] }} kamar kosong">
+                            <span class="pin-pulse"></span>
                             <span class="pin-dot"></span>
                             <span class="pin-ring"></span>
                             <span class="pin-tip">{{ $kota['kota'] }} · <b>{{ $kota['jumlah_kos'] }} kos</b></span>
@@ -37,48 +38,52 @@
                 @endforeach
             </div>
 
-            <aside class="map-side" aria-live="polite" style="display: none;">
+            <div class="map-cards" aria-live="polite">
                 @foreach ($petaKota as $kota)
-                    <article class="map-info" data-kota="{{ $kota['slug'] }}"
-                             data-default="{{ $loop->first ? 'true' : 'false' }}">
-                        <div class="mi-top">
-                            <span class="mi-badge">Aktif</span>
-                            <span class="mi-coord">{{ $kota['jumlah_kos'] }} kos</span>
+                    <div class="mc-group" data-kota="{{ $kota['slug'] }}">
+                        @foreach ($kota['kos'] as $index => $kos)
+                            <input class="mc-input" type="radio" name="kos-card-{{ $kota['slug'] }}"
+                                   id="c-{{ $kota['slug'] }}-{{ $index }}" @checked($loop->first)>
+                        @endforeach
+
+                        <div class="mc-track">
+                            @foreach ($kota['kos'] as $index => $kos)
+                                <article class="mc-card" data-kota="{{ $kota['slug'] }}" data-index="{{ $index }}">
+                                    <div class="mc-head">
+                                        <span class="mc-badge">Mitra</span>
+                                        <span class="mc-coord">{{ $kos['jumlah_kosong'] }} kamar kosong</span>
+                                    </div>
+                                    <h3>{{ $kos['nama'] }}</h3>
+                                    <p class="mc-names">{{ $kota['kota'] }} · {{ $kos['jumlah_kamar'] }} kamar</p>
+                                    <div class="mc-figs">
+                                        <div><b>{{ $kos['jumlah_kamar'] }}</b><span>kamar</span></div>
+                                        <div><b>{{ $kos['jumlah_kosong'] }}</b><span>kosong</span></div>
+                                        <div><b>{{ $kos['jumlah_penghuni'] }}</b><span>penghuni</span></div>
+                                    </div>
+                                    @if ($kos['harga_min'] !== null)
+                                        <div class="mc-price">
+                                            {{ Rupiah::ringkas($kos['harga_min']) }} – {{ Rupiah::ringkas($kos['harga_max']) }}
+                                            <span>/ bulan</span>
+                                        </div>
+                                    @else
+                                        <div class="mc-price mc-price-empty">Belum ada kamar kosong</div>
+                                    @endif
+                                    <a class="mc-link" href="{{ route('public.kos', $kos['slug']) }}">Lihat kos →</a>
+                                </article>
+                            @endforeach
                         </div>
-                        <h3>{{ $kota['kota'] }}</h3>
-                        <p class="mi-names">
-                            {{ collect($kota['kos'])->pluck('nama')->join(' · ') }}
-                            @if ($kota['jumlah_kos_lainnya'] > 0)
-                                · +{{ $kota['jumlah_kos_lainnya'] }} kos lain
-                            @endif
-                        </p>
-                        <div class="mi-figs">
-                            <div><b>{{ $kota['jumlah_kamar'] }}</b><span>kamar</span></div>
-                            <div><b>{{ $kota['jumlah_kosong'] }}</b><span>kosong</span></div>
-                            <div><b>{{ $kota['jumlah_penghuni'] }}</b><span>penghuni</span></div>
-                        </div>
-                        <div class="mi-price">
-                            {{ Rupiah::ringkas($kota['harga_min']) }} – {{ Rupiah::ringkas($kota['harga_max']) }}
-                            <span>/ bulan</span>
-                        </div>
-                        @if (! empty($kota['kos']))
-                            <a class="mi-link" href="{{ route('public.kos', $kota['kos'][0]['slug']) }}">Lihat kos →</a>
+
+                        @if (count($kota['kos']) > 1)
+                            <div class="mc-nav">
+                                @foreach ($kota['kos'] as $index => $kos)
+                                    <label class="mc-dot" for="c-{{ $kota['slug'] }}-{{ $index }}"
+                                           aria-label="Tampilkan {{ $kos['nama'] }}"></label>
+                                @endforeach
+                            </div>
                         @endif
-                    </article>
+                    </div>
                 @endforeach
-
-                <div class="map-cities">
-                    <span>Kota</span>
-                    @foreach ($petaKota as $kota)
-                        <label for="p-{{ $kota['slug'] }}">{{ $kota['kota'] }}</label>
-                    @endforeach
-                </div>
-
-                @if ($kotaTanpaPeta->isNotEmpty())
-                    <p class="map-demo">Belum dipetakan: {{ $kotaTanpaPeta->join(', ') }}</p>
-                @endif
-                <p class="map-demo">Peta stilasi · data dari kos aktif.</p>
-            </aside>
+            </div>
         </fieldset>
     @endif
 </section>

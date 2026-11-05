@@ -8,23 +8,23 @@ use Illuminate\Support\Str;
 final class KotaPeta
 {
     private const KOORDINAT = [
-        'banda aceh' => ['x' => 10.0, 'y' => 22.0],
-        'medan' => ['x' => 14.5, 'y' => 27.9],
-        'padang' => ['x' => 20.0, 'y' => 60.0],
-        'palembang' => ['x' => 28.0, 'y' => 63.0],
-        'jakarta' => ['x' => 32.2, 'y' => 77.1],
-        'bandung' => ['x' => 36.0, 'y' => 82.0],
-        'yogyakarta' => ['x' => 42.8, 'y' => 79.4],
-        'semarang' => ['x' => 45.0, 'y' => 80.0],
-        'surabaya' => ['x' => 51.3, 'y' => 78.2],
-        'malang' => ['x' => 49.0, 'y' => 81.5],
-        'denpasar' => ['x' => 54.5, 'y' => 82.9],
-        'pontianak' => ['x' => 38.0, 'y' => 58.0],
-        'banjarmasin' => ['x' => 48.0, 'y' => 70.0],
-        'balikpapan' => ['x' => 55.0, 'y' => 66.0],
-        'makassar' => ['x' => 62.9, 'y' => 65.9],
-        'manado' => ['x' => 65.0, 'y' => 48.0],
-        'jayapura' => ['x' => 88.0, 'y' => 55.0],
+        'banda aceh' => ['x' => 9.5, 'y' => 24.0],
+        'medan' => ['x' => 13.8, 'y' => 30.5],
+        'padang' => ['x' => 18.5, 'y' => 56.0],
+        'palembang' => ['x' => 24.5, 'y' => 64.5],
+        'jakarta' => ['x' => 31.0, 'y' => 76.0],
+        'bandung' => ['x' => 35.0, 'y' => 80.5],
+        'yogyakarta' => ['x' => 41.5, 'y' => 80.0],
+        'semarang' => ['x' => 44.0, 'y' => 79.0],
+        'surabaya' => ['x' => 49.5, 'y' => 79.0],
+        'malang' => ['x' => 48.0, 'y' => 82.5],
+        'denpasar' => ['x' => 53.5, 'y' => 85.0],
+        'pontianak' => ['x' => 36.0, 'y' => 58.5],
+        'banjarmasin' => ['x' => 46.5, 'y' => 68.5],
+        'balikpapan' => ['x' => 53.5, 'y' => 65.5],
+        'makassar' => ['x' => 60.5, 'y' => 67.0],
+        'manado' => ['x' => 64.0, 'y' => 49.5],
+        'jayapura' => ['x' => 86.0, 'y' => 57.0],
     ];
 
     private const ALIAS = [
@@ -74,6 +74,11 @@ final class KotaPeta
                 $daftarKos = $kosDiKota->take(3)->map(fn ($kos) => [
                     'nama' => $kos->nama,
                     'slug' => $kos->slug,
+                    'jumlah_kamar' => (int) $kos->jumlah_kamar,
+                    'jumlah_kosong' => (int) $kos->jumlah_kosong,
+                    'jumlah_penghuni' => (int) $kos->jumlah_penghuni,
+                    'harga_min' => $kos->harga_min !== null ? (float) $kos->harga_min : null,
+                    'harga_max' => $kos->harga_max !== null ? (float) $kos->harga_max : null,
                 ])->values()->all();
 
                 return [

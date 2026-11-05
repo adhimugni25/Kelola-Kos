@@ -525,11 +525,172 @@
         display: grid;
         grid-template-columns: 1fr;
         gap: 0;
-        background: rgba(255, 255, 255, .45);
-        border: 1px solid rgba(255, 255, 255, .92);
+        background: linear-gradient(135deg, rgba(255,255,255,.55), rgba(255,255,255,.2));
+        border: 1px solid rgba(255, 255, 255, .7);
         border-radius: var(--radius-kos-xl);
-        padding: 10px;
-        backdrop-filter: blur(16px);
+        padding: 12px;
+        backdrop-filter: blur(20px);
+        box-shadow: 0 18px 48px rgba(12,10,9,.08), inset 0 1px 1px rgba(255,255,255,.9);
+    }
+
+    .map-cards {
+        margin-top: 12px;
+        perspective: 900px;
+        position: relative;
+        min-height: 180px;
+    }
+
+    .mc-input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+    }
+
+    .mc-group {
+        display: none;
+    }
+
+    .mc-track {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .mc-card {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,.72), rgba(255,255,255,.42));
+        border: 1px solid rgba(255, 255, 255, .8);
+        border-radius: var(--radius-kos-lg);
+        padding: 14px 16px;
+        backdrop-filter: blur(14px);
+        box-shadow: 0 8px 24px rgba(12,10,9,.06);
+        opacity: 0;
+        transform: translateX(30px) rotateY(-8deg);
+        transition: opacity .35s ease, transform .35s cubic-bezier(.34,1.56,.64,1);
+        transform-style: preserve-3d;
+    }
+
+    .mc-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .mc-badge {
+        font-family: var(--font-mono);
+        font-size: 8px;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        color: var(--color-gold-ink);
+        background: var(--color-gold-soft);
+        border: 1px solid rgba(161, 98, 7, .26);
+        border-radius: 999px;
+        padding: 2px 8px;
+    }
+
+    .mc-coord {
+        font-family: var(--font-mono);
+        font-size: 8.5px;
+        color: var(--color-muted);
+    }
+
+    .mc-card h3 {
+        font-family: var(--font-display);
+        font-size: 24px;
+        letter-spacing: -.5px;
+        margin: 8px 0 0;
+        line-height: 1;
+    }
+
+    .mc-names {
+        font-size: 11px;
+        color: var(--color-muted-2);
+        margin: 6px 0 0;
+    }
+
+    .mc-figs {
+        display: flex;
+        gap: 18px;
+        margin-top: 12px;
+        padding-top: 10px;
+        border-top: 1px solid rgba(12, 10, 9, .08);
+    }
+
+    .mc-figs b {
+        display: block;
+        font-family: var(--font-display);
+        font-size: 18px;
+        line-height: 1;
+    }
+
+    .mc-figs span {
+        font-size: 9px;
+        color: var(--color-muted);
+    }
+
+    .mc-price {
+        font-size: 11.5px;
+        font-weight: 650;
+        color: var(--color-gold-ink);
+        margin-top: 10px;
+    }
+
+    .mc-price span {
+        font-weight: 500;
+        color: var(--color-muted);
+        font-size: 9px;
+    }
+
+    .mc-price-empty {
+        color: var(--color-muted);
+        font-weight: 500;
+    }
+
+    .mc-link {
+        display: inline-block;
+        margin-top: 9px;
+        font-size: 11px;
+        font-weight: 650;
+        color: var(--color-ink);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(12, 10, 9, .25);
+        padding-bottom: 1px;
+    }
+
+    .mc-link:hover {
+        color: var(--color-gold-ink);
+        border-color: var(--color-gold-2);
+    }
+
+    .mc-nav {
+        display: flex;
+        justify-content: center;
+        gap: 2px;
+        margin-top: 6px;
+    }
+
+    .mc-dot {
+        position: relative;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    .mc-dot::after {
+        content: '';
+        position: absolute;
+        inset: 5px;
+        border-radius: 50%;
+        background: rgba(12, 10, 9, .18);
+        transition: background .2s ease, transform .2s ease;
+    }
+
+    .mc-dot:hover::after {
+        background: var(--color-gold-2);
     }
 
     .map-canvas {
@@ -537,8 +698,10 @@
         width: 100%;
         border-radius: var(--radius-kos-lg);
         overflow: hidden;
-        background: #FAFAF9;
-        border: 1px solid rgba(12, 10, 9, .08);
+        background: linear-gradient(135deg, rgba(255,255,255,.55), rgba(255,255,255,.18));
+        border: 1px solid rgba(255, 255, 255, .62);
+        box-shadow: inset 0 1px 1px rgba(255,255,255,.8), 0 12px 32px rgba(12,10,9,.06);
+        backdrop-filter: blur(14px);
     }
 
     .id-map {
@@ -548,7 +711,7 @@
     }
 
     .map-island {
-        filter: drop-shadow(0 2px 6px rgba(12, 10, 9, .08));
+        filter: drop-shadow(0 3px 8px rgba(12, 10, 9, .12));
         transition: fill .18s ease;
     }
 
@@ -575,11 +738,20 @@
 
     .pin-dot {
         position: absolute;
-        inset: 19px;
+        inset: 18px;
         border-radius: 50%;
         background: #0C0A09;
-        box-shadow: 0 0 0 2px #fff, 0 2px 6px rgba(12,10,9,.35);
-        transition: transform .16s ease, background .16s ease, box-shadow .16s ease;
+        box-shadow: 0 0 0 2px rgba(255,255,255,.95), 0 2px 6px rgba(12,10,9,.35);
+        transition: transform .22s cubic-bezier(.34,1.56,.64,1), background .22s ease, box-shadow .22s ease;
+    }
+
+    .pin-pulse {
+        position: absolute;
+        inset: 8px;
+        border-radius: 50%;
+        border: 1px solid rgba(12,10,9,.25);
+        opacity: 0;
+        transform: scale(.8);
     }
 
     .pin-ring {
@@ -588,21 +760,33 @@
         border-radius: 50%;
         border: 1px solid var(--color-gold-2);
         opacity: 0;
-        transition: opacity .15s ease;
+        transform: scale(.8);
+        transition: opacity .2s ease, transform .2s cubic-bezier(.34,1.56,.64,1);
     }
 
     .pin:hover .pin-dot,
     .pin-input:checked + .pin .pin-dot,
     .pin-input:focus-visible + .pin .pin-dot {
-        transform: scale(1.28);
-        background: linear-gradient(145deg, #F3E5AB, #D4AF37 60%, #A16207);
-        box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(212,175,55,.35), 0 4px 12px rgba(161,98,7,.35);
+        transform: scale(1.32);
+        background: linear-gradient(145deg, #F3E5AB, #D4AF37 55%, #A16207);
+        box-shadow: 0 0 0 2px rgba(255,255,255,.95), 0 0 0 5px rgba(212,175,55,.28), 0 6px 18px rgba(161,98,7,.35);
+    }
+
+    @keyframes pin-pulse {
+        0% { transform: scale(.8); opacity: .55; }
+        100% { transform: scale(1.75); opacity: 0; }
+    }
+
+    .pin:hover .pin-pulse,
+    .pin-input:checked + .pin .pin-pulse {
+        animation: pin-pulse 1.2s ease-out infinite;
     }
 
     .pin:hover .pin-ring,
     .pin-input:checked + .pin .pin-ring,
     .pin-input:focus-visible + .pin .pin-ring {
         opacity: 1;
+        transform: scale(1);
     }
 
     .pin-tip {
@@ -632,151 +816,25 @@
         transform: translate(-50%, 0);
     }
 
-    .map-side {
-        padding: 12px 10px 8px 16px;
-        display: flex;
-        flex-direction: column;
-        min-width: 0;
-        background: rgba(255, 255, 255, .4);
-        border-radius: var(--radius-kos-md);
-    }
 
-    .map-info {
-        display: none;
-        min-height: 236px;
-    }
 
-    .mi-top {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-    }
-
-    .mi-badge {
-        font-family: var(--font-mono);
-        font-size: 8px;
-        letter-spacing: .12em;
-        text-transform: uppercase;
-        color: var(--color-gold-ink);
-        background: var(--color-gold-soft);
-        border: 1px solid rgba(161, 98, 7, .26);
-        border-radius: 999px;
-        padding: 2px 7px;
-    }
-
-    .mi-coord {
-        font-family: var(--font-mono);
-        font-size: 8.5px;
-        color: var(--color-muted);
-    }
-
-    .map-info h3 {
-        font-family: var(--font-display);
-        font-size: 25px;
-        letter-spacing: -.6px;
-        margin: 8px 0 0;
-        line-height: 1;
-    }
-
-    .mi-names {
-        font-size: 10.5px;
-        color: var(--color-muted-2);
-        margin: 5px 0 0;
-    }
-
-    .mi-figs {
-        display: flex;
-        gap: 16px;
-        margin-top: 10px;
-        padding-top: 9px;
-        border-top: 1px solid rgba(12, 10, 9, .09);
-    }
-
-    .mi-figs b {
-        display: block;
-        font-family: var(--font-display);
-        font-size: 18px;
-        line-height: 1;
-    }
-
-    .mi-figs span {
-        font-size: 9px;
-        color: var(--color-muted);
-    }
-
-    .mi-price {
-        font-size: 11px;
-        font-weight: 650;
-        color: var(--color-gold-ink);
-        margin-top: 10px;
-    }
-
-    .mi-price span {
-        font-weight: 500;
-        color: var(--color-muted);
-        font-size: 9px;
-    }
-
-    .mi-link {
-        display: inline-block;
-        margin-top: 8px;
-        font-size: 10.5px;
-        font-weight: 650;
-        color: var(--color-ink);
-        text-decoration: none;
-        border-bottom: 1px solid rgba(12, 10, 9, .25);
-        padding-bottom: 1px;
-    }
-
-    .map-cities {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        align-items: center;
-        gap: 4px;
-        margin-top: 11px;
-    }
-
-    .map-cities > span {
-        grid-column: 1 / -1;
-        font-family: var(--font-mono);
-        font-size: 7.5px;
-        letter-spacing: .12em;
-        text-transform: uppercase;
-        color: var(--color-muted);
-        margin-bottom: 1px;
-    }
-
-    .map-cities label {
-        font-size: 8.5px;
-        color: var(--color-muted-2);
-        border: 1px solid rgba(12, 10, 9, .09);
-        background: rgba(255, 255, 255, .5);
-        border-radius: 999px;
-        padding: 8px 4px;
-        cursor: pointer;
-        text-align: center;
-        transition: all .15s ease;
-    }
-
-    .map-cities label:hover {
-        border-color: rgba(161, 98, 7, .26);
-        color: var(--color-gold-ink);
-    }
-
-    .map-demo {
-        margin-top: auto;
-        padding-top: 10px;
-        font-size: 8.5px;
-        color: var(--color-muted);
-        border-top: 1px dashed rgba(12, 10, 9, .12);
-    }
-
-    @media (max-width: 900px) {
+    @media (min-width: 900px) {
         .map-panel {
-            grid-template-columns: 1fr;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 12px;
         }
 
+        .map-cards {
+            margin-top: 0;
+            min-height: 0;
+        }
+
+        .mc-card {
+            padding: 16px 18px;
+        }
+    }
+
+    @media (max-width: 899px) {
         .pin-tip {
             display: none;
         }

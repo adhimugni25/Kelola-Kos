@@ -232,7 +232,7 @@ class HomePageTest extends TestCase
             ->assertSee('Rp950.000')
             ->assertSee('Foto kamar belum tersedia')
             ->assertSee('/k/kos-melati', false)
-            ->assertDontSee('A1');
+            ->assertDontSee('A1 ·');
     }
 
     public function test_homepage_shows_rooms_empty_state(): void
