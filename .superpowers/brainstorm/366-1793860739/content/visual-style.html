@@ -1,0 +1,418 @@
+<h2>Konsep tampilan dan warna</h2>
+<p class="subtitle">
+  Empat arah visual untuk KelolaKos. Layout responsifnya sama di semua opsi (sidebar di desktop,
+  menu ringkas di HP); yang berbeda adalah karakter warna, bentuk, dan rasa yang ditimbulkan.
+  Klik kartu yang paling cocok dengan kesan yang Anda inginkan.
+</p>
+
+<style>
+  .cards.vs-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+  @media (max-width: 900px) { .cards.vs-grid { grid-template-columns: 1fr; } }
+
+  .card-image.vs-shot {
+    aspect-ratio: 16 / 10;
+    display: block;
+    padding: 14px;
+    background: var(--canvas);
+  }
+
+  .vs-app {
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+    border-radius: var(--radius);
+    background: var(--canvas);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, .08), 0 8px 20px rgba(15, 23, 42, .10);
+    font-family: var(--font);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    font-size: 8px;
+    line-height: 1.35;
+  }
+
+  .vs-side {
+    width: 26%;
+    background: var(--sb);
+    padding: 9px 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-right: 1px solid var(--line);
+  }
+
+  .vs-logo {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 4px;
+  }
+
+  .vs-logo-mark {
+    width: 13px;
+    height: 13px;
+    border-radius: var(--logo-radius);
+    background: var(--brand);
+    color: #fff;
+    font-size: 7px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .vs-logo-text {
+    font-size: 7px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -.2px;
+  }
+
+  .vs-nav {
+    height: 9px;
+    border-radius: 3px;
+    background: var(--nav-idle);
+    width: 88%;
+  }
+
+  .vs-nav.short { width: 68%; }
+  .vs-nav.active { background: var(--brand-soft); }
+
+  .vs-nav.active::after {
+    content: "";
+    display: block;
+    width: 62%;
+    height: 2px;
+    margin: 3.5px 0 0 4px;
+    border-radius: 2px;
+    background: var(--brand);
+  }
+
+  .vs-main {
+    flex: 1;
+    padding: 9px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    background: var(--canvas);
+    min-width: 0;
+  }
+
+  .vs-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .vs-title {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -.2px;
+  }
+
+  .vs-avatar {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--brand-soft);
+    border: 1px solid var(--brand);
+  }
+
+  .vs-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+  }
+
+  .vs-stat {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 5px 5px 4px;
+  }
+
+  .vs-stat-label {
+    font-size: 5.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .3px;
+  }
+
+  .vs-stat-value {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-top: 1px;
+    letter-spacing: -.3px;
+  }
+
+  .vs-stat-value.accent { color: var(--brand); }
+
+  .vs-stat-bar {
+    height: 2px;
+    border-radius: 2px;
+    background: var(--brand-soft);
+    margin-top: 3px;
+    overflow: hidden;
+  }
+
+  .vs-stat-bar span {
+    display: block;
+    height: 100%;
+    width: 62%;
+    background: var(--brand);
+  }
+
+  .vs-panel {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 5px 6px;
+    flex: 1;
+  }
+
+  .vs-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    padding: 3.5px 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .vs-row:last-child { border-bottom: 0; }
+  .vs-bar { height: 3px; border-radius: 2px; background: var(--muted-soft); width: 42%; }
+  .vs-bar.short { width: 26%; }
+  .vs-badge {
+    font-size: 5.5px;
+    font-weight: 700;
+    padding: 1.5px 4px;
+    border-radius: 999px;
+    background: var(--brand-soft);
+    color: var(--brand-strong);
+  }
+  .vs-badge.warn { background: var(--warn-soft); color: var(--warn); }
+
+  .card-body { padding: 0.9rem 1rem 1rem; }
+  .card-body h3 { font-size: 0.98rem; margin-bottom: 0.2rem; }
+  .card-body p { font-size: 0.82rem; line-height: 1.45; }
+
+  .vs-swatches { display: flex; gap: 5px; margin-top: 0.6rem; align-items: center; }
+  .vs-swatch { width: 18px; height: 18px; border-radius: 5px; border: 1px solid rgba(0,0,0,.08); }
+  .vs-spec { margin-top: 0.45rem; font-size: 0.7rem; color: var(--text-secondary); }
+
+  /* A — Emerald Tenang */
+  .tema-a {
+    --canvas: #F8FAFC; --surface: #FFFFFF; --line: #E2E8F0; --line-soft: #F1F5F9;
+    --ink: #0F172A; --muted: #64748B; --muted-soft: #E2E8F0;
+    --brand: #059669; --brand-strong: #047857; --brand-soft: #D1FAE5;
+    --sb: #FFFFFF; --nav-idle: #F1F5F9; --warn: #B45309; --warn-soft: #FEF3C7;
+    --radius: 10px; --radius-sm: 6px; --logo-radius: 4px;
+    --font: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+
+  /* B — Hangat Ramah */
+  .tema-b {
+    --canvas: #FDF8F1; --surface: #FFFFFF; --line: #EDE3D6; --line-soft: #F7F0E6;
+    --ink: #2B2118; --muted: #8A7767; --muted-soft: #EDE3D6;
+    --brand: #C2410C; --brand-strong: #9A3412; --brand-soft: #FFEDD5;
+    --sb: #FFFCF7; --nav-idle: #F5EADB; --warn: #A16207; --warn-soft: #FEF3C7;
+    --radius: 14px; --radius-sm: 9px; --logo-radius: 999px;
+    --font: "Segoe UI", system-ui, sans-serif;
+  }
+
+  /* C — Biru Profesional */
+  .tema-c {
+    --canvas: #F4F6FB; --surface: #FFFFFF; --line: #DDE3EE; --line-soft: #EEF2F8;
+    --ink: #0B1220; --muted: #5B6B84; --muted-soft: #DDE3EE;
+    --brand: #2563EB; --brand-strong: #1D4ED8; --brand-soft: #DBEAFE;
+    --sb: #FFFFFF; --nav-idle: #EEF2F8; --warn: #B45309; --warn-soft: #FEF3C7;
+    --radius: 6px; --radius-sm: 4px; --logo-radius: 3px;
+    --font: "Segoe UI", system-ui, sans-serif;
+  }
+
+  /* D — Teal Gelap */
+  .tema-d {
+    --canvas: #F1F5F9; --surface: #FFFFFF; --line: #E2E8F0; --line-soft: #F1F5F9;
+    --ink: #0F172A; --muted: #64748B; --muted-soft: #E2E8F0;
+    --brand: #0D9488; --brand-strong: #0F766E; --brand-soft: #CCFBF1;
+    --sb: #0F172A; --nav-idle: #1E293B; --warn: #B45309; --warn-soft: #FEF3C7;
+    --radius: 10px; --radius-sm: 6px; --logo-radius: 4px;
+    --font: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+
+  .tema-d .vs-logo-text { color: #F8FAFC; }
+  .tema-d .vs-side { border-right: 0; }
+  .tema-d .vs-nav.active { background: rgba(13, 148, 136, .22); }
+
+  .vs-note {
+    margin-top: 1.25rem;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+  }
+</style>
+
+<div class="cards vs-grid">
+
+  <div class="card" data-choice="emerald" onclick="toggleSelect(this)">
+    <div class="card-image vs-shot tema-a">
+      <div class="vs-app">
+        <div class="vs-side">
+          <div class="vs-logo"><div class="vs-logo-mark">K</div><div class="vs-logo-text">KelolaKos</div></div>
+          <div class="vs-nav active"></div>
+          <div class="vs-nav"></div>
+          <div class="vs-nav short"></div>
+          <div class="vs-nav"></div>
+        </div>
+        <div class="vs-main">
+          <div class="vs-topbar"><span class="vs-title">Dashboard</span><span class="vs-avatar"></span></div>
+          <div class="vs-stats">
+            <div class="vs-stat"><div class="vs-stat-label">Terisi</div><div class="vs-stat-value">8</div><div class="vs-stat-bar"><span></span></div></div>
+            <div class="vs-stat"><div class="vs-stat-label">Pendapatan</div><div class="vs-stat-value accent">7,2 jt</div><div class="vs-stat-bar"><span></span></div></div>
+            <div class="vs-stat"><div class="vs-stat-label">Belum lunas</div><div class="vs-stat-value">3</div><div class="vs-stat-bar"><span></span></div></div>
+          </div>
+          <div class="vs-panel">
+            <div class="vs-row"><div class="vs-bar"></div><div class="vs-badge">Lunas</div></div>
+            <div class="vs-row"><div class="vs-bar short"></div><div class="vs-badge warn">Menunggu</div></div>
+            <div class="vs-row"><div class="vs-bar"></div><div class="vs-badge">Lunas</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A · Emerald Tenang</h3>
+      <p>Melanjutkan identitas hijau yang sudah ada. Bersih, menenangkan, dan terasa seperti aplikasi keuangan yang rapi.</p>
+      <div class="vs-swatches">
+        <span class="vs-swatch" style="background:#059669"></span>
+        <span class="vs-swatch" style="background:#047857"></span>
+        <span class="vs-swatch" style="background:#D1FAE5"></span>
+        <span class="vs-swatch" style="background:#0F172A"></span>
+        <span class="vs-swatch" style="background:#F8FAFC"></span>
+      </div>
+      <div class="vs-spec">Sudut 10px · tegas tapi ramah · risiko: mirip aplikasi kasir</div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="hangat" onclick="toggleSelect(this)">
+    <div class="card-image vs-shot tema-b">
+      <div class="vs-app">
+        <div class="vs-side">
+          <div class="vs-logo"><div class="vs-logo-mark">K</div><div class="vs-logo-text">KelolaKos</div></div>
+          <div class="vs-nav active"></div>
+          <div class="vs-nav"></div>
+          <div class="vs-nav short"></div>
+          <div class="vs-nav"></div>
+        </div>
+        <div class="vs-main">
+          <div class="vs-topbar"><span class="vs-title">Dashboard</span><span class="vs-avatar"></span></div>
+          <div class="vs-stats">
+            <div class="vs-stat"><div class="vs-stat-label">Terisi</div><div class="vs-stat-value">8</div><div class="vs-stat-bar"><span></span></div></div>
+            <div class="vs-stat"><div class="vs-stat-label">Pendapatan</div><div class="vs-stat-value accent">7,2 jt</div><div class="vs-stat-bar"><span></span></div></div>
+            <div class="vs-stat"><div class="vs-stat-label">Belum lunas</div><div class="vs-stat-value">3</div><div class="vs-stat-bar"><span></span></div></div>
+          </div>
+          <div class="vs-panel">
+            <div class="vs-row"><div class="vs-bar"></div><div class="vs-badge">Lunas</div></div>
+            <div class="vs-row"><div class="vs-bar short"></div><div class="vs-badge warn">Menunggu</div></div>
+            <div class="vs-row"><div class="vs-bar"></div><div class="vs-badge">Lunas</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B · Hangat Ramah</h3>
+      <p>Krem dan terakota, seperti rumah kos itu sendiri. Paling personal, tapi lebih sulit menjaga kesan "serius" untuk data uang.</p>
+      <div class="vs-swatches">
+        <span class="vs-swatch" style="background:#C2410C"></span>
+        <span class="vs-swatch" style="background:#EA580C"></span>
+        <span class="vs-swatch" style="background:#FFEDD5"></span>
+        <span class="vs-swatch" style="background:#2B2118"></span>
+        <span class="vs-swatch" style="background:#FDF8F1"></span>
+      </div>
+      <div class="vs-spec">Sudut 14px · lembut dan akrab · risiko: kurang tegas untuk laporan</div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="biru" onclick="toggleSelect(this)">
+    <div class="card-image vs-shot tema-c">
+      <div class="vs-app">
+        <div class="vs-side">
+          <div class="vs-logo"><div class="vs-logo-mark">K</div><div class="vs-logo-text">KelolaKos</div></div>
+          <div class="vs-nav active"></div>
+          <div class="vs-nav"></div>
+          <div class="vs-nav short"></div>
+          <div class="vs-nav"></div>
+        </div>
+        <div class="vs-main">
+          <div class="vs-topbar"><span class="vs-title">Dashboard</span><span class="vs-avatar"></span></div>
+          <div class="vs-stats">
+            <div class="vs-stat"><div class="vs-stat-label">Terisi</div><div class="vs-stat-value">8</div><div class="vs-stat-bar"><span></span></div></div>
+            <div class="vs-stat"><div class="vs-stat-label">Pendapatan</div><div class="vs-stat-value accent">7,2 jt</div><div class="vs-stat-bar"><span></span></div></div>
+            <div class="vs-stat"><div class="vs-stat-label">Belum lunas</div><div class="vs-stat-value">3</div><div class="vs-stat-bar"><span></span></div></div>
+          </div>
+          <div class="vs-panel">
+            <div class="vs-row"><div class="vs-bar"></div><div class="vs-badge">Lunas</div></div>
+            <div class="vs-row"><div class="vs-bar short"></div><div class="vs-badge warn">Menunggu</div></div>
+            <div class="vs-row"><div class="vs-bar"></div><div class="vs-badge">Lunas</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C · Biru Profesional</h3>
+      <p>Biru dan abu netral dengan sudut lebih tajam. Paling "SaaS", mudah dipercaya, dan aman untuk tugas kampus.</p>
+      <div class="vs-swatches">
+        <span class="vs-swatch" style="background:#2563EB"></span>
+        <span class="vs-swatch" style="background:#1D4ED8"></span>
+        <span class="vs-swatch" style="background:#DBEAFE"></span>
+        <span class="vs-swatch" style="background:#0B1220"></span>
+        <span class="vs-swatch" style="background:#F4F6FB"></span>
+      </div>
+      <div class="vs-spec">Sudut 6px · rapi dan netral · risiko: terasa generik</div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="teal" onclick="toggleSelect(this)">
+    <div class="card-image vs-shot tema-d">
+      <div class="vs-app">
+        <div class="vs-side">
+          <div class="vs-logo"><div class="vs-logo-mark">K</div><div class="vs-logo-text">KelolaKos</div></div>
+          <div class="vs-nav active"></div>
+          <div class="vs-nav"></div>
+          <div class="vs-nav short"></div>
+          <div class="vs-nav"></div>
+        </div>
+        <div class="vs-main">
+          <div class="vs-topbar"><span class="vs-title">Dashboard</span><span class="vs-avatar"></span></div>
+          <div class="vs-stats">
+            <div class="vs-stat"><div class="vs-stat-label">Terisi</div><div class="vs-stat-value">8</div><div class="vs-stat-bar"><span></span></div></div>
+            <div class="vs-stat"><div class="vs-stat-label">Pendapatan</div><div class="vs-stat-value accent">7,2 jt</div><div class="vs-stat-bar"><span></span></div></div>
+            <div class="vs-stat"><div class="vs-stat-label">Belum lunas</div><div class="vs-stat-value">3</div><div class="vs-stat-bar"><span></span></div></div>
+          </div>
+          <div class="vs-panel">
+            <div class="vs-row"><div class="vs-bar"></div><div class="vs-badge">Lunas</div></div>
+            <div class="vs-row"><div class="vs-bar short"></div><div class="vs-badge warn">Menunggu</div></div>
+            <div class="vs-row"><div class="vs-bar"></div><div class="vs-badge">Lunas</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>D · Teal Gelap</h3>
+      <p>Sidebar gelap dengan aksen teal. Paling berkarakter dan terlihat premium; cocok kalau demo ingin terasa "aplikasi jadi".</p>
+      <div class="vs-swatches">
+        <span class="vs-swatch" style="background:#0D9488"></span>
+        <span class="vs-swatch" style="background:#0F766E"></span>
+        <span class="vs-swatch" style="background:#CCFBF1"></span>
+        <span class="vs-swatch" style="background:#0F172A"></span>
+        <span class="vs-swatch" style="background:#F1F5F9"></span>
+      </div>
+      <div class="vs-spec">Sudut 10px · kontras tinggi · risiko: lebih ramai di layar kecil</div>
+    </div>
+  </div>
+
+</div>
+
+<p class="vs-note">
+  Klik satu kartu untuk memilih, lalu balas di terminal — misalnya "B, tapi sidebarnya terang" atau
+  "campur A dan D". Warna akhir tetap akan saya uji kontrasnya supaya teks tetap terbaca.
+</p>

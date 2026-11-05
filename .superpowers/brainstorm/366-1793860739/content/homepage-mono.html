@@ -1,0 +1,959 @@
+<h2 style="font-family: Georgia, serif; margin: 0 0 4px;">Monokrom + aksen gold tipis</h2>
+<p style="color: #71717A; font-size: 12px; margin: 0 0 18px; max-width: 640px;">
+  Gold hanya di enam titik: garis atas, label kecil, kata kunci judul, status kamar, angka dashboard, dan tombol utama.
+  Sisanya tetap hitam–putih dengan tangga transparansi. Halaman ditambah: ringkasan ketersediaan, dua peran, alur pembayaran, dan tanya jawab.
+</p>
+
+<style>
+  .mono-wrap { max-width: 1080px; margin: 0 auto; }
+
+  /* ============ annotation strip ============ */
+  .ladder {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    background: linear-gradient(120deg, #18181B, #09090B);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 14px; padding: 10px 14px; margin-bottom: 16px;
+    font-family: ui-monospace, "Cascadia Mono", monospace;
+  }
+  .ladder-title { font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: #A1A1AA; }
+  .ladder-bar { display: flex; flex: 1; min-width: 230px; border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,.18); }
+  .ladder-bar span {
+    flex: 1; text-align: center; font-size: 9px; padding: 7px 0; color: #FAFAFA;
+    background: rgba(255,255,255,var(--o)); border-right: 1px solid rgba(255,255,255,.14);
+  }
+  .ladder-bar span:last-child { border-right: 0; }
+  .ladder-note { font-size: 9px; color: #D4D4D8; display: flex; align-items: center; gap: 6px; }
+  .ladder-note::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: linear-gradient(145deg, #D4AF37, #A16207); }
+
+  /* ============ tokens ============ */
+  .site {
+    --ink: #0C0A09;
+    --ink-2: #1C1917;
+    --ink-3: #292524;
+    --paper: #FFFFFF;
+    --paper-2: #FAFAF9;
+    --stone-1: #F5F5F4;
+    --stone-2: #E7E5E4;
+    --stone-3: #D6D3D1;
+    --stone-4: #A8A29E;
+    --muted: #71717A;
+    --muted-2: #57534E;
+    --gold: #A16207;
+    --gold-ink: #8A5306;
+    --gold-2: #D4AF37;
+    --gold-soft: #F7EBD1;
+    --gold-line: rgba(161, 98, 7, .26);
+    --glass-06: rgba(255, 255, 255, .06);
+    --glass-12: rgba(255, 255, 255, .12);
+    --glass-28: rgba(255, 255, 255, .28);
+    --glass-45: rgba(255, 255, 255, .45);
+    --glass-72: rgba(255, 255, 255, .72);
+    --glass-92: rgba(255, 255, 255, .92);
+    --line-d: rgba(12, 10, 9, .09);
+    --line-l: rgba(255, 255, 255, .16);
+    --radius-xl: 26px;
+    --radius-lg: 18px;
+    --radius-md: 13px;
+    --font-body: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-display: Georgia, "Times New Roman", serif;
+    --font-mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+    position: relative;
+    background:
+      radial-gradient(circle at 84% 1%, rgba(255,255,255,.96) 0%, transparent 28%),
+      radial-gradient(circle at 6% 30%, rgba(247,235,209,.55) 0%, transparent 26%),
+      linear-gradient(180deg, #FAFAF9 0%, #F6F5F4 32%, #EEEDEB 64%, #E7E5E4 100%);
+    color: var(--ink);
+    font-family: var(--font-body);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(12, 10, 9, .08);
+    box-shadow: 0 26px 64px rgba(12, 10, 9, .18);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* gold hairline — accent #1 */
+  .site::before {
+    content: ""; display: block; height: 2px;
+    background: linear-gradient(90deg, transparent 2%, rgba(212,175,55,.7) 28%, var(--gold) 58%, rgba(212,175,55,.35) 82%, transparent);
+  }
+
+  .site a { color: inherit; }
+  .site :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 6px; }
+
+  /* ============ nav ============ */
+  .nav { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; padding: 14px 22px; }
+  .brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; letter-spacing: -.3px; text-decoration: none; }
+  .brand-mark {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: linear-gradient(145deg, #3F3F46, #09090B);
+    color: #FAFAF9; display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; box-shadow: inset 0 0 0 3px var(--paper-2);
+  }
+  .nav-pill {
+    display: flex; gap: 2px; padding: 4px;
+    background: var(--glass-45);
+    border: 1px solid rgba(255,255,255,.95);
+    border-radius: 999px;
+    backdrop-filter: blur(18px) saturate(1.1);
+    box-shadow: 0 10px 26px rgba(12,10,9,.08), inset 0 1px 0 rgba(255,255,255,.9);
+  }
+  .nav-pill a { padding: 7px 14px; border-radius: 999px; font-size: 12px; color: #52525B; text-decoration: none; }
+  .nav-pill a.active { background: var(--ink); color: var(--paper); font-weight: 600; box-shadow: 0 4px 10px rgba(12,10,9,.24); }
+  .nav-actions { display: flex; justify-content: flex-end; align-items: center; gap: 8px; }
+  .nav-actions .masuk { font-size: 12px; color: var(--ink-2); text-decoration: none; padding: 7px 10px; }
+  .pill-dark {
+    background: linear-gradient(145deg, #27272A, #09090B); color: var(--paper);
+    border-radius: 999px; padding: 8px 16px; font-size: 12px; font-weight: 600; text-decoration: none;
+    box-shadow: 0 6px 16px rgba(12,10,9,.22);
+  }
+  .burger { display: none; width: 32px; height: 32px; border-radius: 10px; background: var(--glass-72); border: 1px solid rgba(12,10,9,.12); cursor: pointer; }
+  .burger i { display: block; width: 13px; height: 1.5px; background: var(--ink); margin: 3px auto; border-radius: 2px; }
+
+  /* ============ hero ============ */
+  .hero { display: grid; grid-template-columns: 1.04fr .96fr; gap: 34px; padding: 32px 22px 24px; align-items: center; }
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--gold-ink); font-weight: 700; display: flex; align-items: center; gap: 8px;
+  }
+  .eyebrow::before { content: ""; width: 22px; height: 1px; background: var(--gold); }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 5.2vw, 58px); line-height: .99; letter-spacing: -2px;
+    margin: 12px 0 0; font-weight: 700;
+    background: linear-gradient(180deg, #0C0A09 58%, #52525B 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero h1 em {
+    font-style: italic;
+    background: linear-gradient(160deg, var(--gold-2) 6%, var(--gold) 62%, #6B4405 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero p.lead { margin: 14px 0 0; max-width: 440px; font-size: 13.5px; line-height: 1.62; color: #52525B; }
+
+  .searchbar {
+    margin-top: 20px; display: flex; align-items: center; gap: 4px; padding: 6px;
+    background: linear-gradient(140deg, rgba(255,255,255,.88), rgba(255,255,255,.52));
+    border: 1px solid rgba(255,255,255,.98); border-radius: 18px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 18px 40px rgba(12,10,9,.10), inset 0 1px 0 rgba(255,255,255,.95);
+  }
+  .field { flex: 1; padding: 7px 12px; min-width: 0; }
+  .field + .field { border-left: 1px solid var(--line-d); }
+  .field label { display: block; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-family: var(--font-mono); }
+  .field span { display: block; font-size: 12px; font-weight: 600; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .search-btn {
+    flex: 0 0 auto; background: linear-gradient(145deg, #E3C368, #A16207 82%); color: #1A1206;
+    border: 0; border-radius: 13px; padding: 12px 18px; font-size: 12.5px; font-weight: 700;
+    white-space: nowrap; cursor: pointer;
+    box-shadow: 0 8px 18px rgba(122,78,6,.28), inset 0 1px 0 rgba(255,255,255,.35);
+  }
+  .hero-links { margin-top: 14px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .text-link { color: var(--ink); font-size: 12.5px; font-weight: 650; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; border-bottom: 1px solid rgba(12,10,9,.28); padding-bottom: 1px; }
+  .text-link::after { content: "→"; }
+  .trust { margin-top: 20px; display: flex; gap: 22px; padding-top: 16px; border-top: 1px solid var(--line-d); }
+  .trust b { display: block; font-family: var(--font-display); font-size: 20px; line-height: 1; }
+  .trust span { font-size: 10.5px; color: var(--muted); }
+
+  /* hero visual */
+  .hero-visual { position: relative; min-height: 380px; }
+  .sheen {
+    position: absolute; width: 260px; height: 260px; border-radius: 50%; top: -24px; right: -18px;
+    background: radial-gradient(circle at 36% 30%, #FFFFFF, #E7E5E4 56%, #C9C4BE 100%);
+    filter: blur(1px); opacity: .6;
+  }
+  .room-card-main {
+    position: absolute; top: 22px; right: 0; width: 78%;
+    background: linear-gradient(150deg, rgba(255,255,255,.84), rgba(255,255,255,.46));
+    border: 1px solid rgba(255,255,255,.95); border-radius: var(--radius-lg);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 22px 48px rgba(12,10,9,.16), inset 0 1px 0 rgba(255,255,255,.9);
+    padding: 10px;
+  }
+  .photo {
+    height: 192px; border-radius: 12px; position: relative; overflow: hidden;
+    background:
+      radial-gradient(circle at 72% 22%, rgba(255,255,255,.9), transparent 44%),
+      linear-gradient(150deg, #D6D3D1, #A8A29E 52%, #44403C);
+  }
+  .photo::before {
+    content: ""; position: absolute; left: 18%; top: 26%; width: 42%; height: 48%; border-radius: 3px;
+    background: linear-gradient(160deg, rgba(250,250,249,.7), rgba(250,250,249,.1));
+    box-shadow: 0 0 0 6px rgba(250,250,249,.16);
+  }
+  .photo::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 46%;
+    background: linear-gradient(180deg, transparent, rgba(12,10,9,.5));
+  }
+  .photo-tag {
+    position: absolute; left: 10px; top: 10px; z-index: 1;
+    background: rgba(12,10,9,.55); color: #FAFAF9; border: 1px solid rgba(255,255,255,.22);
+    border-radius: 999px; padding: 4px 9px; font-size: 9.5px; backdrop-filter: blur(6px);
+  }
+  .photo-price {
+    position: absolute; right: 10px; bottom: 10px; z-index: 1;
+    background: linear-gradient(145deg, #FBF3DF, #EFD9A8); color: var(--gold-ink);
+    border: 1px solid rgba(255,255,255,.75); border-radius: 999px;
+    padding: 6px 11px; font-size: 11px; font-weight: 700;
+    box-shadow: 0 8px 18px rgba(12,10,9,.28);
+  }
+  .photo-price span { font-weight: 500; font-size: 9px; color: #8A6A2F; }
+  .room-body { padding: 10px 6px 3px; }
+  .room-body h3 { margin: 0; font-size: 13.5px; letter-spacing: -.2px; }
+  .room-body p { margin: 3px 0 0; font-size: 10.5px; color: var(--muted); }
+
+  .float-stat {
+    position: absolute; left: -4px; bottom: 20px; width: 198px;
+    background: var(--glass-45); border: 1px solid rgba(255,255,255,.9);
+    border-radius: var(--radius-md); backdrop-filter: blur(22px);
+    box-shadow: 0 18px 40px rgba(12,10,9,.16), inset 0 1px 0 rgba(255,255,255,.9);
+    padding: 12px;
+  }
+  .float-stat .label { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .float-stat .value { font-family: var(--font-display); font-size: 23px; line-height: 1; margin-top: 4px; }
+  .float-stat .value small { font-family: var(--font-body); font-size: 10px; color: var(--muted); font-weight: 500; }
+  .float-stat .sub { font-size: 9px; color: var(--muted-2); margin-top: 2px; }
+  .bars { display: flex; align-items: flex-end; gap: 4px; height: 32px; margin-top: 8px; }
+  .bars i { flex: 1; border-radius: 3px 3px 0 0; background: rgba(12,10,9,.16); }
+  .bars i:nth-child(1) { height: 38%; } .bars i:nth-child(2) { height: 58%; }
+  .bars i:nth-child(3) { height: 46%; } .bars i:nth-child(4) { height: 74%; }
+  .bars i:nth-child(5) { height: 66%; }
+  .bars i:nth-child(6) { height: 92%; background: linear-gradient(180deg, var(--gold-2), var(--gold)); }
+
+  .float-badge {
+    position: absolute; right: 8px; top: -6px;
+    background: linear-gradient(145deg, #27272A, #09090B); color: var(--paper);
+    border-radius: 999px; padding: 8px 13px 8px 9px; font-size: 10.5px;
+    display: flex; align-items: center; gap: 6px; box-shadow: 0 12px 26px rgba(12,10,9,.28);
+  }
+  .float-badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: linear-gradient(145deg, var(--gold-2), var(--gold)); box-shadow: 0 0 0 3px rgba(212,175,55,.24); }
+
+  /* ============ fact strip ============ */
+  .facts {
+    margin: 6px 22px 0; display: grid; grid-template-columns: repeat(4, 1fr);
+    background: var(--glass-45); border: 1px solid rgba(255,255,255,.9);
+    border-radius: var(--radius-lg); backdrop-filter: blur(16px);
+    box-shadow: 0 12px 30px rgba(12,10,9,.07);
+    position: relative; overflow: hidden;
+  }
+  .facts::before {
+    content: ""; position: absolute; left: 14px; right: 14px; top: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-line), transparent);
+  }
+  .fact { padding: 14px 16px; display: flex; gap: 9px; align-items: flex-start; }
+  .fact + .fact { border-left: 1px solid var(--line-d); }
+  .fact svg { flex: 0 0 auto; width: 16px; height: 16px; stroke: var(--gold-ink); fill: none; stroke-width: 1.7; margin-top: 1px; }
+  .fact h4 { margin: 0; font-size: 11.5px; letter-spacing: -.1px; }
+  .fact p { margin: 2px 0 0; font-size: 10px; line-height: 1.45; color: var(--muted); }
+
+  /* ============ section shell ============ */
+  .section { padding: 34px 22px 0; }
+  .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+  .section-head h2 { font-family: var(--font-display); font-size: 27px; letter-spacing: -.8px; line-height: 1.06; margin: 0; }
+  /* accent #2 — section labels */
+  .kicker { font-family: var(--font-mono); font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-ink); font-weight: 700; }
+  .section-head p { margin: 6px 0 0; font-size: 12px; color: var(--muted); max-width: 490px; }
+
+  /* ============ availability ============ */
+  .avail-panel {
+    background: var(--glass-28); border: 1px solid rgba(255,255,255,.92);
+    border-radius: var(--radius-lg); padding: 14px 16px; backdrop-filter: blur(14px);
+    box-shadow: 0 10px 26px rgba(12,10,9,.05);
+  }
+  .avail-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+  .avail-legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 10px; color: var(--muted-2); }
+  .avail-legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+  .dot.isi { background: var(--ink); }
+  .dot.rep { background: var(--stone-3); border: 1px solid var(--stone-4); }
+  .dot.kosong { background: linear-gradient(145deg, var(--gold-2), var(--gold)); }
+  .bar { display: flex; height: 10px; border-radius: 999px; overflow: hidden; margin-top: 12px; background: var(--stone-2); }
+  .bar i { display: block; height: 100%; }
+  .bar .isi { width: 50%; background: linear-gradient(90deg, #292524, #0C0A09); }
+  .bar .rep { width: 16.7%; background: repeating-linear-gradient(45deg, #D6D3D1, #D6D3D1 3px, #E7E5E4 3px, #E7E5E4 6px); }
+  .bar .kosong { width: 33.3%; background: linear-gradient(90deg, #EFD9A8, #D2A84F); }
+  .avail-note { font-size: 10px; color: var(--muted); margin-top: 8px; }
+
+  /* room cards */
+  .rooms { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 14px; }
+  .room {
+    background: linear-gradient(180deg, #FFFFFF, #FAFAF9);
+    border: 1px solid rgba(12,10,9,.09); border-radius: var(--radius-lg); overflow: hidden;
+    box-shadow: 0 10px 24px rgba(12,10,9,.06), inset 0 1px 0 #FFF;
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .room:hover { transform: translateY(-3px); box-shadow: 0 18px 34px rgba(12,10,9,.12); border-color: var(--gold-line); }
+  .room .photo { height: 112px; border-radius: 0; }
+  .room .photo::before { left: 22%; top: 30%; width: 38%; height: 42%; }
+  .room .photo.p2 { background: radial-gradient(circle at 30% 18%, rgba(255,255,255,.85), transparent 40%), linear-gradient(140deg, #E7E5E4, #A8A29E 58%, #57534E); }
+  .room .photo.p3 { background: radial-gradient(circle at 76% 26%, rgba(255,255,255,.8), transparent 42%), linear-gradient(160deg, #D6D3D1, #8A847E 56%, #292524); }
+  .room-content { padding: 11px 12px 12px; }
+  .room-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+  .room-content h3 { margin: 0; font-size: 12.5px; letter-spacing: -.2px; }
+  .room-content .loc { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .price { font-weight: 700; font-size: 12px; white-space: nowrap; color: var(--gold-ink); }
+  .price span { font-size: 9px; color: var(--muted); font-weight: 500; }
+  .tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+  .tag { font-size: 9px; color: #52525B; background: var(--stone-1); border: 1px solid var(--stone-2); border-radius: 999px; padding: 2px 7px; }
+  .room-cta { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; padding-top: 9px; border-top: 1px solid var(--line-d); }
+  .room-cta .avail {
+    font-size: 9.5px; color: var(--gold-ink); display: inline-flex; align-items: center; gap: 5px;
+    background: var(--gold-soft); border: 1px solid var(--gold-line);
+    border-radius: 999px; padding: 2px 8px 2px 7px;
+  }
+  .room-cta .avail::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: linear-gradient(145deg, var(--gold-2), var(--gold)); }
+  .room-cta a { font-size: 10.5px; font-weight: 650; color: var(--ink); text-decoration: none; }
+
+  /* ============ roles ============ */
+  .roles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .role-panel {
+    background: var(--glass-72); border: 1px solid rgba(255,255,255,.95);
+    border-radius: var(--radius-xl); padding: 18px; backdrop-filter: blur(14px);
+    box-shadow: 0 10px 26px rgba(12,10,9,.05);
+  }
+  .role-panel.dark {
+    background: radial-gradient(circle at 88% 4%, rgba(212,175,55,.12), transparent 38%), linear-gradient(155deg, #292524, #0C0A09 64%);
+    border: 1px solid rgba(255,255,255,.12); color: var(--paper);
+    box-shadow: 0 22px 50px rgba(12,10,9,.28);
+  }
+  .role-panel h3 { font-family: var(--font-display); font-size: 21px; letter-spacing: -.5px; margin: 7px 0 0; line-height: 1.1; }
+  .role-panel > p { font-size: 11px; line-height: 1.5; color: var(--muted); margin: 5px 0 0; }
+  .role-panel.dark > p { color: #D4D4D8; }
+  .role-panel.dark .kicker { color: var(--gold-2); }
+  .role-list { list-style: none; padding: 0; margin: 14px 0 0; display: grid; gap: 9px; }
+  .role-list li { display: flex; gap: 9px; align-items: flex-start; font-size: 10.5px; line-height: 1.45; color: var(--muted-2); }
+  .role-panel.dark .role-list li { color: #E7E5E4; }
+  .role-list b { color: var(--ink); font-weight: 650; }
+  .role-panel.dark .role-list b { color: #FAFAF9; }
+  .role-num {
+    flex: 0 0 auto; width: 18px; height: 18px; border-radius: 50%;
+    border: 1px solid var(--gold-line); color: var(--gold-ink);
+    font-family: var(--font-mono); font-size: 8px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .role-panel.dark .role-num { border-color: rgba(212,175,55,.5); color: var(--gold-2); }
+  .role-actions { margin-top: 14px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .btn-ink { background: linear-gradient(145deg, #27272A, #09090B); color: var(--paper); border-radius: 999px; padding: 9px 15px; font-size: 11px; font-weight: 700; text-decoration: none; display: inline-block; }
+  .btn-ghost { border: 1px solid rgba(255,255,255,.32); color: var(--paper); border-radius: 999px; padding: 9px 15px; font-size: 11px; font-weight: 600; text-decoration: none; display: inline-block; }
+  .link-plain { font-size: 10.5px; color: var(--muted); text-decoration: none; }
+
+  /* ============ dashboard bento ============ */
+  .bento { display: grid; grid-template-columns: 1.35fr 1fr; gap: 12px; }
+  .bento-main {
+    background: radial-gradient(circle at 88% 6%, rgba(255,255,255,.16), transparent 40%), linear-gradient(155deg, #292524, #09090B 62%);
+    color: var(--paper); border-radius: var(--radius-xl); padding: 18px;
+    position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,.12);
+    box-shadow: 0 22px 50px rgba(12,10,9,.28);
+  }
+  .bento-main .kicker { color: var(--gold-2); }
+  .bento-main h3 { font-family: var(--font-display); font-size: 23px; line-height: 1.07; letter-spacing: -.6px; margin: 8px 0 0; max-width: 310px; }
+  .bento-main p { font-size: 11.5px; line-height: 1.55; color: #D4D4D8; margin: 8px 0 0; max-width: 330px; }
+  .dash {
+    margin-top: 14px; background: var(--glass-06); border: 1px solid var(--line-l);
+    border-radius: 12px; padding: 10px; position: relative; z-index: 1; backdrop-filter: blur(10px);
+  }
+  .dash-top { display: flex; align-items: center; justify-content: space-between; font-size: 9px; color: #D4D4D8; }
+  .dash-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; }
+  .dash-tile { background: var(--glass-12); border: 1px solid var(--line-l); border-radius: 8px; padding: 7px; }
+  .dash-tile span { font-size: 8px; color: #A1A1AA; text-transform: uppercase; letter-spacing: .08em; }
+  .dash-tile b { display: block; font-size: 15px; margin-top: 2px; letter-spacing: -.4px; }
+  /* accent #3 — one dashboard figure */
+  .dash-tile.gold { background: rgba(212,175,55,.10); border-color: rgba(212,175,55,.42); }
+  .dash-tile.gold b { color: var(--gold-2); }
+  .dash-chart { display: flex; align-items: flex-end; gap: 4px; height: 40px; margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--line-l); }
+  .dash-chart i { flex: 1; border-radius: 2px 2px 0 0; background: rgba(255,255,255,.22); }
+  .dash-chart i:nth-child(1) { height: 34%; } .dash-chart i:nth-child(2) { height: 52%; }
+  .dash-chart i:nth-child(3) { height: 44%; } .dash-chart i:nth-child(4) { height: 68%; }
+  .dash-chart i:nth-child(5) { height: 58%; } .dash-chart i:nth-child(6) { height: 80%; }
+  .dash-chart i:nth-child(7) { height: 72%; }
+  .dash-chart i:nth-child(8) { height: 96%; background: linear-gradient(180deg, var(--gold-2), var(--gold)); }
+  .dash-foot { margin-top: 7px; font-size: 8.5px; color: #A1A1AA; }
+  .feature-stack { display: grid; gap: 12px; }
+  .feature {
+    background: var(--glass-72); border: 1px solid rgba(255,255,255,.95);
+    border-radius: var(--radius-lg); padding: 13px; display: flex; gap: 11px; align-items: flex-start;
+    backdrop-filter: blur(12px); box-shadow: 0 8px 20px rgba(12,10,9,.05);
+  }
+  .feature .fi { flex: 0 0 auto; width: 28px; height: 28px; border-radius: 9px; background: var(--stone-1); border: 1px solid var(--stone-2); display: flex; align-items: center; justify-content: center; }
+  .feature .fi svg { width: 14px; height: 14px; stroke: var(--ink); fill: none; stroke-width: 1.6; }
+  .feature h4 { margin: 0; font-size: 12px; letter-spacing: -.2px; }
+  .feature p { margin: 3px 0 0; font-size: 10.2px; line-height: 1.5; color: var(--muted); }
+
+  /* ============ payment flow ============ */
+  .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .pay-step {
+    background: var(--glass-45); border: 1px solid rgba(255,255,255,.92);
+    border-radius: var(--radius-lg); padding: 15px 14px; backdrop-filter: blur(14px);
+    position: relative;
+  }
+  .pay-step .num {
+    width: 25px; height: 25px; border-radius: 50%;
+    border: 1px solid var(--gold-line); color: var(--gold-ink);
+    background: linear-gradient(145deg, #FBF3DF, #F0DCAF);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; font-family: var(--font-mono);
+  }
+  .pay-step h4 { margin: 9px 0 0; font-size: 12px; }
+  .pay-step p { margin: 4px 0 0; font-size: 10.2px; line-height: 1.5; color: var(--muted); }
+  .pay-step .meta { display: block; margin-top: 7px; font-family: var(--font-mono); font-size: 8.5px; color: var(--muted-2); letter-spacing: .02em; }
+  .pay-step::after { content: ""; position: absolute; top: 27px; right: -12px; width: 12px; height: 1px; background: linear-gradient(90deg, rgba(12,10,9,.25), transparent); }
+  .pay-step:last-child::after { display: none; }
+  .flow-note {
+    margin-top: 12px; display: flex; gap: 8px; align-items: flex-start;
+    background: rgba(255,255,255,.55); border: 1px dashed rgba(12,10,9,.16);
+    border-radius: var(--radius-md); padding: 10px 12px; font-size: 10.2px; color: var(--muted-2);
+  }
+  .flow-note svg { flex: 0 0 auto; width: 14px; height: 14px; stroke: var(--gold-ink); fill: none; stroke-width: 1.7; margin-top: 1px; }
+
+  /* ============ faq ============ */
+  .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .faq-grid details {
+    background: var(--glass-72); border: 1px solid rgba(255,255,255,.95);
+    border-radius: var(--radius-md); padding: 12px 14px; backdrop-filter: blur(12px);
+    box-shadow: 0 6px 16px rgba(12,10,9,.04);
+  }
+  .faq-grid summary { cursor: pointer; font-size: 11.5px; font-weight: 650; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .faq-grid summary::-webkit-details-marker { display: none; }
+  .faq-grid summary::after { content: "+"; font-family: var(--font-mono); font-size: 13px; color: var(--gold-ink); font-weight: 700; }
+  .faq-grid details[open] summary::after { content: "–"; }
+  .faq-grid details p { margin: 7px 0 0; font-size: 10.5px; line-height: 1.55; color: var(--muted); }
+
+  /* ============ cta ============ */
+  .cta {
+    margin: 34px 22px 0;
+    background: radial-gradient(circle at 82% 12%, rgba(212,175,55,.24), transparent 42%), linear-gradient(150deg, #292524, #09090B 64%);
+    color: var(--paper); border-radius: var(--radius-xl); padding: 28px 26px;
+    display: flex; align-items: center; justify-content: space-between; gap: 22px;
+    border: 1px solid rgba(255,255,255,.12); box-shadow: 0 24px 54px rgba(12,10,9,.3);
+  }
+  .cta h2 { font-family: var(--font-display); font-size: 29px; line-height: 1.04; letter-spacing: -.9px; margin: 0; max-width: 430px; }
+  .cta h2 em { color: var(--gold-2); font-style: italic; }
+  .cta p { margin: 8px 0 0; font-size: 11.5px; color: #D4D4D8; max-width: 390px; }
+  .cta-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  /* accent #4 — main action */
+  .btn-gold {
+    background: linear-gradient(145deg, #E3C368, #A16207 78%); color: #1A1206;
+    border-radius: 999px; padding: 11px 18px; font-size: 12px; font-weight: 700; text-decoration: none;
+    box-shadow: 0 10px 22px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.35);
+  }
+  .btn-outline { border: 1px solid rgba(255,255,255,.32); color: var(--paper); border-radius: 999px; padding: 11px 18px; font-size: 12px; font-weight: 600; text-decoration: none; }
+
+  /* ============ footer ============ */
+  .footer { padding: 22px 22px 20px; margin-top: 10px; }
+  .footer-main { display: grid; grid-template-columns: 1.4fr 1fr 1.2fr; gap: 18px; padding-bottom: 16px; border-bottom: 1px solid var(--line-d); }
+  .footer .f-brand { display: flex; align-items: center; gap: 7px; font-weight: 700; font-size: 13px; }
+  /* accent #5 — footer mark */
+  .footer .f-brand::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: linear-gradient(145deg, var(--gold-2), var(--gold)); }
+  .footer p { margin: 6px 0 0; font-size: 10px; line-height: 1.55; color: var(--muted); max-width: 270px; }
+  .footer h5 { margin: 0 0 7px; font-family: var(--font-mono); font-size: 8.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted-2); }
+  .footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 5px; }
+  .footer li { font-size: 10px; color: var(--muted); }
+  .footer a { color: var(--muted); text-decoration: none; }
+  .footer .f-contact b { color: var(--ink-2); font-weight: 650; }
+  .footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-top: 12px; font-size: 9.5px; color: var(--muted); }
+  .footer-bottom .links { display: flex; gap: 14px; }
+
+  /* ============ phone preview ============ */
+  .phone-section { margin-top: 28px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .phone-label { font-family: ui-monospace, monospace; font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: #71717A; }
+  .phone { width: 300px; border-radius: 30px; padding: 7px; background: linear-gradient(150deg, #3F3F46, #09090B); box-shadow: 0 22px 48px rgba(9,9,11,.3); }
+  .phone-screen { border-radius: 24px; overflow: hidden; background: linear-gradient(180deg, #FAFAF9, #EDEDEB); font-family: Inter, system-ui, sans-serif; color: #09090B; }
+  .phone-screen .m-nav { display: flex; align-items: center; justify-content: space-between; padding: 12px 12px 8px; }
+  .phone-screen .m-brand { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; }
+  .phone-screen .m-mark { width: 18px; height: 18px; border-radius: 50%; background: #09090B; color: #FAFAF9; font-size: 8px; display: flex; align-items: center; justify-content: center; }
+  .phone-screen .m-burger { width: 26px; height: 26px; border-radius: 8px; background: rgba(255,255,255,.7); border: 1px solid rgba(9,9,11,.12); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; }
+  .phone-screen .m-burger i { width: 12px; height: 1.5px; background: #09090B; border-radius: 2px; }
+  .phone-screen .m-body { padding: 4px 12px 14px; }
+  .phone-screen .m-eyebrow { font-family: ui-monospace, monospace; font-size: 7px; letter-spacing: .14em; text-transform: uppercase; color: #8A5306; font-weight: 700; }
+  .phone-screen h3 { font-family: Georgia, serif; font-size: 25px; line-height: 1; letter-spacing: -1px; margin: 6px 0 0; }
+  .phone-screen h3 em { font-style: italic; color: #A16207; }
+  .phone-screen .m-sub { font-size: 9px; line-height: 1.5; color: #52525B; margin: 7px 0 0; }
+  .phone-screen .m-search { margin-top: 10px; background: rgba(255,255,255,.82); border: 1px solid #fff; border-radius: 13px; padding: 7px; box-shadow: 0 8px 20px rgba(9,9,11,.08); }
+  .m-field { display: flex; justify-content: space-between; align-items: center; padding: 4px 3px; font-size: 8.5px; color: #52525B; }
+  .m-field b { color: #09090B; font-size: 9px; }
+  .m-cta { margin-top: 5px; background: linear-gradient(145deg, #E3C368, #A16207 82%); color: #1A1206; text-align: center; border-radius: 9px; padding: 7px; font-size: 9px; font-weight: 700; }
+  .m-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 9px; }
+  .m-fact { background: rgba(255,255,255,.6); border: 1px solid rgba(255,255,255,.9); border-radius: 9px; padding: 6px 7px; font-size: 7px; color: #52525B; line-height: 1.35; }
+  .m-fact b { display: block; color: #09090B; font-size: 7.5px; margin-bottom: 1px; }
+  .m-avail { margin-top: 9px; background: rgba(255,255,255,.6); border: 1px solid rgba(255,255,255,.9); border-radius: 10px; padding: 7px 8px; }
+  .m-avail .row { display: flex; justify-content: space-between; font-size: 7.5px; color: #52525B; }
+  .m-avail .row b { color: #09090B; }
+  .m-bar { display: flex; height: 5px; border-radius: 999px; overflow: hidden; margin-top: 5px; }
+  .m-bar .isi { width: 50%; background: #09090B; }
+  .m-bar .rep { width: 16.7%; background: #D6D3D1; }
+  .m-bar .kosong { width: 33.3%; background: linear-gradient(90deg, #EFD9A8, #D2A84F); }
+  .m-card { margin-top: 9px; background: #fff; border: 1px solid rgba(9,9,11,.08); border-radius: 13px; overflow: hidden; }
+  .m-photo { height: 74px; background: radial-gradient(circle at 72% 22%, rgba(255,255,255,.9), transparent 44%), linear-gradient(150deg, #D6D3D1, #A8A29E 52%, #44403C); position: relative; }
+  .m-photo::before { content: ""; position: absolute; left: 20%; top: 28%; width: 38%; height: 44%; border-radius: 3px; background: linear-gradient(160deg, rgba(255,255,255,.7), rgba(255,255,255,.1)); }
+  .m-price { position: absolute; right: 7px; bottom: 7px; background: linear-gradient(145deg, #FBF3DF, #EFD9A8); color: #8A5306; border-radius: 999px; font-size: 8px; font-weight: 700; padding: 3px 7px; }
+  .m-card-body { padding: 8px 9px; }
+  .m-card-body b { font-size: 10px; }
+  .m-card-body p { font-size: 8px; color: #71717A; margin: 2px 0 0; }
+
+  /* ============ responsive ============ */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; gap: 26px; }
+    .hero-visual { min-height: 340px; }
+    .fact:nth-child(3) { border-left: 0; border-top: 1px solid var(--line-d); }
+    .fact:nth-child(4) { border-top: 1px solid var(--line-d); }
+    .facts { grid-template-columns: 1fr 1fr; }
+    .roles, .bento, .faq-grid { grid-template-columns: 1fr; }
+    .rooms { grid-template-columns: 1fr 1fr; }
+    .rooms .room:last-child { grid-column: span 2; }
+    .flow { grid-template-columns: 1fr 1fr; }
+    .pay-step:nth-child(2)::after { display: none; }
+    .footer-main { grid-template-columns: 1fr 1fr; }
+    .nav-pill { display: none; }
+    .nav { grid-template-columns: 1fr auto; }
+    .nav-actions .masuk { display: none; }
+    .burger { display: block; }
+    .cta { flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 620px) {
+    .hero { padding: 26px 18px 20px; }
+    .section { padding: 28px 18px 0; }
+    .facts { grid-template-columns: 1fr; margin-left: 18px; margin-right: 18px; }
+    .rooms, .flow { grid-template-columns: 1fr; }
+    .fact + .fact { border-left: 0; border-top: 1px solid var(--line-d); }
+    .rooms .room:last-child { grid-column: auto; }
+    .section-head { flex-direction: column; align-items: flex-start; }
+    .searchbar { flex-direction: column; align-items: stretch; }
+    .field + .field { border-left: 0; border-top: 1px solid var(--line-d); }
+    .search-btn { text-align: center; }
+    .footer-main { grid-template-columns: 1fr; }
+    .cta { margin: 28px 18px 0; padding: 22px 18px; }
+    .footer { padding: 18px 18px 16px; }
+  }
+</style>
+
+<div class="mono-wrap">
+
+  <div class="ladder">
+    <div class="ladder-title">Tangga transparansi</div>
+    <div class="ladder-bar">
+      <span style="--o:.06">6%</span>
+      <span style="--o:.12">12%</span>
+      <span style="--o:.28">28%</span>
+      <span style="--o:.45">45%</span>
+      <span style="--o:.72">72%</span>
+      <span style="--o:1">100%</span>
+    </div>
+    <div class="ladder-note">Gold: label, status, angka, tombol utama</div>
+  </div>
+
+  <div class="site">
+
+    <!-- ================= NAV ================= -->
+    <div class="nav">
+      <a class="brand" href="#"><span class="brand-mark">K</span>KelolaKos</a>
+      <nav class="nav-pill">
+        <a class="active" href="#beranda">Beranda</a>
+        <a href="#kamar">Kamar</a>
+        <a href="#peran">Peran</a>
+        <a href="#pengurus">Pengurus</a>
+        <a href="#faq">Tanya jawab</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="masuk" href="#">Masuk</a>
+        <a class="pill-dark" href="#">Daftar</a>
+        <button class="burger" type="button" aria-label="Buka menu"><i></i><i></i><i></i></button>
+      </div>
+    </div>
+
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="beranda">
+      <div>
+        <div class="eyebrow">Kos &amp; penghuni · Yogyakarta</div>
+        <h1>Cari kamar.<br>Kelola kos.<br><em>Satu tempat.</em></h1>
+        <p class="lead">
+          Bandingkan kamar, ajukan sewa, lalu pantau tagihan dan bukti bayar.
+          Pengurus mendapat dashboard yang sama rapi — tanpa buku catatan.
+        </p>
+
+        <div class="searchbar">
+          <div class="field"><label>Kota</label><span>Yogyakarta</span></div>
+          <div class="field"><label>Harga maks</label><span>Rp1.000.000</span></div>
+          <button class="search-btn" type="button">Cari kamar</button>
+        </div>
+
+        <div class="hero-links">
+          <a class="text-link" href="#pengurus">Ingin mengelola kos Anda?</a>
+        </div>
+
+        <div class="trust">
+          <div><b>2</b><span>kos aktif</span></div>
+          <div><b>4</b><span>kamar kosong</span></div>
+          <div><b>6</b><span>penghuni</span></div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="sheen"></div>
+        <div class="float-badge">4 kamar siap diajukan</div>
+
+        <div class="room-card-main">
+          <div class="photo">
+            <span class="photo-tag">Kos Melati · Kamar A6</span>
+            <span class="photo-price">Rp1,05 jt <span>/ bln</span></span>
+          </div>
+          <div class="room-body">
+            <h3>VIP · kamar mandi dalam</h3>
+            <p>Kasur · lemari · meja belajar · WiFi</p>
+          </div>
+        </div>
+
+        <div class="float-stat">
+          <div class="label">Tagihan bulan ini</div>
+          <div class="value">Rp6,0 <small>juta</small></div>
+          <div class="sub">6 sewa aktif · 2 menunggu verifikasi</div>
+          <div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FACT STRIP ================= -->
+    <div class="facts">
+      <div class="fact">
+        <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+        <div><h4>Harga apa adanya</h4><p>Sewa dan biaya tambahan dipisah di tagihan.</p></div>
+      </div>
+      <div class="fact">
+        <svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.2-2.9 7.4-7 9-4.1-1.6-7-4.8-7-9V6l7-3z"/><path d="M9.5 12l1.8 1.8L15 10"/></svg>
+        <div><h4>Bukti bayar privat</h4><p>Hanya penghuni terkait dan pengurus kos.</p></div>
+      </div>
+      <div class="fact">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M8 9h8M8 13h5"/></svg>
+        <div><h4>Tagihan sekali klik</h4><p>Buat tagihan periode berjalan untuk semua sewa aktif.</p></div>
+      </div>
+      <div class="fact">
+        <svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15l4-5 3 3 5-7"/></svg>
+        <div><h4>Laporan CSV &amp; PDF</h4><p>Rekap pendapatan siap diunduh kapan saja.</p></div>
+      </div>
+    </div>
+
+    <!-- ================= AVAILABILITY ================= -->
+    <section class="section" id="kamar">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Ketersediaan kamar</div>
+          <h2>4 kosong, 2 sedang perbaikan</h2>
+          <p>Dari 12 kamar di dua kos. Status mengikuti pengajuan yang sudah disetujui pengurus.</p>
+        </div>
+        <a class="text-link" href="#">Lihat kedua kos</a>
+      </div>
+
+      <div class="avail-panel">
+        <div class="avail-top">
+          <div class="avail-legend">
+            <span><i class="dot isi"></i>Terisi 6</span>
+            <span><i class="dot rep"></i>Perbaikan 2</span>
+            <span><i class="dot kosong"></i>Kosong 4</span>
+          </div>
+          <span class="avail-note" style="margin:0">Diperbarui dari status kamar</span>
+        </div>
+        <div class="bar"><i class="isi"></i><i class="rep"></i><i class="kosong"></i></div>
+        <div class="avail-note">A4 sedang perbaikan di masing-masing kos. Kamar terisi tidak ditampilkan di daftar bawah.</div>
+      </div>
+
+      <div class="rooms">
+        <article class="room">
+          <div class="photo">
+            <span class="photo-tag">Kos Melati</span>
+            <span class="photo-price">Rp950 rb <span>/ bln</span></span>
+          </div>
+          <div class="room-content">
+            <div class="room-top">
+              <div><h3>A5 · VIP</h3><div class="loc">Kaliurang · kamar mandi luar</div></div>
+            </div>
+            <div class="tags"><span class="tag">Kasur</span><span class="tag">Lemari</span><span class="tag">Meja</span><span class="tag">WiFi</span></div>
+            <div class="room-cta"><span class="avail">Tersedia</span><a href="#">Ajukan sewa →</a></div>
+          </div>
+        </article>
+
+        <article class="room">
+          <div class="photo p2">
+            <span class="photo-tag">Kos Melati</span>
+            <span class="photo-price">Rp1,05 jt <span>/ bln</span></span>
+          </div>
+          <div class="room-content">
+            <div class="room-top">
+              <div><h3>A6 · VIP</h3><div class="loc">Kaliurang · kamar mandi dalam</div></div>
+            </div>
+            <div class="tags"><span class="tag">KM dalam</span><span class="tag">Kasur</span><span class="tag">Lemari</span><span class="tag">Meja</span></div>
+            <div class="room-cta"><span class="avail">Tersedia</span><a href="#">Ajukan sewa →</a></div>
+          </div>
+        </article>
+
+        <article class="room">
+          <div class="photo p3">
+            <span class="photo-tag">Kos Anggrek</span>
+            <span class="photo-price">Rp950 rb <span>/ bln</span></span>
+          </div>
+          <div class="room-content">
+            <div class="room-top">
+              <div><h3>A5 · VIP</h3><div class="loc">Gejayan · kamar mandi luar</div></div>
+            </div>
+            <div class="tags"><span class="tag">Kasur</span><span class="tag">Lemari</span><span class="tag">Meja</span><span class="tag">WiFi</span></div>
+            <div class="room-cta"><span class="avail">Tersedia</span><a href="#">Ajukan sewa →</a></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================= ROLES ================= -->
+    <section class="section" id="peran">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Satu sistem, dua peran</div>
+          <h2>Calon penghuni dan pengurus</h2>
+          <p>Alurnya sama dari dua sisi: pengajuan masuk, disetujui, lalu tagihan berjalan.</p>
+        </div>
+      </div>
+
+      <div class="roles">
+        <div class="role-panel">
+          <div class="kicker">Untuk calon penghuni</div>
+          <h3>Dari melihat kamar sampai lunas.</h3>
+          <p>Tanpa perlu datang dulu untuk menanyakan harga dan fasilitas.</p>
+          <ul class="role-list">
+            <li><span class="role-num">1</span><span><b>Buka halaman kos.</b> Lihat kamar kosong, harga, dan fasilitas kamar.</span></li>
+            <li><span class="role-num">2</span><span><b>Ajukan sewa.</b> Pilih tanggal mulai dan durasi, lalu kirim ke pengurus.</span></li>
+            <li><span class="role-num">3</span><span><b>Bayar dan pantau.</b> Unggah bukti transfer, status tagihan berubah setelah diverifikasi.</span></li>
+          </ul>
+          <div class="role-actions">
+            <a class="btn-ink" href="#">Cari kamar</a>
+            <a class="link-plain" href="#">Sudah punya akun? Masuk</a>
+          </div>
+        </div>
+
+        <div class="role-panel dark">
+          <div class="kicker">Untuk pengurus kos</div>
+          <h3>Rapi tanpa buku catatan.</h3>
+          <p>Kamar, pengajuan, tagihan, dan bukti bayar dalam satu dashboard.</p>
+          <ul class="role-list">
+            <li><span class="role-num">1</span><span><b>Tambahkan kamar.</b> Satu per satu, atau impor sekaligus lewat CSV.</span></li>
+            <li><span class="role-num">2</span><span><b>Kelola pengajuan.</b> Setujui atau tolak; tagihan pertama dibuat otomatis.</span></li>
+            <li><span class="role-num">3</span><span><b>Verifikasi dan lapor.</b> Terima bukti bayar, unduh rekap CSV atau PDF.</span></li>
+          </ul>
+          <div class="role-actions">
+            <a class="btn-ghost" href="#">Daftar sebagai pengurus</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= DASHBOARD ================= -->
+    <section class="section" id="pengurus">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Dashboard pengurus</div>
+          <h2>Angka penting dalam satu layar</h2>
+          <p>Keterisian, tagihan bulan ini, dan antrean verifikasi — berubah saat pembayaran diterima.</p>
+        </div>
+        <a class="text-link" href="#">Lihat contoh dashboard</a>
+      </div>
+
+      <div class="bento">
+        <div class="bento-main">
+          <div class="kicker">Ringkasan · November 2026</div>
+          <h3>Semua kos Anda, tanpa pindah tab.</h3>
+          <p>Angka di bawah adalah data demo dari dua kos: 12 kamar dan 6 sewa aktif.</p>
+
+          <div class="dash">
+            <div class="dash-top"><span>2 kos · Yogyakarta</span><span>Laporan →</span></div>
+            <div class="dash-grid">
+              <div class="dash-tile"><span>Terisi</span><b>6 / 12</b></div>
+              <div class="dash-tile gold"><span>Tagihan</span><b>Rp6,0 jt</b></div>
+              <div class="dash-tile"><span>Verifikasi</span><b>2</b></div>
+            </div>
+            <div class="dash-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="dash-foot">Data contoh · bukan angka produksi</div>
+          </div>
+        </div>
+
+        <div class="feature-stack">
+          <div class="feature">
+            <div class="fi"><svg viewBox="0 0 24 24"><path d="M12 4v10M8 8l4-4 4 4"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg></div>
+            <div><h4>Impor CSV</h4><p>Kamar dan penghuni bisa dimasukkan sekaligus, lengkap dengan template.</p></div>
+          </div>
+          <div class="feature">
+            <div class="fi"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.2-2.9 7.4-7 9-4.1-1.6-7-4.8-7-9V6l7-3z"/><path d="M9.5 12l1.8 1.8L15 10"/></svg></div>
+            <div><h4>Jejak audit</h4><p>Setiap pembayaran yang diterima tercatat: siapa, kapan, dan berapa.</p></div>
+          </div>
+          <div class="feature">
+            <div class="fi"><svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15l4-5 3 3 5-7"/></svg></div>
+            <div><h4>Laporan kas</h4><p>Unduh rekap pendapatan berbasis kas dalam format CSV dan PDF.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PAYMENT FLOW ================= -->
+    <section class="section" id="alur">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Alur pembayaran</div>
+          <h2>Dari tagihan terbit sampai lunas</h2>
+          <p>Empat langkah yang sama untuk setiap tagihan bulanan.</p>
+        </div>
+      </div>
+
+      <div class="flow">
+        <div class="pay-step">
+          <div class="num">1</div>
+          <h4>Tagihan terbit</h4>
+          <p>Sewa bulanan ditambah biaya tambahan bila ada. Jatuh tempo ditentukan pengurus.</p>
+          <span class="meta">STATUS: BELUM BAYAR</span>
+        </div>
+        <div class="pay-step">
+          <div class="num">2</div>
+          <h4>Transfer &amp; unggah bukti</h4>
+          <p>Pilih rekening kos, unggah JPG, PNG, atau PDF maksimal 2 MB.</p>
+          <span class="meta">STATUS: MENUNGGU VERIFIKASI</span>
+        </div>
+        <div class="pay-step">
+          <div class="num">3</div>
+          <h4>Pengurus memverifikasi</h4>
+          <p>Jumlah harus sama persis dengan total. Bukti hanya bisa dibuka pihak terkait.</p>
+          <span class="meta">DIPERIKSA MANUAL</span>
+        </div>
+        <div class="pay-step">
+          <div class="num">4</div>
+          <h4>Lunas dan tercatat</h4>
+          <p>Status berubah, riwayat tersimpan, dan masuk laporan pendapatan.</p>
+          <span class="meta">STATUS: LUNAS</span>
+        </div>
+      </div>
+
+      <div class="flow-note">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+        Tagihan yang sudah dibayar atau sedang menunggu verifikasi tidak bisa dibatalkan. Tagihan yang dibatalkan tetap tersimpan sebagai riwayat.
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="section" id="faq">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Tanya jawab</div>
+          <h2>Hal yang sering ditanyakan</h2>
+          <p>Jawaban singkat sebelum Anda membuat akun atau mengajukan sewa.</p>
+        </div>
+      </div>
+
+      <div class="faq-grid">
+        <details open>
+          <summary>Apakah perlu akun untuk melihat kamar?</summary>
+          <p>Tidak. Halaman kos bisa dibuka tanpa masuk. Akun penghuni baru diperlukan saat mengajukan sewa.</p>
+        </details>
+        <details>
+          <summary>Bagaimana pengajuan sewa diproses?</summary>
+          <p>Setelah dikirim, pengurus meninjau tanggal mulai dan durasi. Jika disetujui, tagihan pertama dibuat otomatis.</p>
+        </details>
+        <details>
+          <summary>Apa saja yang masuk ke tagihan?</summary>
+          <p>Nominal sewa bulanan dan biaya tambahan bila pengurus menambahkannya. Total ditampilkan sebelum pembayaran.</p>
+        </details>
+        <details>
+          <summary>Format bukti bayar apa yang diterima?</summary>
+          <p>JPG, PNG, atau PDF dengan ukuran maksimal 2 MB. Jumlah pembayaran harus sama persis dengan total tagihan.</p>
+        </details>
+        <details>
+          <summary>Siapa yang bisa melihat bukti pembayaran?</summary>
+          <p>Hanya penghuni pemilik tagihan dan pengurus kos terkait. Tautan bukti tetap memerlukan izin akses.</p>
+        </details>
+        <details>
+          <summary>Apakah laporan bisa diunduh?</summary>
+          <p>Bisa. Pengurus dapat mengunduh rekap pendapatan berbasis kas dalam CSV dan PDF.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- ================= CTA ================= -->
+    <section class="cta">
+      <div>
+        <h2>Siap <em>merapikan</em> kos Anda?</h2>
+        <p>Buat akun pengurus, tambahkan kamar, lalu biarkan tagihan bulanan berjalan sendiri.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn-gold" href="#">Daftar sebagai pengurus</a>
+        <a class="btn-outline" href="#">Masuk</a>
+      </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <div class="footer">
+      <div class="footer-main">
+        <div>
+          <div class="f-brand">KelolaKos</div>
+          <p>Pencatatan kos untuk penghuni dan pengurus. Kamar, tagihan, bukti bayar, dan laporan dalam satu tempat.</p>
+        </div>
+        <div>
+          <h5>Jelajahi</h5>
+          <ul>
+            <li><a href="#kamar">Kamar tersedia</a></li>
+            <li><a href="#peran">Cara kerja</a></li>
+            <li><a href="#pengurus">Untuk pengurus</a></li>
+            <li><a href="#faq">Tanya jawab</a></li>
+          </ul>
+        </div>
+        <div class="f-contact">
+          <h5>Kos terdaftar</h5>
+          <ul>
+            <li><b>Kos Melati</b> — Jl. Kaliurang Km. 5 No. 12</li>
+            <li><b>Kos Anggrek</b> — Jl. Gejayan No. 45</li>
+            <li>Yogyakarta · 0812-0000-0000</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 KelolaKos. Data pada halaman ini adalah data demo.</span>
+        <span class="links"><a href="#">Masuk</a><a href="#">Daftar</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ================= PHONE PREVIEW ================= -->
+  <div class="phone-section">
+    <div class="phone-label">Pratinjau HP · 375px</div>
+    <div class="phone">
+      <div class="phone-screen">
+        <div class="m-nav">
+          <div class="m-brand"><span class="m-mark">K</span>KelolaKos</div>
+          <div class="m-burger"><i></i><i></i><i></i></div>
+        </div>
+        <div class="m-body">
+          <div class="m-eyebrow">Kos &amp; penghuni · Yogyakarta</div>
+          <h3>Cari kamar.<br>Kelola kos.<br><em>Satu tempat.</em></h3>
+          <p class="m-sub">Kamar kosong, tagihan, dan bukti bayar dalam satu alur.</p>
+
+          <div class="m-search">
+            <div class="m-field"><span>Kota</span><b>Yogyakarta</b></div>
+            <div class="m-field"><span>Harga maks</span><b>Rp1.000.000</b></div>
+            <div class="m-cta">Cari kamar</div>
+          </div>
+
+          <div class="m-facts">
+            <div class="m-fact"><b>Harga jelas</b>Sewa + biaya tambahan terpisah.</div>
+            <div class="m-fact"><b>Bukti privat</b>Hanya pihak terkait.</div>
+            <div class="m-fact"><b>4 kosong</b>Dari 12 kamar.</div>
+            <div class="m-fact"><b>CSV &amp; PDF</b>Laporan siap unduh.</div>
+          </div>
+
+          <div class="m-avail">
+            <div class="row"><span>Ketersediaan</span><b>6 terisi · 4 kosong</b></div>
+            <div class="m-bar"><i class="isi"></i><i class="rep"></i><i class="kosong"></i></div>
+          </div>
+
+          <div class="m-card">
+            <div class="m-photo"><span class="m-price">Rp1,05 jt</span></div>
+            <div class="m-card-body"><b>A6 · VIP · Kos Melati</b><p>KM dalam · kasur · lemari · WiFi</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,250 @@
+<h2>Halaman depan: tiga cara melayani dua audiens</h2>
+<p class="subtitle">
+  Semua memakai gaya yang sama (kaca, hitam–putih, aksen gold). Yang berbeda adalah cara
+  pengunjung menemukan jalannya: dilihat bersamaan, dipilih lewat sakelar, atau diceritakan
+  saat menggulir. Klik susunan yang paling Anda bayangkan.
+</p>
+
+<style>
+  .cards.lp-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.1rem; }
+  @media (max-width: 1080px) { .cards.lp-grid { grid-template-columns: 1fr; } }
+
+  .card-image.lp-shot {
+    aspect-ratio: 4 / 3.4;
+    display: block;
+    padding: 12px;
+    background: #E7E5E4;
+  }
+
+  .lp {
+    height: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+    background:
+      radial-gradient(circle at 82% 6%, rgba(201, 162, 39, .20) 0%, transparent 38%),
+      radial-gradient(circle at 8% 92%, rgba(201, 162, 39, .10) 0%, transparent 42%),
+      linear-gradient(155deg, #FAFAF9, #F1F0EE 58%, #E7E5E4);
+    border: 1px solid rgba(255, 255, 255, .8);
+    box-shadow: 0 14px 34px rgba(12, 10, 9, .14);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: #0C0A09;
+    display: flex;
+    flex-direction: column;
+    font-size: 7px;
+    line-height: 1.4;
+  }
+
+  .lp-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 10px; gap: 6px;
+  }
+  .lp-brand { display: flex; align-items: center; gap: 4px; font-weight: 700; font-size: 7.5px; letter-spacing: -.2px; }
+  .lp-dot { width: 9px; height: 9px; border-radius: 50%; background: #0C0A09; box-shadow: inset 0 0 0 2px #FAFAF9; }
+  .lp-links { display: flex; gap: 7px; color: #78716C; font-size: 5.5px; }
+  .lp-pill { background: #0C0A09; color: #FAFAF9; border-radius: 999px; padding: 2.5px 7px; font-size: 5.5px; font-weight: 700; }
+
+  .lp-eyebrow {
+    font-size: 5px; letter-spacing: .16em; text-transform: uppercase;
+    color: #A16207; font-weight: 700; font-family: ui-monospace, monospace;
+  }
+  .lp-h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 15px; line-height: 1.02; letter-spacing: -.6px; font-weight: 700;
+    margin-top: 3px;
+  }
+  .lp-h1 em { color: #A16207; font-style: italic; }
+  .lp-sub { color: #57534E; font-size: 6.2px; margin-top: 4px; line-height: 1.5; max-width: 92%; }
+
+  .lp-actions { display: flex; gap: 5px; margin-top: 7px; align-items: center; flex-wrap: wrap; }
+  .lp-btn { background: #0C0A09; color: #FAFAF9; border-radius: 999px; padding: 4px 9px; font-size: 5.8px; font-weight: 700; }
+  .lp-btn.ghost { background: rgba(255,255,255,.55); color: #0C0A09; border: 1px solid rgba(12,10,9,.18); backdrop-filter: blur(6px); }
+  .lp-btn.gold { background: linear-gradient(135deg, #D4AF37, #A16207); color: #fff; }
+  .lp-meta { display: flex; gap: 7px; margin-top: 6px; color: #78716C; font-size: 5.2px; }
+  .lp-meta b { color: #0C0A09; }
+
+  .lp-glass {
+    background: rgba(255, 255, 255, .58);
+    border: 1px solid rgba(255, 255, 255, .9);
+    border-radius: 9px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 18px rgba(12, 10, 9, .08);
+  }
+
+  /* A — split */
+  .lp-a-hero { display: grid; grid-template-columns: 1.05fr .95fr; gap: 8px; padding: 8px 10px 10px; flex: 1; }
+  .lp-a-cards { display: flex; flex-direction: column; gap: 6px; }
+  .lp-door { padding: 7px; display: flex; flex-direction: column; gap: 4px; }
+  .lp-door-title { font-size: 6px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; }
+  .lp-door-title span:last-child { color: #A16207; font-size: 5px; }
+  .lp-search { display: flex; gap: 3px; }
+  .lp-input {
+    flex: 1; background: rgba(255,255,255,.85); border: 1px solid rgba(12,10,9,.12);
+    border-radius: 999px; height: 9px; display: flex; align-items: center;
+    padding: 0 5px; font-size: 4.8px; color: #A8A29E;
+  }
+  .lp-mini-btn { width: 9px; height: 9px; border-radius: 50%; background: #0C0A09; flex: 0 0 auto; }
+  .lp-chips { display: flex; gap: 3px; }
+  .lp-chip { background: rgba(12,10,9,.06); border-radius: 999px; padding: 1.5px 4px; font-size: 4.6px; color: #44403C; }
+  .lp-mini-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
+  .lp-mini-stat { background: rgba(255,255,255,.7); border-radius: 4px; padding: 3px 3px 2px; }
+  .lp-mini-stat b { display: block; font-size: 6.5px; letter-spacing: -.2px; }
+  .lp-mini-stat span { font-size: 4.2px; color: #78716C; }
+
+  /* B — toggle */
+  .lp-b { padding: 10px 12px; display: flex; flex-direction: column; align-items: center; text-align: center; flex: 1; }
+  .lp-b .lp-h1 { font-size: 13px; max-width: 88%; }
+  .lp-b .lp-sub { max-width: 78%; }
+  .lp-toggle {
+    display: inline-flex; gap: 2px; margin-top: 8px; padding: 2px;
+    background: rgba(255,255,255,.6); border: 1px solid rgba(255,255,255,.9);
+    border-radius: 999px; backdrop-filter: blur(8px);
+  }
+  .lp-seg { padding: 2.5px 7px; border-radius: 999px; font-size: 5.2px; color: #57534E; }
+  .lp-seg.on { background: #0C0A09; color: #FAFAF9; font-weight: 700; }
+  .lp-b-panel { width: 100%; margin-top: 8px; padding: 7px; display: flex; flex-direction: column; gap: 5px; }
+  .lp-roomrow { display: flex; align-items: center; gap: 5px; padding: 3px 0; border-bottom: 1px solid rgba(12,10,9,.06); }
+  .lp-roomrow:last-child { border-bottom: 0; }
+  .lp-thumb { width: 16px; height: 12px; border-radius: 3px; background: linear-gradient(135deg,#D6D3D1,#A8A29E); }
+  .lp-roominfo { flex: 1; }
+  .lp-roominfo b { display: block; font-size: 5.2px; }
+  .lp-roominfo span { font-size: 4.4px; color: #78716C; }
+  .lp-price { font-size: 5px; font-weight: 700; color: #A16207; }
+
+  /* C — editorial */
+  .lp-c { padding: 9px 11px; flex: 1; display: flex; flex-direction: column; }
+  .lp-c .lp-h1 { font-size: 16px; max-width: 96%; }
+  .lp-lanes { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 9px; }
+  .lp-lane { padding: 6px; }
+  .lp-lane h4 { font-size: 5.6px; margin-bottom: 3px; display: flex; align-items: center; gap: 3px; }
+  .lp-lane h4::before { content: ""; width: 4px; height: 4px; border-radius: 50%; background: #A16207; }
+  .lp-lane p { font-size: 4.8px; color: #57534E; line-height: 1.45; }
+  .lp-line { height: 2px; border-radius: 2px; background: rgba(12,10,9,.10); margin-top: 3px; }
+  .lp-line.short { width: 68%; }
+
+  .card-body { padding: .9rem 1rem 1rem; }
+  .card-body h3 { font-size: .98rem; margin-bottom: .2rem; }
+  .card-body p { font-size: .82rem; line-height: 1.45; }
+  .lp-trade { margin-top: .5rem; font-size: .72rem; color: var(--text-secondary); }
+  .lp-trade strong { color: var(--text-primary); }
+
+  .lp-note { margin-top: 1.25rem; font-size: .82rem; color: var(--text-secondary); }
+</style>
+
+<div class="cards lp-grid">
+
+  <div class="card" data-choice="split" onclick="toggleSelect(this)">
+    <div class="card-image lp-shot">
+      <div class="lp">
+        <div class="lp-nav">
+          <div class="lp-brand"><span class="lp-dot"></span>KelolaKos</div>
+          <div class="lp-links"><span>Kos</span><span>Fitur</span><span>Cara kerja</span></div>
+          <div class="lp-pill">Masuk</div>
+        </div>
+        <div class="lp-a-hero">
+          <div>
+            <div class="lp-eyebrow">Kos &amp; penghuni</div>
+            <div class="lp-h1">Cari kamar.<br>Kelola kos.<br><em>Satu tempat.</em></div>
+            <div class="lp-sub">Untuk yang sedang mencari kamar, dan untuk pengurus yang ingin rapi tanpa buku catatan.</div>
+            <div class="lp-actions">
+              <span class="lp-btn">Cari kamar</span>
+              <span class="lp-btn ghost">Saya pengurus</span>
+            </div>
+            <div class="lp-meta"><span><b>2</b> kos</span><span><b>12</b> kamar</span><span><b>6</b> penghuni</span></div>
+          </div>
+          <div class="lp-a-cards">
+            <div class="lp-glass lp-door">
+              <div class="lp-door-title"><span>Untuk pencari kos</span><span>01</span></div>
+              <div class="lp-search"><div class="lp-input">Cari kota atau nama kos</div><div class="lp-mini-btn"></div></div>
+              <div class="lp-chips"><span class="lp-chip">Yogyakarta</span><span class="lp-chip">&lt; 1 jt</span><span class="lp-chip">AC</span></div>
+            </div>
+            <div class="lp-glass lp-door">
+              <div class="lp-door-title"><span>Untuk pengurus</span><span>02</span></div>
+              <div class="lp-mini-stats">
+                <div class="lp-mini-stat"><b>8</b><span>terisi</span></div>
+                <div class="lp-mini-stat"><b>3</b><span>tagihan</span></div>
+                <div class="lp-mini-stat"><b>Rp7,2 jt</b><span>bulan ini</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A · Dua Pintu Sejajar</h3>
+      <p>Hero terbelah: kiri pesan utama, kanan dua kartu kaca untuk masing-masing audiens. Keduanya terlihat tanpa perlu mengklik apa pun.</p>
+      <div class="lp-trade"><strong>Paling jelas</strong> · tapi ruang hero di HP jadi lebih panjang.</div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="toggle" onclick="toggleSelect(this)">
+    <div class="card-image lp-shot">
+      <div class="lp">
+        <div class="lp-nav">
+          <div class="lp-brand"><span class="lp-dot"></span>KelolaKos</div>
+          <div class="lp-links"><span>Kos</span><span>Fitur</span><span>Cara kerja</span></div>
+          <div class="lp-pill">Masuk</div>
+        </div>
+        <div class="lp-b">
+          <div class="lp-eyebrow">Satu akun, dua peran</div>
+          <div class="lp-h1">Temukan kamar,<br>atau <em>kelola kos</em> Anda.</div>
+          <div class="lp-sub">Pilih peran Anda — halaman ini menyesuaikan diri.</div>
+          <div class="lp-toggle"><span class="lp-seg on">Saya pencari kos</span><span class="lp-seg">Saya pengurus</span></div>
+          <div class="lp-glass lp-b-panel">
+            <div class="lp-search"><div class="lp-input">Cari kota atau nama kos</div><div class="lp-mini-btn"></div></div>
+            <div class="lp-roomrow"><div class="lp-thumb"></div><div class="lp-roominfo"><b>Kos Melati · A1</b><span>Standar · WiFi · AC</span></div><div class="lp-price">Rp900rb</div></div>
+            <div class="lp-roomrow"><div class="lp-thumb"></div><div class="lp-roominfo"><b>Kos Anggrek · B2</b><span>Deluxe · kamar mandi dalam</span></div><div class="lp-price">Rp1,2jt</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B · Sakelar Peran</h3>
+      <p>Satu hero terpusat dengan sakelar pencari kos / pengurus. Isi, gambar, dan tombol berganti saat dipilih — paling terasa interaktif.</p>
+      <div class="lp-trade"><strong>Paling hidup</strong> · tapi separuh pesan tersembunyi sampai sakelar dipakai.</div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="editorial" onclick="toggleSelect(this)">
+    <div class="card-image lp-shot">
+      <div class="lp">
+        <div class="lp-nav">
+          <div class="lp-brand"><span class="lp-dot"></span>KelolaKos</div>
+          <div class="lp-links"><span>Kos</span><span>Fitur</span><span>Cara kerja</span></div>
+          <div class="lp-pill">Masuk</div>
+        </div>
+        <div class="lp-c">
+          <div class="lp-eyebrow">Kos, tanpa keributan</div>
+          <div class="lp-h1">Satu tempat untuk<br>menemukan kamar &amp;<br><em>merapikan kos.</em></div>
+          <div class="lp-actions">
+            <span class="lp-btn gold">Cari kamar</span>
+            <span class="lp-btn ghost">Kelola kos saya</span>
+          </div>
+          <div class="lp-lanes">
+            <div class="lp-glass lp-lane">
+              <h4>Untuk pencari kos</h4>
+              <p>Lihat kamar kosong, harga, dan fasilitas. Ajukan sewa tanpa datang dulu.</p>
+              <div class="lp-line"></div><div class="lp-line short"></div>
+            </div>
+            <div class="lp-glass lp-lane">
+              <h4>Untuk pengurus</h4>
+              <p>Catat kamar, tagihan, dan bukti bayar. Laporan pendapatan siap diunduh.</p>
+              <div class="lp-line"></div><div class="lp-line short"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C · Editorial Bergulir</h3>
+      <p>Hero tipografi besar, lalu dua jalur berdampingan yang bercerita saat digulir. Paling berkelas dan paling "desain".</p>
+      <div class="lp-trade"><strong>Paling premium</strong> · tapi jalur audiens baru terlihat setelah sedikit menggulir.</div>
+    </div>
+  </div>
+
+</div>
+
+<p class="lp-note">
+  Rekomendasi saya: <strong>A</strong>, karena dua audiens langsung terlihat tanpa klik dan tetap
+  bisa diberi gerak halus (kartu kaca mengikuti kursor, angka menghitung naik). Kalau Anda ingin
+  kesan yang lebih berani, <strong>C</strong> paling kuat secara visual.
+</p>

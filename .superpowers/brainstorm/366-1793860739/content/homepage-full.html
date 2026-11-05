@@ -1,0 +1,657 @@
+<h2>Halaman depan — versi utuh</h2>
+<p class="subtitle">
+  Nav pil di tengah, hero dua jalur, daftar kamar nyata, blok pengurus, cara kerja, lalu penutup gelap.
+  Semua permukaan memakai token warna yang sama: hitam, putih, abu, dan gold sebagai aksen.
+</p>
+
+<style>
+  .site {
+    --ink: #0C0A09;
+    --ink-soft: #292524;
+    --paper: #FAFAF9;
+    --stone-100: #F5F5F4;
+    --stone-200: #E7E5E4;
+    --stone-300: #D6D3D1;
+    --muted: #78716C;
+    --gold: #A16207;
+    --gold-light: #D4AF37;
+    --gold-soft: #F3E3BF;
+    --glass: rgba(255, 255, 255, .58);
+    --glass-strong: rgba(255, 255, 255, .8);
+    --line: rgba(12, 10, 9, .10);
+    --radius-xl: 26px;
+    --radius-lg: 18px;
+    --radius-md: 13px;
+    --font-body: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-display: Georgia, "Times New Roman", serif;
+    --font-mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+    max-width: 1080px;
+    margin: 0 auto;
+    background:
+      radial-gradient(circle at 86% 4%, rgba(212, 175, 55, .16) 0%, transparent 34%),
+      radial-gradient(circle at 4% 46%, rgba(212, 175, 55, .08) 0%, transparent 30%),
+      var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, .9);
+    box-shadow: 0 24px 60px rgba(12, 10, 9, .16);
+  }
+
+  .site::before {
+    content: "";
+    display: block;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold-light) 30%, var(--gold) 70%, transparent);
+  }
+
+  /* ---------- NAV ---------- */
+  .nav {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 22px;
+  }
+
+  .brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; letter-spacing: -.3px; }
+
+  .brand-mark {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--ink); color: var(--paper);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+    box-shadow: inset 0 0 0 3px var(--paper);
+  }
+
+  .nav-pill {
+    display: flex; gap: 2px; padding: 4px;
+    background: var(--glass);
+    border: 1px solid rgba(255, 255, 255, .9);
+    border-radius: 999px;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 8px 22px rgba(12, 10, 9, .07);
+  }
+
+  .nav-pill a {
+    padding: 7px 14px; border-radius: 999px;
+    font-size: 12px; color: #57534E; text-decoration: none;
+  }
+
+  .nav-pill a.active { background: var(--ink); color: var(--paper); font-weight: 600; }
+
+  .nav-actions { display: flex; justify-content: flex-end; align-items: center; gap: 8px; }
+  .nav-actions .masuk { font-size: 12px; color: var(--ink-soft); text-decoration: none; padding: 7px 10px; }
+  .pill-dark {
+    background: var(--ink); color: var(--paper);
+    border-radius: 999px; padding: 8px 16px;
+    font-size: 12px; font-weight: 600; text-decoration: none;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    display: grid;
+    grid-template-columns: 1.02fr .98fr;
+    gap: 34px;
+    padding: 34px 22px 26px;
+    align-items: center;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--gold); font-weight: 700;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .eyebrow::before { content: ""; width: 22px; height: 1px; background: var(--gold); }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 5.2vw, 60px);
+    line-height: .98; letter-spacing: -2px;
+    margin: 12px 0 0;
+    font-weight: 700;
+  }
+
+  .hero h1 em { color: var(--gold); font-style: italic; }
+
+  .hero p.lead {
+    margin: 14px 0 0; max-width: 430px;
+    font-size: 13.5px; line-height: 1.62; color: #57534E;
+  }
+
+  .searchbar {
+    margin-top: 20px;
+    display: flex; align-items: center; gap: 4px;
+    padding: 6px;
+    background: var(--glass-strong);
+    border: 1px solid rgba(255, 255, 255, .95);
+    border-radius: 18px;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 14px 34px rgba(12, 10, 9, .10);
+  }
+
+  .field { flex: 1; padding: 7px 12px; min-width: 0; }
+  .field + .field { border-left: 1px solid var(--line); }
+  .field label {
+    display: block; font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted); font-family: var(--font-mono);
+  }
+  .field span { display: block; font-size: 12px; font-weight: 600; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .search-btn {
+    flex: 0 0 auto; background: var(--ink); color: var(--paper);
+    border-radius: 13px; padding: 12px 18px; font-size: 12.5px; font-weight: 650;
+    white-space: nowrap;
+  }
+
+  .hero-links { margin-top: 14px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .gold-link { color: var(--gold); font-size: 12.5px; font-weight: 650; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+  .gold-link::after { content: "→"; }
+
+  .trust { margin-top: 20px; display: flex; gap: 22px; padding-top: 16px; border-top: 1px solid var(--line); }
+  .trust b { display: block; font-family: var(--font-display); font-size: 20px; line-height: 1; }
+  .trust span { font-size: 10.5px; color: var(--muted); }
+
+  /* hero visual */
+  .hero-visual { position: relative; min-height: 372px; }
+
+  .orb {
+    position: absolute; width: 250px; height: 250px; border-radius: 50%;
+    top: -18px; right: -14px;
+    background: radial-gradient(circle at 35% 30%, var(--gold-light), var(--gold) 62%, #6B4A05 100%);
+    filter: blur(2px);
+    opacity: .28;
+  }
+
+  .room-card-main {
+    position: absolute; top: 22px; right: 0; width: 78%;
+    background: var(--glass);
+    border: 1px solid rgba(255, 255, 255, .92);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 20px 44px rgba(12, 10, 9, .14);
+    padding: 10px;
+  }
+
+  .photo {
+    height: 196px; border-radius: 12px; position: relative; overflow: hidden;
+    background:
+      radial-gradient(circle at 72% 24%, rgba(255, 255, 255, .85), transparent 42%),
+      linear-gradient(150deg, #D6D3D1, #A8A29E 55%, #57534E);
+  }
+
+  .photo::before {
+    content: ""; position: absolute; left: 18%; top: 26%; width: 42%; height: 48%;
+    border-radius: 3px;
+    background: linear-gradient(160deg, rgba(250, 250, 249, .6), rgba(250, 250, 249, .12));
+    box-shadow: 0 0 0 6px rgba(250, 250, 249, .18);
+  }
+
+  .photo::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 44%;
+    background: linear-gradient(180deg, transparent, rgba(12, 10, 9, .42));
+  }
+
+  .photo-tag {
+    position: absolute; left: 10px; top: 10px; z-index: 1;
+    background: rgba(12, 10, 9, .62); color: #FAFAF9;
+    border: 1px solid rgba(255, 255, 255, .26);
+    border-radius: 999px; padding: 4px 9px; font-size: 9.5px;
+    backdrop-filter: blur(6px);
+  }
+
+  .photo-price {
+    position: absolute; right: 10px; bottom: 10px; z-index: 1;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    color: #FFFDF7; border-radius: 999px; padding: 6px 11px;
+    font-size: 11px; font-weight: 700;
+    box-shadow: 0 6px 16px rgba(107, 74, 5, .3);
+  }
+
+  .room-body { padding: 10px 6px 3px; }
+  .room-body h3 { margin: 0; font-size: 13.5px; letter-spacing: -.2px; }
+  .room-body p { margin: 3px 0 0; font-size: 10.5px; color: var(--muted); }
+
+  .float-stat {
+    position: absolute; left: -4px; bottom: 22px; width: 196px;
+    background: var(--glass-strong);
+    border: 1px solid rgba(255, 255, 255, .95);
+    border-radius: var(--radius-md);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 16px 36px rgba(12, 10, 9, .14);
+    padding: 12px;
+  }
+  .float-stat .label { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .float-stat .value { font-family: var(--font-display); font-size: 24px; line-height: 1; margin-top: 4px; }
+  .float-stat .value small { font-family: var(--font-body); font-size: 10px; color: var(--muted); font-weight: 500; }
+  .bars { display: flex; align-items: flex-end; gap: 4px; height: 34px; margin-top: 8px; }
+  .bars i { flex: 1; border-radius: 3px 3px 0 0; background: var(--stone-300); }
+  .bars i:nth-child(1) { height: 38%; }
+  .bars i:nth-child(2) { height: 58%; }
+  .bars i:nth-child(3) { height: 46%; }
+  .bars i:nth-child(4) { height: 74%; }
+  .bars i:nth-child(5) { height: 66%; }
+  .bars i:nth-child(6) { height: 92%; background: linear-gradient(180deg, var(--gold-light), var(--gold)); }
+
+  .float-badge {
+    position: absolute; right: 8px; top: -4px;
+    background: var(--ink); color: var(--paper);
+    border-radius: 999px; padding: 8px 13px 8px 9px;
+    font-size: 10.5px; display: flex; align-items: center; gap: 6px;
+    box-shadow: 0 10px 24px rgba(12, 10, 9, .26);
+  }
+  .float-badge::before {
+    content: ""; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--gold-light); box-shadow: 0 0 0 3px rgba(212, 175, 55, .26);
+  }
+
+  /* ---------- STATS ---------- */
+  .stats {
+    margin: 6px 22px 0;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    background: var(--glass);
+    border: 1px solid rgba(255, 255, 255, .9);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 10px 26px rgba(12, 10, 9, .07);
+  }
+  .stat { padding: 14px 18px; }
+  .stat + .stat { border-left: 1px solid var(--line); }
+  .stat b { font-family: var(--font-display); font-size: 22px; line-height: 1; }
+  .stat span { display: block; font-size: 10px; color: var(--muted); margin-top: 3px; }
+  .stat i { display: block; width: 26px; height: 2px; background: var(--gold); margin-top: 8px; }
+
+  /* ---------- SECTION HEADS ---------- */
+  .section { padding: 34px 22px 0; }
+  .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+  .section-head h2 { font-family: var(--font-display); font-size: 28px; letter-spacing: -.8px; line-height: 1.05; margin: 0; }
+  .section-head .kicker { font-family: var(--font-mono); font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+  .section-head p { margin: 6px 0 0; font-size: 12px; color: var(--muted); max-width: 460px; }
+
+  /* ---------- ROOM CARDS ---------- */
+  .rooms { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .room {
+    background: #FFFFFF;
+    border: 1px solid rgba(12, 10, 9, .08);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(12, 10, 9, .05);
+  }
+  .room .photo { height: 118px; border-radius: 0; }
+  .room .photo.small-2 {
+    background: radial-gradient(circle at 30% 20%, rgba(255,255,255,.8), transparent 40%),
+                linear-gradient(140deg, #E7E5E4, #B8B2AC 60%, #6B6560);
+  }
+  .room .photo.small-3 {
+    background: radial-gradient(circle at 75% 30%, rgba(255,255,255,.75), transparent 42%),
+                linear-gradient(160deg, #D6D3D1, #9C948D 55%, #44403C);
+  }
+  .room .photo::before { left: 22%; top: 30%; width: 38%; height: 42%; }
+  .room-content { padding: 11px 12px 12px; }
+  .room-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+  .room-content h3 { margin: 0; font-size: 12.5px; letter-spacing: -.2px; }
+  .room-content .loc { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .price { color: var(--gold); font-weight: 700; font-size: 12px; white-space: nowrap; }
+  .price span { font-size: 9px; color: var(--muted); font-weight: 500; }
+  .tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+  .tag { font-size: 9px; color: #57534E; background: var(--stone-100); border: 1px solid var(--stone-200); border-radius: 999px; padding: 2px 7px; }
+  .room-cta { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; padding-top: 9px; border-top: 1px solid var(--line); }
+  .room-cta .avail { font-size: 9.5px; color: #57534E; display: flex; align-items: center; gap: 5px; }
+  .room-cta .avail::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--ink); }
+  .room-cta a { font-size: 10.5px; font-weight: 650; color: var(--ink); text-decoration: none; }
+
+  /* ---------- MANAGER BENTO ---------- */
+  .bento { display: grid; grid-template-columns: 1.35fr 1fr; gap: 12px; }
+  .bento-main {
+    background: var(--ink); color: var(--paper);
+    border-radius: var(--radius-xl); padding: 18px;
+    position: relative; overflow: hidden;
+  }
+  .bento-main::after {
+    content: ""; position: absolute; width: 220px; height: 220px; border-radius: 50%;
+    right: -70px; top: -70px;
+    background: radial-gradient(circle, rgba(212, 175, 55, .45), transparent 70%);
+  }
+  .bento-main .kicker { font-family: var(--font-mono); font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-light); }
+  .bento-main h3 { font-family: var(--font-display); font-size: 24px; line-height: 1.06; letter-spacing: -.6px; margin: 8px 0 0; max-width: 300px; }
+  .bento-main p { font-size: 11.5px; line-height: 1.55; color: #D6D3D1; margin: 8px 0 0; max-width: 320px; }
+
+  .dash {
+    margin-top: 14px; background: rgba(255, 255, 255, .07);
+    border: 1px solid rgba(255, 255, 255, .16);
+    border-radius: 12px; padding: 10px; position: relative; z-index: 1;
+    backdrop-filter: blur(8px);
+  }
+  .dash-top { display: flex; align-items: center; justify-content: space-between; font-size: 9px; color: #D6D3D1; }
+  .dash-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; }
+  .dash-tile { background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .1); border-radius: 8px; padding: 7px; }
+  .dash-tile span { font-size: 8px; color: #A8A29E; text-transform: uppercase; letter-spacing: .08em; }
+  .dash-tile b { display: block; font-size: 15px; margin-top: 2px; letter-spacing: -.4px; }
+  .dash-tile.gold b { color: var(--gold-light); }
+  .dash-chart { display: flex; align-items: flex-end; gap: 4px; height: 42px; margin-top: 8px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,.1); }
+  .dash-chart i { flex: 1; border-radius: 2px 2px 0 0; background: rgba(255,255,255,.22); }
+  .dash-chart i:last-child { background: linear-gradient(180deg, var(--gold-light), var(--gold)); }
+  .dash-chart i:nth-child(1) { height: 34%; } .dash-chart i:nth-child(2) { height: 52%; }
+  .dash-chart i:nth-child(3) { height: 44%; } .dash-chart i:nth-child(4) { height: 68%; }
+  .dash-chart i:nth-child(5) { height: 58%; } .dash-chart i:nth-child(6) { height: 80%; }
+  .dash-chart i:nth-child(7) { height: 72%; } .dash-chart i:nth-child(8) { height: 96%; }
+
+  .feature-stack { display: grid; gap: 12px; }
+  .feature {
+    background: #FFFFFF; border: 1px solid rgba(12, 10, 9, .08);
+    border-radius: var(--radius-lg); padding: 14px;
+    display: flex; gap: 11px; align-items: flex-start;
+  }
+  .fi {
+    flex: 0 0 auto; width: 30px; height: 30px; border-radius: 9px;
+    background: var(--stone-100); border: 1px solid var(--stone-200);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .fi svg { width: 15px; height: 15px; stroke: var(--ink); fill: none; stroke-width: 1.6; }
+  .feature h4 { margin: 0; font-size: 12.5px; letter-spacing: -.2px; }
+  .feature p { margin: 3px 0 0; font-size: 10.5px; line-height: 1.5; color: var(--muted); }
+
+  /* ---------- STEPS ---------- */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .step { position: relative; padding: 16px 14px 14px; background: var(--glass); border: 1px solid rgba(255,255,255,.9); border-radius: var(--radius-lg); backdrop-filter: blur(12px); }
+  .step .num {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold)); color: #FFFDF7;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; font-family: var(--font-mono);
+  }
+  .step h4 { margin: 10px 0 0; font-size: 12.5px; }
+  .step p { margin: 4px 0 0; font-size: 10.5px; line-height: 1.55; color: var(--muted); }
+  .step::after {
+    content: ""; position: absolute; top: 29px; right: -12px; width: 12px; height: 1px;
+    background: linear-gradient(90deg, var(--stone-300), transparent);
+  }
+  .step:last-child::after { display: none; }
+
+  /* ---------- CTA ---------- */
+  .cta {
+    margin: 34px 22px 0;
+    background:
+      radial-gradient(circle at 85% 15%, rgba(212, 175, 55, .4), transparent 42%),
+      var(--ink);
+    color: var(--paper);
+    border-radius: var(--radius-xl);
+    padding: 30px 26px;
+    display: flex; align-items: center; justify-content: space-between; gap: 22px;
+  }
+  .cta h2 { font-family: var(--font-display); font-size: 30px; line-height: 1.03; letter-spacing: -.9px; margin: 0; max-width: 420px; }
+  .cta h2 em { color: var(--gold-light); font-style: italic; }
+  .cta p { margin: 8px 0 0; font-size: 11.5px; color: #D6D3D1; max-width: 380px; }
+  .cta-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn-gold {
+    background: linear-gradient(135deg, var(--gold-light), var(--gold)); color: #FFFDF7;
+    border-radius: 999px; padding: 11px 18px; font-size: 12px; font-weight: 700; text-decoration: none;
+  }
+  .btn-outline {
+    border: 1px solid rgba(255,255,255,.35); color: var(--paper);
+    border-radius: 999px; padding: 11px 18px; font-size: 12px; font-weight: 600; text-decoration: none;
+  }
+
+  /* ---------- FOOTER ---------- */
+  .footer {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 20px 22px 22px; margin-top: 8px;
+    font-size: 10.5px; color: var(--muted);
+  }
+  .footer .links { display: flex; gap: 14px; }
+  .footer a { color: var(--muted); text-decoration: none; }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-visual { min-height: 330px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(3) { border-left: 0; border-top: 1px solid var(--line); }
+    .stat:nth-child(4) { border-top: 1px solid var(--line); }
+    .rooms, .steps { grid-template-columns: 1fr; }
+    .bento { grid-template-columns: 1fr; }
+    .nav-pill { display: none; }
+    .nav { grid-template-columns: 1fr auto; }
+    .cta { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+
+<div class="site">
+
+  <div class="nav">
+    <a class="brand" href="#"><span class="brand-mark">K</span>KelolaKos</a>
+    <nav class="nav-pill">
+      <a class="active" href="#">Beranda</a>
+      <a href="#">Kos</a>
+      <a href="#">Fitur</a>
+      <a href="#">Cara kerja</a>
+      <a href="#">Untuk pengurus</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="masuk" href="#">Masuk</a>
+      <a class="pill-dark" href="#">Daftar</a>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Kos &amp; penghuni · Yogyakarta</div>
+      <h1>Cari kamar.<br>Kelola kos.<br><em>Satu tempat.</em></h1>
+      <p class="lead">
+        Untuk yang sedang mencari kamar, dan untuk pengurus yang ingin rapi tanpa buku catatan.
+        Kamar kosong, tagihan, dan bukti bayar dalam satu alur.
+      </p>
+
+      <div class="searchbar">
+        <div class="field"><label>Kota</label><span>Yogyakarta</span></div>
+        <div class="field"><label>Harga maks</label><span>Rp1.000.000</span></div>
+        <div class="search-btn">Cari kamar</div>
+      </div>
+
+      <div class="hero-links">
+        <a class="gold-link" href="#">Ingin mengelola kos Anda?</a>
+      </div>
+
+      <div class="trust">
+        <div><b>2</b><span>kos aktif</span></div>
+        <div><b>12</b><span>kamar terdaftar</span></div>
+        <div><b>6</b><span>penghuni</span></div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="orb"></div>
+
+      <div class="float-badge">8 kamar terisi bulan ini</div>
+
+      <div class="room-card-main">
+        <div class="photo">
+          <span class="photo-tag">Kos Melati · Kamar A3</span>
+          <span class="photo-price">Rp1,1 jt / bulan</span>
+        </div>
+        <div class="room-body">
+          <h3>Kamar VIP, kamar mandi dalam</h3>
+          <p>WiFi · AC · meja belajar · parkir motor</p>
+        </div>
+      </div>
+
+      <div class="float-stat">
+        <div class="label">Pendapatan bulan ini</div>
+        <div class="value">Rp7,2 <small>juta</small></div>
+        <div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div class="stat"><b>100%</b><span>tagihan tercatat rapi</span><i></i></div>
+    <div class="stat"><b>3</b><span>bulan riwayat tersimpan</span><i></i></div>
+    <div class="stat"><b>CSV</b><span>ekspor laporan pendapatan</span><i></i></div>
+    <div class="stat"><b>PDF</b><span>rekap siap cetak</span><i></i></div>
+  </div>
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Kamar tersedia</div>
+        <h2>Temukan kamar yang pas</h2>
+        <p>Harga dan fasilitas ditampilkan apa adanya. Ajukan sewa langsung dari halaman kos.</p>
+      </div>
+      <a class="gold-link" href="#">Lihat semua kamar</a>
+    </div>
+
+    <div class="rooms">
+      <article class="room">
+        <div class="photo">
+          <span class="photo-tag">Kos Melati</span>
+          <span class="photo-price">Rp900 rb</span>
+        </div>
+        <div class="room-content">
+          <div class="room-top">
+            <div><h3>Kamar A1 · Standar</h3><div class="loc">Kaliurang, Yogyakarta</div></div>
+          </div>
+          <div class="tags"><span class="tag">WiFi</span><span class="tag">Kasur</span><span class="tag">Lemari</span></div>
+          <div class="room-cta"><span class="avail">Tersedia</span><a href="#">Lihat kamar →</a></div>
+        </div>
+      </article>
+
+      <article class="room">
+        <div class="photo small-2">
+          <span class="photo-tag">Kos Anggrek</span>
+          <span class="photo-price">Rp1,2 jt</span>
+        </div>
+        <div class="room-content">
+          <div class="room-top">
+            <div><h3>Kamar B2 · Deluxe</h3><div class="loc">Gejayan, Yogyakarta</div></div>
+          </div>
+          <div class="tags"><span class="tag">AC</span><span class="tag">KM dalam</span><span class="tag">Parkir</span></div>
+          <div class="room-cta"><span class="avail">Tersedia</span><a href="#">Lihat kamar →</a></div>
+        </div>
+      </article>
+
+      <article class="room">
+        <div class="photo small-3">
+          <span class="photo-tag">Kos Melati</span>
+          <span class="photo-price">Rp1,1 jt</span>
+        </div>
+        <div class="room-content">
+          <div class="room-top">
+            <div><h3>Kamar A5 · VIP</h3><div class="loc">Kaliurang, Yogyakarta</div></div>
+          </div>
+          <div class="tags"><span class="tag">AC</span><span class="tag">KM dalam</span><span class="tag">Meja</span></div>
+          <div class="room-cta"><span class="avail">Tersedia</span><a href="#">Lihat kamar →</a></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Untuk pengurus</div>
+        <h2>Rapi tanpa buku catatan</h2>
+        <p>Satu dashboard untuk kamar, tagihan, pembayaran, dan laporan.</p>
+      </div>
+      <a class="gold-link" href="#">Coba dashboard</a>
+    </div>
+
+    <div class="bento">
+      <div class="bento-main">
+        <div class="kicker">Dashboard pengurus</div>
+        <h3>Semua angka penting, dalam satu layar.</h3>
+        <p>Keterisian, pendapatan bulan ini, dan tagihan yang belum lunas — diperbarui saat pembayaran diverifikasi.</p>
+
+        <div class="dash">
+          <div class="dash-top"><span>Ringkasan · November 2026</span><span>Lihat laporan →</span></div>
+          <div class="dash-grid">
+            <div class="dash-tile"><span>Terisi</span><b>8 / 12</b></div>
+            <div class="dash-tile gold"><span>Pendapatan</span><b>Rp7,2 jt</b></div>
+            <div class="dash-tile"><span>Belum lunas</span><b>3</b></div>
+          </div>
+          <div class="dash-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+
+      <div class="feature-stack">
+        <div class="feature">
+          <div class="fi">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M8 9h8M8 13h5"/></svg>
+          </div>
+          <div>
+            <h4>Tagihan otomatis</h4>
+            <p>Buat tagihan bulanan sekali klik, tanpa menghitung ulang sewa.</p>
+          </div>
+        </div>
+
+        <div class="feature">
+          <div class="fi">
+            <svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.2-2.9 7.4-7 9-4.1-1.6-7-4.8-7-9V6l7-3z"/><path d="M9.5 12l1.8 1.8L15 10"/></svg>
+          </div>
+          <div>
+            <h4>Bukti bayar privat</h4>
+            <p>Hanya pengurus kos terkait yang bisa membuka unggahan penghuni.</p>
+          </div>
+        </div>
+
+        <div class="feature">
+          <div class="fi">
+            <svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15l4-5 3 3 5-7"/></svg>
+          </div>
+          <div>
+            <h4>Laporan siap unduh</h4>
+            <p>Rekap pendapatan berbasis kas dalam CSV dan PDF.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Cara kerja</div>
+        <h2>Mulai dalam tiga langkah</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="num">01</div>
+        <h4>Cari kos dan kamar</h4>
+        <p>Buka halaman publik kos, lihat kamar kosong, harga, dan fasilitasnya.</p>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <h4>Ajukan sewa</h4>
+        <p>Masuk sebagai penghuni, pilih tanggal mulai dan durasi, lalu kirim pengajuan.</p>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <h4>Bayar dan verifikasi</h4>
+        <p>Tagihan muncul otomatis. Unggah bukti transfer, pengurus memverifikasi.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div>
+      <h2>Siap <em>merapikan</em> kos Anda?</h2>
+      <p>Buat akun pengurus, tambahkan kamar, dan biarkan tagihan berjalan sendiri.</p>
+    </div>
+    <div class="cta-actions">
+      <a class="btn-gold" href="#">Daftar sebagai pengurus</a>
+      <a class="btn-outline" href="#">Masuk</a>
+    </div>
+  </section>
+
+  <div class="footer">
+    <div><strong>KelolaKos</strong> · Kelola kos lebih rapi.</div>
+    <div class="links">
+      <a href="#">Kos</a><a href="#">Fitur</a><a href="#">Cara kerja</a><a href="#">Masuk</a>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,890 @@
+<h2 style="font-family: Georgia, serif; margin: 0 0 4px; color: #FAFAF9;">Peta jaringan + teks dipangkas</h2>
+<p style="color: #71717A; font-size: 12px; margin: 0 0 18px; max-width: 660px;">
+  Enam kota dengan titik emas. Klik atau fokuskan titik untuk mengganti kartu informasi di kanan —
+  tanpa JavaScript, jadi aman untuk CSP. Teks di hero, kartu, dashboard, dan footer dipendekkan.
+</p>
+
+<style>
+  .mono-wrap { max-width: 1080px; margin: 0 auto; }
+
+  .ladder {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    background: linear-gradient(120deg, #18181B, #09090B);
+    border: 1px solid rgba(255,255,255,.12); border-radius: 14px;
+    padding: 10px 14px; margin-bottom: 16px; font-family: ui-monospace, "Cascadia Mono", monospace;
+  }
+  .ladder-title { font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: #A1A1AA; }
+  .ladder-bar { display: flex; flex: 1; min-width: 220px; border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,.18); }
+  .ladder-bar span { flex: 1; text-align: center; font-size: 9px; padding: 7px 0; color: #FAFAFA; background: rgba(255,255,255,var(--o)); border-right: 1px solid rgba(255,255,255,.14); }
+  .ladder-bar span:last-child { border-right: 0; }
+  .ladder-note { font-size: 9px; color: #D4D4D8; display: flex; align-items: center; gap: 6px; }
+  .ladder-note::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: linear-gradient(145deg, #D4AF37, #A16207); }
+
+  .site {
+    --ink: #0C0A09; --ink-2: #1C1917; --ink-3: #292524;
+    --paper: #FFFFFF; --paper-2: #FAFAF9;
+    --stone-1: #F5F5F4; --stone-2: #E7E5E4; --stone-3: #D6D3D1; --stone-4: #A8A29E;
+    --muted: #71717A; --muted-2: #57534E;
+    --gold: #A16207; --gold-ink: #8A5306; --gold-2: #D4AF37;
+    --gold-soft: #F7EBD1; --gold-line: rgba(161,98,7,.26);
+    --glass-45: rgba(255,255,255,.45); --glass-72: rgba(255,255,255,.72);
+    --line-d: rgba(12,10,9,.09); --line-l: rgba(255,255,255,.16);
+    --radius-xl: 24px; --radius-lg: 16px; --radius-md: 12px;
+    --font-body: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-display: Georgia, "Times New Roman", serif;
+    --font-mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+    position: relative; color: var(--ink); font-family: var(--font-body); font-size: 13px; line-height: 1.5;
+    background:
+      radial-gradient(circle at 84% 1%, rgba(255,255,255,.96) 0%, transparent 26%),
+      radial-gradient(circle at 8% 24%, rgba(247,235,209,.5) 0%, transparent 24%),
+      linear-gradient(180deg, #FAFAF9 0%, #F6F5F4 34%, #EEEDEB 66%, #E7E5E4 100%);
+    border-radius: 20px; overflow: hidden;
+    border: 1px solid rgba(12,10,9,.08); box-shadow: 0 26px 64px rgba(12,10,9,.18);
+  }
+  .site::before {
+    content: ""; display: block; height: 2px;
+    background: linear-gradient(90deg, transparent 2%, rgba(212,175,55,.7) 28%, var(--gold) 58%, rgba(212,175,55,.35) 82%, transparent);
+  }
+  .site a { color: inherit; }
+  .site a.pill-dark { color: var(--paper); }
+  .site a.btn-gold { color: #1A1206; }
+  .site a.btn-outline { color: var(--paper); }
+  .site :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 6px; }
+
+  /* nav */
+  .nav { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; padding: 13px 22px; }
+  .brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; letter-spacing: -.3px; text-decoration: none; }
+  .brand-mark {
+    width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(145deg, #3F3F46, #09090B);
+    color: #FAFAF9; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700;
+    box-shadow: inset 0 0 0 3px var(--paper-2);
+  }
+  .nav-pill {
+    display: flex; gap: 2px; padding: 4px; background: var(--glass-45);
+    border: 1px solid rgba(255,255,255,.95); border-radius: 999px; backdrop-filter: blur(18px);
+    box-shadow: 0 10px 26px rgba(12,10,9,.08), inset 0 1px 0 rgba(255,255,255,.9);
+  }
+  .nav-pill a { padding: 7px 14px; border-radius: 999px; font-size: 12px; color: #52525B; text-decoration: none; }
+  .nav-pill a.active { background: var(--ink); color: var(--paper); font-weight: 600; box-shadow: 0 4px 10px rgba(12,10,9,.24); }
+  .nav-actions { display: flex; justify-content: flex-end; align-items: center; gap: 8px; }
+  .nav-actions .masuk { font-size: 12px; color: var(--ink-2); text-decoration: none; padding: 7px 10px; }
+  .pill-dark {
+    background: linear-gradient(145deg, #27272A, #09090B); color: var(--paper); border-radius: 999px;
+    padding: 8px 16px; font-size: 12px; font-weight: 600; text-decoration: none; box-shadow: 0 6px 16px rgba(12,10,9,.22);
+  }
+  .burger { display: none; width: 32px; height: 32px; border-radius: 10px; background: var(--glass-72); border: 1px solid rgba(12,10,9,.12); cursor: pointer; }
+  .burger i { display: block; width: 13px; height: 1.5px; background: var(--ink); margin: 3px auto; border-radius: 2px; }
+
+  /* hero */
+  .hero { display: grid; grid-template-columns: 1.06fr .94fr; gap: 30px; padding: 28px 22px 22px; align-items: center; }
+  .eyebrow { font-family: var(--font-mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-ink); font-weight: 700; display: flex; align-items: center; gap: 8px; }
+  .eyebrow::before { content: ""; width: 22px; height: 1px; background: var(--gold); }
+  .hero h1 {
+    font-family: var(--font-display); font-size: clamp(38px, 5vw, 56px); line-height: 1; letter-spacing: -2px;
+    margin: 11px 0 0; font-weight: 700;
+    background: linear-gradient(180deg, #0C0A09 58%, #52525B 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero h1 em {
+    font-style: italic;
+    background: linear-gradient(160deg, var(--gold-2) 6%, var(--gold) 62%, #6B4405 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero p.lead { margin: 12px 0 0; max-width: 410px; font-size: 13px; line-height: 1.6; color: #52525B; }
+
+  .searchbar {
+    margin-top: 18px; display: flex; align-items: center; gap: 4px; padding: 6px;
+    background: linear-gradient(140deg, rgba(255,255,255,.88), rgba(255,255,255,.52));
+    border: 1px solid rgba(255,255,255,.98); border-radius: 17px; backdrop-filter: blur(20px);
+    box-shadow: 0 18px 40px rgba(12,10,9,.10), inset 0 1px 0 rgba(255,255,255,.95);
+  }
+  .field { flex: 1; padding: 7px 12px; min-width: 0; }
+  .field + .field { border-left: 1px solid var(--line-d); }
+  .field label { display: block; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-family: var(--font-mono); }
+  .field span { display: block; font-size: 12px; font-weight: 600; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .search-btn {
+    flex: 0 0 auto; background: linear-gradient(145deg, #E3C368, #A16207 82%); color: #1A1206;
+    border: 0; border-radius: 12px; padding: 12px 18px; font-size: 12.5px; font-weight: 700;
+    white-space: nowrap; cursor: pointer; box-shadow: 0 8px 18px rgba(122,78,6,.28), inset 0 1px 0 rgba(255,255,255,.35);
+  }
+  .hero-links { margin-top: 12px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .text-link { color: var(--ink); font-size: 12px; font-weight: 650; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; border-bottom: 1px solid rgba(12,10,9,.28); padding-bottom: 1px; }
+  .text-link::after { content: "→"; }
+  .trust { margin-top: 18px; display: flex; gap: 24px; padding-top: 14px; border-top: 1px solid var(--line-d); }
+  .trust b { display: block; font-family: var(--font-display); font-size: 19px; line-height: 1; }
+  .trust span { font-size: 10px; color: var(--muted); }
+
+  .hero-visual { position: relative; min-height: 380px; }
+  .sheen { position: absolute; width: 230px; height: 230px; border-radius: 50%; top: -20px; right: -14px; background: radial-gradient(circle at 36% 30%, #FFFFFF, #E7E5E4 56%, #C9C4BE 100%); filter: blur(1px); opacity: .6; }
+  .room-card-main {
+    position: absolute; top: 20px; right: 0; width: 78%;
+    background: linear-gradient(150deg, rgba(255,255,255,.84), rgba(255,255,255,.46));
+    border: 1px solid rgba(255,255,255,.95); border-radius: var(--radius-lg); backdrop-filter: blur(20px);
+    box-shadow: 0 22px 48px rgba(12,10,9,.16), inset 0 1px 0 rgba(255,255,255,.9); padding: 9px;
+  }
+  .photo {
+    height: 170px; border-radius: 11px; position: relative; overflow: hidden;
+    background: radial-gradient(circle at 72% 22%, rgba(255,255,255,.9), transparent 44%), linear-gradient(150deg, #D6D3D1, #A8A29E 52%, #44403C);
+  }
+  .photo::before { content: ""; position: absolute; left: 54%; top: 18%; width: 34%; height: 40%; border-radius: 3px; background: linear-gradient(160deg, rgba(255,255,255,.34), rgba(255,255,255,.06)); box-shadow: 0 0 0 5px rgba(250,250,249,.1), inset 0 0 0 1px rgba(255,255,255,.4); }
+  .photo::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 46%; background: linear-gradient(180deg, transparent, rgba(12,10,9,.5)); }
+  .photo-tag { position: absolute; left: 9px; top: 9px; z-index: 1; background: rgba(12,10,9,.55); color: #FAFAF9; border: 1px solid rgba(255,255,255,.22); border-radius: 999px; padding: 4px 9px; font-size: 9px; backdrop-filter: blur(6px); }
+  .photo-price {
+    position: absolute; right: 9px; bottom: 9px; z-index: 1;
+    background: linear-gradient(145deg, #FBF3DF, #EFD9A8); color: var(--gold-ink);
+    border: 1px solid rgba(255,255,255,.75); border-radius: 999px; padding: 6px 10px; font-size: 10.5px; font-weight: 700;
+    box-shadow: 0 8px 18px rgba(12,10,9,.28);
+  }
+  .photo-price span { font-weight: 500; font-size: 8.5px; color: #8A6A2F; }
+  .room-body { padding: 9px 5px 2px; }
+  .room-body h3 { margin: 0; font-size: 13px; letter-spacing: -.2px; }
+  .room-body p { margin: 2px 0 0; font-size: 10px; color: var(--muted); }
+
+  .float-stat {
+    position: absolute; left: -4px; bottom: 0; width: 188px;
+    background: var(--glass-45); border: 1px solid rgba(255,255,255,.9); border-radius: var(--radius-md);
+    backdrop-filter: blur(22px); box-shadow: 0 18px 40px rgba(12,10,9,.16), inset 0 1px 0 rgba(255,255,255,.9); padding: 11px;
+  }
+  .float-stat .label { font-family: var(--font-mono); font-size: 8px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .float-stat .value { font-family: var(--font-display); font-size: 21px; line-height: 1; margin-top: 3px; }
+  .float-stat .value small { font-family: var(--font-body); font-size: 9px; color: var(--muted); font-weight: 500; }
+  .float-stat .sub { font-size: 8.5px; color: var(--muted-2); margin-top: 2px; }
+  .bars { display: flex; align-items: flex-end; gap: 4px; height: 26px; margin-top: 7px; }
+  .bars i { flex: 1; border-radius: 3px 3px 0 0; background: rgba(12,10,9,.16); }
+  .bars i:nth-child(1) { height: 38%; } .bars i:nth-child(2) { height: 58%; } .bars i:nth-child(3) { height: 46%; }
+  .bars i:nth-child(4) { height: 74%; } .bars i:nth-child(5) { height: 66%; }
+  .bars i:nth-child(6) { height: 92%; background: linear-gradient(180deg, var(--gold-2), var(--gold)); }
+  .float-badge {
+    position: absolute; right: 8px; top: -6px; background: linear-gradient(145deg, #27272A, #09090B); color: var(--paper);
+    border-radius: 999px; padding: 8px 12px 8px 9px; font-size: 10px; display: flex; align-items: center; gap: 6px;
+    box-shadow: 0 12px 26px rgba(12,10,9,.28);
+  }
+  .float-badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: linear-gradient(145deg, var(--gold-2), var(--gold)); box-shadow: 0 0 0 3px rgba(212,175,55,.24); }
+
+  /* section shell */
+  .section { padding: 30px 22px 0; }
+  .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 13px; }
+  .section-head h2 { font-family: var(--font-display); font-size: 26px; letter-spacing: -.8px; line-height: 1.08; margin: 0; }
+  .kicker { font-family: var(--font-mono); font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-ink); font-weight: 700; }
+  .section-head p { margin: 5px 0 0; font-size: 11.5px; color: var(--muted); max-width: 430px; }
+  .head-hint { font-size: 10px; color: var(--muted); white-space: nowrap; padding-bottom: 3px; }
+
+  /* ============ MAP ============ */
+  .map-panel {
+    display: grid; grid-template-columns: 1.52fr .88fr; gap: 8px;
+    background: var(--glass-45); border: 1px solid rgba(255,255,255,.92);
+    border-radius: var(--radius-xl); padding: 10px; backdrop-filter: blur(16px);
+    box-shadow: 0 12px 30px rgba(12,10,9,.07);
+  }
+  .map-canvas {
+    position: relative; aspect-ratio: 760 / 340; border-radius: var(--radius-lg); overflow: hidden;
+    background:
+      radial-gradient(circle at 62% 42%, rgba(212,175,55,.12), transparent 54%),
+      linear-gradient(160deg, rgba(255,255,255,.62), rgba(255,255,255,.26));
+    border: 1px solid rgba(255,255,255,.9);
+  }
+  .map-canvas::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(12,10,9,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(12,10,9,.05) 1px, transparent 1px);
+    background-size: 38px 38px;
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 52%, transparent 98%);
+    mask-image: radial-gradient(circle at 50% 50%, #000 52%, transparent 98%);
+  }
+  .id-map { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .map-labels { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 2.4px; fill: rgba(12,10,9,.38); }
+
+  .pin-slot { position: absolute; transform: translate(-50%, -50%); z-index: 2; }
+  .pin-input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+  .pin { position: relative; display: block; width: 30px; height: 30px; cursor: pointer; }
+  .pin .dot {
+    position: absolute; inset: 9px; border-radius: 50%;
+    background: linear-gradient(145deg, #E9CE7E, #A16207 80%);
+    box-shadow: 0 0 0 2px #fff, 0 3px 8px rgba(12,10,9,.28);
+    transition: transform .16s ease, box-shadow .16s ease;
+  }
+  .pin .ring { position: absolute; inset: 0; border-radius: 50%; border: 1px solid rgba(161,98,7,.4); opacity: 0; }
+  .pin:hover .dot { transform: scale(1.18); }
+  .pin:hover .ring, .pin-input:focus-visible + .pin .ring { opacity: 1; }
+  .pin-input:focus-visible + .pin .dot { box-shadow: 0 0 0 2px #fff, 0 0 0 5px rgba(161,98,7,.28); }
+  .pin .tip {
+    position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translate(-50%, 3px);
+    background: #0C0A09; color: #FAFAF9; padding: 5px 9px; border-radius: 7px;
+    font-size: 9px; white-space: nowrap; opacity: 0; pointer-events: none;
+    transition: opacity .15s ease, transform .15s ease; box-shadow: 0 6px 16px rgba(12,10,9,.3);
+  }
+  .pin .tip b { color: var(--gold-2); font-weight: 700; }
+  .pin:hover .tip, .pin-input:focus-visible + .pin .tip { opacity: 1; transform: translate(-50%, 0); }
+
+  .map-panel:has(.pin-input:checked) .map-info { display: none; }
+  .map-panel:has(#p-medan:checked) .map-info--medan,
+  .map-panel:has(#p-jakarta:checked) .map-info--jakarta,
+  .map-panel:has(#p-jogja:checked) .map-info--jogja,
+  .map-panel:has(#p-surabaya:checked) .map-info--surabaya,
+  .map-panel:has(#p-denpasar:checked) .map-info--denpasar,
+  .map-panel:has(#p-makassar:checked) .map-info--makassar { display: block; }
+  .map-info--jogja { display: block; }
+  .map-panel:has(#p-medan:checked) .pin--medan .dot,
+  .map-panel:has(#p-jakarta:checked) .pin--jakarta .dot,
+  .map-panel:has(#p-jogja:checked) .pin--jogja .dot,
+  .map-panel:has(#p-surabaya:checked) .pin--surabaya .dot,
+  .map-panel:has(#p-denpasar:checked) .pin--denpasar .dot,
+  .map-panel:has(#p-makassar:checked) .pin--makassar .dot {
+    transform: scale(1.3);
+    box-shadow: 0 0 0 2px #fff, 0 0 0 6px rgba(212,175,55,.22), 0 4px 10px rgba(12,10,9,.3);
+  }
+  .map-panel:has(#p-medan:checked) .pin--medan .ring,
+  .map-panel:has(#p-jakarta:checked) .pin--jakarta .ring,
+  .map-panel:has(#p-jogja:checked) .pin--jogja .ring,
+  .map-panel:has(#p-surabaya:checked) .pin--surabaya .ring,
+  .map-panel:has(#p-denpasar:checked) .pin--denpasar .ring,
+  .map-panel:has(#p-makassar:checked) .pin--makassar .ring {
+    opacity: 1; animation: ping 1.9s ease-out infinite;
+  }
+  @keyframes ping {
+    0% { transform: scale(.75); opacity: .7; }
+    70% { transform: scale(2.1); opacity: 0; }
+    100% { transform: scale(2.1); opacity: 0; }
+  }
+
+  .map-side { padding: 10px 8px 4px 14px; display: flex; flex-direction: column; min-width: 0; }
+  .map-info { display: none; min-height: 236px; }
+  .mi-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .mi-badge {
+    font-family: var(--font-mono); font-size: 8px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--gold-ink); background: var(--gold-soft); border: 1px solid var(--gold-line);
+    border-radius: 999px; padding: 2px 7px;
+  }
+  .mi-coord { font-family: var(--font-mono); font-size: 8.5px; color: var(--muted); }
+  .map-info h3 { font-family: var(--font-display); font-size: 25px; letter-spacing: -.6px; margin: 8px 0 0; line-height: 1; }
+  .mi-names { font-size: 10.5px; color: var(--muted-2); margin: 5px 0 0; }
+  .mi-figs { display: flex; gap: 16px; margin-top: 10px; padding-top: 9px; border-top: 1px solid var(--line-d); }
+  .mi-figs b { display: block; font-family: var(--font-display); font-size: 18px; line-height: 1; }
+  .mi-figs span { font-size: 9px; color: var(--muted); }
+  .mi-price { font-size: 11px; font-weight: 650; color: var(--gold-ink); margin-top: 10px; }
+  .mi-price span { font-weight: 500; color: var(--muted); font-size: 9px; }
+  .mi-link { display: inline-block; margin-top: 8px; font-size: 10.5px; font-weight: 650; color: var(--ink); text-decoration: none; border-bottom: 1px solid rgba(12,10,9,.25); padding-bottom: 1px; }
+  .map-cities { display: grid; grid-template-columns: repeat(3, 1fr); align-items: center; gap: 4px; margin-top: 11px; }
+  .map-cities > span { grid-column: 1 / -1; font-family: var(--font-mono); font-size: 7.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 1px; }
+  .map-cities label { font-size: 8.5px; color: var(--muted-2); border: 1px solid var(--line-d); background: rgba(255,255,255,.5); border-radius: 999px; padding: 4px 4px; cursor: pointer; text-align: center; transition: border-color .15s ease, color .15s ease, background .15s ease; }
+  .map-cities label:hover { border-color: var(--gold-line); color: var(--gold-ink); }
+  .map-panel:has(#p-medan:checked) .map-cities label[for="p-medan"],
+  .map-panel:has(#p-jakarta:checked) .map-cities label[for="p-jakarta"],
+  .map-panel:has(#p-jogja:checked) .map-cities label[for="p-jogja"],
+  .map-panel:has(#p-surabaya:checked) .map-cities label[for="p-surabaya"],
+  .map-panel:has(#p-denpasar:checked) .map-cities label[for="p-denpasar"],
+  .map-panel:has(#p-makassar:checked) .map-cities label[for="p-makassar"] {
+    background: var(--gold-soft); border-color: var(--gold-line); color: var(--gold-ink);
+  }
+  .map-demo { margin-top: auto; padding-top: 10px; font-size: 8.5px; color: var(--muted); border-top: 1px dashed rgba(12,10,9,.12); }
+
+  /* ============ ROOMS ============ */
+  .mini-avail { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .mini-avail .bar { flex: 1; display: flex; height: 8px; border-radius: 999px; overflow: hidden; background: var(--stone-2); }
+  .mini-avail .bar i { display: block; height: 100%; }
+  .bar .isi { width: 50%; background: linear-gradient(90deg, #292524, #0C0A09); }
+  .bar .rep { width: 16.7%; background: repeating-linear-gradient(45deg, #D6D3D1, #D6D3D1 3px, #E7E5E4 3px, #E7E5E4 6px); }
+  .bar .kosong { width: 33.3%; background: linear-gradient(90deg, #EFD9A8, #D2A84F); }
+  .mini-avail .legend { display: flex; gap: 12px; font-size: 9.5px; color: var(--muted-2); }
+  .mini-avail .legend span { display: inline-flex; align-items: center; gap: 4px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+  .dot.isi { background: var(--ink); } .dot.rep { background: var(--stone-3); border: 1px solid var(--stone-4); }
+  .dot.kosong { background: linear-gradient(145deg, var(--gold-2), var(--gold)); }
+
+  .rooms { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .room {
+    background: linear-gradient(180deg, #FFFFFF, #FAFAF9); border: 1px solid rgba(12,10,9,.09);
+    border-radius: var(--radius-lg); overflow: hidden;
+    box-shadow: 0 10px 24px rgba(12,10,9,.06), inset 0 1px 0 #FFF;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .room:hover { transform: translateY(-3px); box-shadow: 0 18px 34px rgba(12,10,9,.12); border-color: var(--gold-line); }
+  .room .photo { height: 104px; border-radius: 0; }
+  .room .photo::before { left: 56%; top: 22%; width: 30%; height: 38%; }
+  .room .photo.p2 { background: radial-gradient(circle at 30% 18%, rgba(255,255,255,.85), transparent 40%), linear-gradient(140deg, #E7E5E4, #A8A29E 58%, #57534E); }
+  .room .photo.p3 { background: radial-gradient(circle at 76% 26%, rgba(255,255,255,.8), transparent 42%), linear-gradient(160deg, #D6D3D1, #8A847E 56%, #292524); }
+  .room-content { padding: 10px 11px 11px; }
+  .room-content h3 { margin: 0; font-size: 12px; letter-spacing: -.2px; }
+  .room-content .loc { font-size: 9.5px; color: var(--muted); margin-top: 2px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 7px; }
+  .tag { font-size: 8.5px; color: #52525B; background: var(--stone-1); border: 1px solid var(--stone-2); border-radius: 999px; padding: 2px 6px; }
+  .room-cta { display: flex; align-items: center; justify-content: space-between; margin-top: 9px; padding-top: 8px; border-top: 1px solid var(--line-d); }
+  .room-cta .avail {
+    font-size: 9px; color: var(--gold-ink); display: inline-flex; align-items: center; gap: 4px;
+    background: var(--gold-soft); border: 1px solid var(--gold-line); border-radius: 999px; padding: 2px 7px;
+  }
+  .room-cta .avail::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: linear-gradient(145deg, var(--gold-2), var(--gold)); }
+  .room-cta a { font-size: 10px; font-weight: 650; color: var(--ink); text-decoration: none; }
+
+  /* ============ DASHBOARD ============ */
+  .dash-block {
+    display: grid; grid-template-columns: 1fr 1.12fr; gap: 20px;
+    background: radial-gradient(circle at 90% 4%, rgba(212,175,55,.16), transparent 38%), linear-gradient(155deg, #292524, #09090B 62%);
+    color: var(--paper); border-radius: var(--radius-xl); padding: 20px;
+    border: 1px solid rgba(255,255,255,.12); box-shadow: 0 22px 50px rgba(12,10,9,.28);
+  }
+  .dash-copy .kicker { color: var(--gold-2); }
+  .dash-copy h3 { font-family: var(--font-display); font-size: 24px; line-height: 1.08; letter-spacing: -.6px; margin: 7px 0 0; }
+  .dash-copy p { font-size: 11px; line-height: 1.55; color: #D4D4D8; margin: 6px 0 0; }
+  .dash-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 11px; }
+  .dash-tags span { font-size: 8.5px; color: #E7E5E4; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.06); border-radius: 999px; padding: 3px 8px; }
+  .dash-panel { background: rgba(255,255,255,.06); border: 1px solid var(--line-l); border-radius: 13px; padding: 11px; backdrop-filter: blur(10px); }
+  .dash-top { display: flex; align-items: center; justify-content: space-between; font-size: 8.5px; color: #D4D4D8; }
+  .dash-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; }
+  .dash-tile { background: rgba(255,255,255,.08); border: 1px solid var(--line-l); border-radius: 8px; padding: 7px; }
+  .dash-tile span { font-size: 7.5px; color: #A1A1AA; text-transform: uppercase; letter-spacing: .08em; }
+  .dash-tile b { display: block; font-size: 15px; margin-top: 2px; letter-spacing: -.4px; }
+  .dash-tile.gold { background: rgba(212,175,55,.10); border-color: rgba(212,175,55,.42); }
+  .dash-tile.gold b { color: var(--gold-2); }
+  .dash-chart { display: flex; align-items: flex-end; gap: 4px; height: 38px; margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--line-l); }
+  .dash-chart i { flex: 1; border-radius: 2px 2px 0 0; background: rgba(255,255,255,.22); }
+  .dash-chart i:nth-child(1) { height: 34%; } .dash-chart i:nth-child(2) { height: 52%; } .dash-chart i:nth-child(3) { height: 44%; }
+  .dash-chart i:nth-child(4) { height: 68%; } .dash-chart i:nth-child(5) { height: 58%; } .dash-chart i:nth-child(6) { height: 80%; }
+  .dash-chart i:nth-child(7) { height: 72%; }
+  .dash-chart i:nth-child(8) { height: 96%; background: linear-gradient(180deg, var(--gold-2), var(--gold)); }
+  .dash-foot { margin-top: 6px; font-size: 8px; color: #A1A1AA; }
+
+  /* ============ FAQ ============ */
+  .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+  .faq-grid details { background: var(--glass-72); border: 1px solid rgba(255,255,255,.95); border-radius: var(--radius-md); padding: 11px 13px; backdrop-filter: blur(12px); box-shadow: 0 6px 16px rgba(12,10,9,.04); }
+  .faq-grid summary { cursor: pointer; font-size: 11px; font-weight: 650; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .faq-grid summary::-webkit-details-marker { display: none; }
+  .faq-grid summary::after { content: "+"; font-family: var(--font-mono); font-size: 13px; color: var(--gold-ink); font-weight: 700; }
+  .faq-grid details[open] summary::after { content: "–"; }
+  .faq-grid details p { margin: 6px 0 0; font-size: 10px; line-height: 1.5; color: var(--muted); }
+
+  /* ============ CTA ============ */
+  .cta {
+    margin: 30px 22px 0;
+    background: radial-gradient(circle at 82% 12%, rgba(212,175,55,.24), transparent 42%), linear-gradient(150deg, #292524, #09090B 64%);
+    color: var(--paper); border-radius: var(--radius-xl); padding: 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    border: 1px solid rgba(255,255,255,.12); box-shadow: 0 24px 54px rgba(12,10,9,.3);
+  }
+  .cta h2 { font-family: var(--font-display); font-size: 27px; line-height: 1.05; letter-spacing: -.8px; margin: 0; }
+  .cta h2 em { color: var(--gold-2); font-style: italic; }
+  .cta p { margin: 6px 0 0; font-size: 11px; color: #D4D4D8; max-width: 360px; }
+  .cta-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn-gold {
+    background: linear-gradient(145deg, #E3C368, #A16207 78%); color: #1A1206; border-radius: 999px;
+    padding: 11px 18px; font-size: 12px; font-weight: 700; text-decoration: none;
+    box-shadow: 0 10px 22px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.35);
+  }
+  .btn-outline { border: 1px solid rgba(255,255,255,.32); color: var(--paper); border-radius: 999px; padding: 11px 18px; font-size: 12px; font-weight: 600; text-decoration: none; }
+
+  /* ============ FOOTER ============ */
+  .footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 18px 22px 8px; margin-top: 6px; font-size: 10px; color: var(--muted); }
+  .f-left { display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--ink); font-size: 12px; }
+  .f-left::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: linear-gradient(145deg, var(--gold-2), var(--gold)); }
+  .f-left span { font-weight: 400; color: var(--muted); font-size: 10px; }
+  .f-links { display: flex; gap: 14px; }
+  .footer a { color: var(--muted); text-decoration: none; }
+  .f-bottom { padding: 0 22px 16px; font-size: 9px; color: #A8A29E; }
+
+  /* ============ PHONE ============ */
+  .phone-section { margin-top: 26px; display: flex; flex-direction: column; align-items: center; gap: 11px; }
+  .phone-label { font-family: ui-monospace, monospace; font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: #71717A; }
+  .phone { width: 290px; border-radius: 30px; padding: 7px; background: linear-gradient(150deg, #3F3F46, #09090B); box-shadow: 0 22px 48px rgba(9,9,11,.3); }
+  .phone-screen { border-radius: 24px; overflow: hidden; background: linear-gradient(180deg, #FAFAF9, #EDEDEB); font-family: Inter, system-ui, sans-serif; color: #09090B; }
+  .m-nav { display: flex; align-items: center; justify-content: space-between; padding: 11px 12px 7px; }
+  .m-brand { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; }
+  .m-mark { width: 18px; height: 18px; border-radius: 50%; background: #09090B; color: #FAFAF9; font-size: 8px; display: flex; align-items: center; justify-content: center; }
+  .m-burger { width: 26px; height: 26px; border-radius: 8px; background: rgba(255,255,255,.7); border: 1px solid rgba(9,9,11,.12); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; }
+  .m-burger i { width: 12px; height: 1.5px; background: #09090B; border-radius: 2px; }
+  .m-body { padding: 2px 12px 13px; }
+  .m-eyebrow { font-family: ui-monospace, monospace; font-size: 7px; letter-spacing: .14em; text-transform: uppercase; color: #8A5306; font-weight: 700; }
+  .m-body h3 { font-family: Georgia, serif; font-size: 24px; line-height: 1; letter-spacing: -1px; margin: 6px 0 0; }
+  .m-body h3 em { font-style: italic; color: #A16207; }
+  .m-sub { font-size: 8.5px; line-height: 1.45; color: #52525B; margin: 6px 0 0; }
+  .m-search { margin-top: 9px; background: rgba(255,255,255,.82); border: 1px solid #fff; border-radius: 12px; padding: 6px; box-shadow: 0 8px 20px rgba(9,9,11,.08); }
+  .m-field { display: flex; justify-content: space-between; align-items: center; padding: 4px 3px; font-size: 8px; color: #52525B; }
+  .m-field b { color: #09090B; font-size: 8.5px; }
+  .m-cta { margin-top: 4px; background: linear-gradient(145deg, #E3C368, #A16207 82%); color: #1A1206; text-align: center; border-radius: 8px; padding: 6px; font-size: 8.5px; font-weight: 700; }
+  .m-map { position: relative; margin-top: 9px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.9); background: radial-gradient(circle at 60% 40%, rgba(212,175,55,.12), transparent 55%), rgba(255,255,255,.55); aspect-ratio: 760/340; }
+  .m-map .id-map { opacity: .9; }
+  .m-pin { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(145deg, #E3C368, #A16207); box-shadow: 0 0 0 2px #fff; transform: translate(-50%,-50%); }
+  .m-map-label { position: absolute; left: 8px; bottom: 6px; font-family: ui-monospace, monospace; font-size: 6.5px; color: #52525B; letter-spacing: .1em; }
+  .m-card { margin-top: 9px; background: #fff; border: 1px solid rgba(9,9,11,.08); border-radius: 12px; overflow: hidden; }
+  .m-photo { height: 62px; background: radial-gradient(circle at 72% 22%, rgba(255,255,255,.9), transparent 44%), linear-gradient(150deg, #D6D3D1, #A8A29E 52%, #44403C); position: relative; }
+  .m-photo::before { content: ""; position: absolute; left: 54%; top: 18%; width: 32%; height: 40%; border-radius: 3px; background: linear-gradient(160deg, rgba(255,255,255,.34), rgba(255,255,255,.06)); box-shadow: 0 0 0 3px rgba(250,250,249,.1); }
+  .m-price { position: absolute; right: 7px; bottom: 7px; background: linear-gradient(145deg, #FBF3DF, #EFD9A8); color: #8A5306; border-radius: 999px; font-size: 8px; font-weight: 700; padding: 3px 7px; }
+  .m-card-body { padding: 7px 9px; }
+  .m-card-body b { font-size: 9.5px; }
+  .m-card-body p { font-size: 7.5px; color: #71717A; margin: 2px 0 0; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; gap: 24px; }
+    .hero-visual { min-height: 350px; }
+    .map-panel { grid-template-columns: 1fr; }
+    .map-side { padding: 8px 6px 4px 6px; }
+    .map-info { min-height: 0; }
+    .map-demo { margin-top: 12px; }
+    .rooms { grid-template-columns: 1fr 1fr; }
+    .rooms .room:last-child { grid-column: span 2; }
+    .dash-block { grid-template-columns: 1fr; }
+    .faq-grid { grid-template-columns: 1fr; }
+    .nav-pill { display: none; }
+    .nav { grid-template-columns: 1fr auto; }
+    .nav-actions .masuk { display: none; }
+    .burger { display: block; }
+    .cta { flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 620px) {
+    .hero { padding: 24px 18px 18px; }
+    .section { padding: 26px 18px 0; }
+    .section-head { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .head-hint { padding-bottom: 0; }
+    .searchbar { flex-direction: column; align-items: stretch; }
+    .field + .field { border-left: 0; border-top: 1px solid var(--line-d); }
+    .search-btn { text-align: center; }
+    .rooms { grid-template-columns: 1fr; }
+    .rooms .room:last-child { grid-column: auto; }
+    .mini-avail { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .mini-avail .bar { width: 100%; }
+    .pin .tip { display: none; }
+    .cta { margin: 26px 18px 0; padding: 20px 18px; }
+    .footer { padding: 16px 18px 6px; }
+    .f-bottom { padding: 0 18px 14px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pin .ring { animation: none !important; }
+    .room, .pin .dot { transition: none; }
+  }
+</style>
+
+<div class="mono-wrap">
+
+  <div class="site">
+
+    <!-- NAV -->
+    <div class="nav">
+      <a class="brand" href="#"><span class="brand-mark">K</span>KelolaKos</a>
+      <nav class="nav-pill">
+        <a class="active" href="#beranda">Beranda</a>
+        <a href="#jaringan">Jaringan</a>
+        <a href="#kamar">Kamar</a>
+        <a href="#pengurus">Pengurus</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="masuk" href="#">Masuk</a>
+        <a class="pill-dark" href="#">Daftar</a>
+        <button class="burger" type="button" aria-label="Buka menu"><i></i><i></i><i></i></button>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero" id="beranda">
+      <div>
+        <div class="eyebrow">Kos &amp; penghuni · Yogyakarta</div>
+        <h1>Cari kamar.<br>Kelola kos.<br><em>Satu tempat.</em></h1>
+        <p class="lead">Kamar kosong, tagihan, dan bukti bayar dalam satu alur.</p>
+
+        <div class="searchbar">
+          <div class="field"><label>Kota</label><span>Semua kota</span></div>
+          <div class="field"><label>Harga maks</label><span>Rp1.000.000</span></div>
+          <button class="search-btn" type="button">Cari kamar</button>
+        </div>
+
+        <div class="hero-links">
+          <a class="text-link" href="#pengurus">Ingin mengelola kos?</a>
+        </div>
+
+        <div class="trust">
+          <div><b>6</b><span>kota</span></div>
+          <div><b>8</b><span>kos</span></div>
+          <div><b>50</b><span>kamar</span></div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="sheen"></div>
+        <div class="float-badge">4 kamar siap diajukan</div>
+
+        <div class="room-card-main">
+          <div class="photo">
+            <span class="photo-tag">Kos Melati · A6</span>
+            <span class="photo-price">Rp1,05 jt <span>/ bln</span></span>
+          </div>
+          <div class="room-body">
+            <h3>VIP · kamar mandi dalam</h3>
+            <p>Kasur · lemari · meja · WiFi</p>
+          </div>
+        </div>
+
+        <div class="float-stat">
+          <div class="label">Tagihan bulan ini</div>
+          <div class="value">Rp6,0 <small>juta</small></div>
+          <div class="sub">6 sewa aktif · 2 verifikasi</div>
+          <div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAP -->
+    <section class="section" id="jaringan">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Jaringan kos</div>
+          <h2>Sudah bergabung di enam kota</h2>
+        </div>
+        <span class="head-hint">Klik titik emas →</span>
+      </div>
+
+      <div class="map-panel">
+        <div class="map-canvas">
+          <svg class="id-map" viewBox="0 0 760 340" aria-hidden="true">
+            <defs>
+              <linearGradient id="land" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#1C1917" stop-opacity=".2"/>
+                <stop offset="1" stop-color="#1C1917" stop-opacity=".09"/>
+              </linearGradient>
+            </defs>
+            <g fill="url(#land)" stroke="rgba(12,10,9,.26)" stroke-width="1" stroke-linejoin="round">
+              <path d="M96 58 C108 54 120 64 130 78 L178 144 C194 166 208 188 213 203 C217 214 211 222 202 223 C192 224 184 216 177 205 L129 144 C116 127 100 110 90 94 C82 81 84 63 96 58 Z"/>
+              <path d="M212 254 C232 247 256 250 282 255 C310 260 338 266 364 264 C382 263 396 259 404 263 C411 267 410 275 401 278 C380 284 352 280 322 276 C292 272 260 268 238 265 C226 263 218 261 212 254 Z"/>
+              <path d="M300 116 C316 102 340 96 362 100 C384 104 396 118 408 130 C422 143 436 150 438 164 C441 180 431 193 415 199 C399 205 382 199 368 191 C352 183 336 189 321 181 C305 172 297 157 295 141 C293 130 294 122 300 116 Z"/>
+              <path d="M356 196 C370 202 372 216 362 224 C352 232 340 226 338 214 C336 204 344 198 356 196 Z"/>
+              <path d="M472 126 C482 118 494 120 498 130 C502 140 496 150 488 157 C482 162 481 172 487 181 C494 192 500 202 495 211 C490 220 478 217 473 207 C467 194 461 182 453 172 C445 162 443 148 451 139 C457 132 466 129 472 126 Z"/>
+              <path d="M478 122 C484 110 496 106 504 112 C512 118 511 128 503 132 C495 136 486 132 482 127 Z"/>
+              <path d="M496 202 C508 198 522 202 528 211 C533 219 528 227 518 226 C507 225 498 216 496 208 Z"/>
+              <path d="M478 212 C486 216 490 226 486 234 C482 242 472 243 467 236 C462 229 466 219 472 214 Z"/>
+              <path d="M624 166 C636 150 656 143 676 148 C696 153 710 164 722 178 C736 194 740 206 732 214 C724 222 712 219 704 211 C696 203 686 204 678 213 C669 223 655 230 643 226 C631 222 627 210 629 198 C631 186 617 178 624 166 Z"/>
+              <path d="M608 160 C600 148 604 136 616 134 C628 132 636 142 634 154 C632 166 620 170 612 166 Z"/>
+              <path d="M731 196 C743 192 754 198 757 207 C760 216 753 223 744 221 C735 219 729 210 731 196 Z"/>
+              <ellipse cx="414" cy="282" rx="5" ry="3"/>
+              <ellipse cx="430" cy="284" rx="6" ry="3"/>
+              <ellipse cx="451" cy="285" rx="9" ry="3.5"/>
+              <ellipse cx="480" cy="284" rx="11" ry="3.5"/>
+              <ellipse cx="516" cy="291" rx="10" ry="4" transform="rotate(-12 516 291)"/>
+              <path d="M538 148 C544 140 552 139 556 145 C560 150 558 157 552 161 C546 165 539 163 537 157 C536 153 537 150 538 148 Z"/>
+              <ellipse cx="560" cy="188" rx="10" ry="4" transform="rotate(-8 560 188)"/>
+              <circle cx="548" cy="200" r="3"/>
+              <ellipse cx="204" cy="196" rx="7" ry="3" transform="rotate(-38 204 196)"/>
+              <ellipse cx="216" cy="209" rx="5" ry="2.5" transform="rotate(-38 216 209)"/>
+              <circle cx="196" cy="128" r="2.5"/>
+              <circle cx="206" cy="136" r="2"/>
+              <circle cx="188" cy="140" r="1.8"/>
+            </g>
+            <g class="map-labels">
+              <text x="86" y="128" transform="rotate(-52 86 128)">SUMATRA</text>
+              <text x="288" y="300">JAWA</text>
+              <text x="340" y="88">KALIMANTAN</text>
+              <text x="462" y="258">SULAWESI</text>
+              <text x="662" y="128">PAPUA</text>
+            </g>
+          </svg>
+
+          <div class="pin-slot" style="left:14.5%;top:27.9%">
+            <input class="pin-input" type="radio" name="kos-map" id="p-medan">
+            <label class="pin pin--medan" for="p-medan" aria-label="Medan, 1 kos">
+              <span class="dot"></span><span class="ring"></span>
+              <span class="tip">Medan · <b>1 kos</b></span>
+            </label>
+          </div>
+          <div class="pin-slot" style="left:32.2%;top:77.1%">
+            <input class="pin-input" type="radio" name="kos-map" id="p-jakarta">
+            <label class="pin pin--jakarta" for="p-jakarta" aria-label="Jakarta, 2 kos">
+              <span class="dot"></span><span class="ring"></span>
+              <span class="tip">Jakarta · <b>2 kos</b></span>
+            </label>
+          </div>
+          <div class="pin-slot" style="left:42.8%;top:79.4%">
+            <input class="pin-input" type="radio" name="kos-map" id="p-jogja" checked>
+            <label class="pin pin--jogja" for="p-jogja" aria-label="Yogyakarta, 2 kos">
+              <span class="dot"></span><span class="ring"></span>
+              <span class="tip">Yogyakarta · <b>2 kos</b></span>
+            </label>
+          </div>
+          <div class="pin-slot" style="left:51.3%;top:78.2%">
+            <input class="pin-input" type="radio" name="kos-map" id="p-surabaya">
+            <label class="pin pin--surabaya" for="p-surabaya" aria-label="Surabaya, 1 kos">
+              <span class="dot"></span><span class="ring"></span>
+              <span class="tip">Surabaya · <b>1 kos</b></span>
+            </label>
+          </div>
+          <div class="pin-slot" style="left:54.5%;top:82.9%">
+            <input class="pin-input" type="radio" name="kos-map" id="p-denpasar">
+            <label class="pin pin--denpasar" for="p-denpasar" aria-label="Denpasar, 1 kos">
+              <span class="dot"></span><span class="ring"></span>
+              <span class="tip">Denpasar · <b>1 kos</b></span>
+            </label>
+          </div>
+          <div class="pin-slot" style="left:62.9%;top:65.9%">
+            <input class="pin-input" type="radio" name="kos-map" id="p-makassar">
+            <label class="pin pin--makassar" for="p-makassar" aria-label="Makassar, 1 kos">
+              <span class="dot"></span><span class="ring"></span>
+              <span class="tip">Makassar · <b>1 kos</b></span>
+            </label>
+          </div>
+        </div>
+
+        <aside class="map-side">
+          <article class="map-info map-info--medan">
+            <div class="mi-top"><span class="mi-badge">Aktif</span><span class="mi-coord">1 kos</span></div>
+            <h3>Medan</h3>
+            <p class="mi-names">Kos Cempaka</p>
+            <div class="mi-figs"><div><b>6</b><span>kamar</span></div><div><b>2</b><span>kosong</span></div><div><b>3</b><span>penghuni</span></div></div>
+            <div class="mi-price">Rp800 rb – Rp1,0 jt <span>/ bulan</span></div>
+            <a class="mi-link" href="#">Lihat kos →</a>
+          </article>
+
+          <article class="map-info map-info--jakarta">
+            <div class="mi-top"><span class="mi-badge">Aktif</span><span class="mi-coord">2 kos</span></div>
+            <h3>Jakarta</h3>
+            <p class="mi-names">Kos Kenanga · Kos Teratai</p>
+            <div class="mi-figs"><div><b>14</b><span>kamar</span></div><div><b>4</b><span>kosong</span></div><div><b>10</b><span>penghuni</span></div></div>
+            <div class="mi-price">Rp1,2 – 1,8 jt <span>/ bulan</span></div>
+            <a class="mi-link" href="#">Lihat kos →</a>
+          </article>
+
+          <article class="map-info map-info--jogja">
+            <div class="mi-top"><span class="mi-badge">Aktif</span><span class="mi-coord">2 kos</span></div>
+            <h3>Yogyakarta</h3>
+            <p class="mi-names">Kos Melati · Kos Anggrek</p>
+            <div class="mi-figs"><div><b>12</b><span>kamar</span></div><div><b>4</b><span>kosong</span></div><div><b>6</b><span>penghuni</span></div></div>
+            <div class="mi-price">Rp900 rb – Rp1,2 jt <span>/ bulan</span></div>
+            <a class="mi-link" href="#">Lihat kos →</a>
+          </article>
+
+          <article class="map-info map-info--surabaya">
+            <div class="mi-top"><span class="mi-badge">Aktif</span><span class="mi-coord">1 kos</span></div>
+            <h3>Surabaya</h3>
+            <p class="mi-names">Kos Flamboyan</p>
+            <div class="mi-figs"><div><b>7</b><span>kamar</span></div><div><b>3</b><span>kosong</span></div><div><b>4</b><span>penghuni</span></div></div>
+            <div class="mi-price">Rp850 rb – Rp1,1 jt <span>/ bulan</span></div>
+            <a class="mi-link" href="#">Lihat kos →</a>
+          </article>
+
+          <article class="map-info map-info--denpasar">
+            <div class="mi-top"><span class="mi-badge">Aktif</span><span class="mi-coord">1 kos</span></div>
+            <h3>Denpasar</h3>
+            <p class="mi-names">Kos Bougenville</p>
+            <div class="mi-figs"><div><b>5</b><span>kamar</span></div><div><b>1</b><span>kosong</span></div><div><b>4</b><span>penghuni</span></div></div>
+            <div class="mi-price">Rp1,1 – 1,4 jt <span>/ bulan</span></div>
+            <a class="mi-link" href="#">Lihat kos →</a>
+          </article>
+
+          <article class="map-info map-info--makassar">
+            <div class="mi-top"><span class="mi-badge">Aktif</span><span class="mi-coord">1 kos</span></div>
+            <h3>Makassar</h3>
+            <p class="mi-names">Kos Palem</p>
+            <div class="mi-figs"><div><b>6</b><span>kamar</span></div><div><b>2</b><span>kosong</span></div><div><b>4</b><span>penghuni</span></div></div>
+            <div class="mi-price">Rp800 rb – Rp1,0 jt <span>/ bulan</span></div>
+            <a class="mi-link" href="#">Lihat kos →</a>
+          </article>
+
+          <div class="map-cities">
+            <span>Kota</span>
+            <label for="p-medan">Medan</label>
+            <label for="p-jakarta">Jakarta</label>
+            <label for="p-jogja">Yogyakarta</label>
+            <label for="p-surabaya">Surabaya</label>
+            <label for="p-denpasar">Denpasar</label>
+            <label for="p-makassar">Makassar</label>
+          </div>
+
+          <div class="map-demo">Peta stilasi · data contoh. Titik produksi diambil dari data kos.</div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ROOMS -->
+    <section class="section" id="kamar">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Kamar di Yogyakarta</div>
+          <h2>Empat kamar kosong</h2>
+        </div>
+        <span class="head-hint">Diperbarui dari status kamar</span>
+      </div>
+
+      <div class="mini-avail">
+        <div class="bar"><i class="isi"></i><i class="rep"></i><i class="kosong"></i></div>
+        <div class="legend">
+          <span><i class="dot isi"></i>6 terisi</span>
+          <span><i class="dot rep"></i>2 perbaikan</span>
+          <span><i class="dot kosong"></i>4 kosong</span>
+        </div>
+      </div>
+
+      <div class="rooms">
+        <article class="room">
+          <div class="photo">
+            <span class="photo-tag">Kos Melati</span>
+            <span class="photo-price">Rp950 rb <span>/ bln</span></span>
+          </div>
+          <div class="room-content">
+            <h3>A5 · VIP</h3>
+            <div class="loc">Kaliurang · KM luar</div>
+            <div class="tags"><span class="tag">Kasur</span><span class="tag">Lemari</span><span class="tag">WiFi</span></div>
+            <div class="room-cta"><span class="avail">Tersedia</span><a href="#">Ajukan →</a></div>
+          </div>
+        </article>
+
+        <article class="room">
+          <div class="photo p2">
+            <span class="photo-tag">Kos Melati</span>
+            <span class="photo-price">Rp1,05 jt <span>/ bln</span></span>
+          </div>
+          <div class="room-content">
+            <h3>A6 · VIP</h3>
+            <div class="loc">Kaliurang · KM dalam</div>
+            <div class="tags"><span class="tag">KM dalam</span><span class="tag">Kasur</span><span class="tag">AC</span></div>
+            <div class="room-cta"><span class="avail">Tersedia</span><a href="#">Ajukan →</a></div>
+          </div>
+        </article>
+
+        <article class="room">
+          <div class="photo p3">
+            <span class="photo-tag">Kos Anggrek</span>
+            <span class="photo-price">Rp950 rb <span>/ bln</span></span>
+          </div>
+          <div class="room-content">
+            <h3>A5 · VIP</h3>
+            <div class="loc">Gejayan · KM luar</div>
+            <div class="tags"><span class="tag">Kasur</span><span class="tag">Lemari</span><span class="tag">WiFi</span></div>
+            <div class="room-cta"><span class="avail">Tersedia</span><a href="#">Ajukan →</a></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section class="section" id="pengurus">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Untuk pengurus</div>
+          <h2>Kamar, tagihan, verifikasi.</h2>
+        </div>
+        <a class="text-link" href="#">Contoh dashboard</a>
+      </div>
+
+      <div class="dash-block">
+        <div class="dash-copy">
+          <div class="kicker">Dashboard pengurus</div>
+          <h3>Angka penting, satu layar.</h3>
+          <p>Dua kos Anda di Yogyakarta, terhubung ke satu dashboard.</p>
+          <div class="dash-tags"><span>Impor CSV</span><span>Jejak audit</span><span>Laporan PDF</span></div>
+        </div>
+
+        <div class="dash-panel">
+          <div class="dash-top"><span>Ringkasan · November 2026</span><span>Laporan →</span></div>
+          <div class="dash-grid">
+            <div class="dash-tile"><span>Terisi</span><b>6 / 12</b></div>
+            <div class="dash-tile gold"><span>Tagihan</span><b>Rp6,0 jt</b></div>
+            <div class="dash-tile"><span>Verifikasi</span><b>2</b></div>
+          </div>
+          <div class="dash-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="dash-foot">Data contoh · bukan angka produksi</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Tanya jawab</div>
+          <h2>Sebelum mulai</h2>
+        </div>
+      </div>
+
+      <div class="faq-grid">
+        <details>
+          <summary>Perlu akun untuk melihat kamar?</summary>
+          <p>Tidak. Akun hanya diperlukan saat mengajukan sewa.</p>
+        </details>
+        <details>
+          <summary>Bagaimana cara mengajukan sewa?</summary>
+          <p>Pilih kamar, isi tanggal mulai dan durasi, lalu kirim ke pengurus.</p>
+        </details>
+        <details>
+          <summary>Format bukti bayar apa yang diterima?</summary>
+          <p>JPG, PNG, atau PDF maksimal 2 MB, dengan jumlah sesuai tagihan.</p>
+        </details>
+        <details>
+          <summary>Laporan bisa diunduh?</summary>
+          <p>Bisa. Rekap pendapatan tersedia dalam CSV dan PDF.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+      <div>
+        <h2>Siap <em>merapikan</em> kos?</h2>
+        <p>Daftar, tambah kamar, tagihan jalan sendiri.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn-gold" href="#">Daftar sebagai pengurus</a>
+        <a class="btn-outline" href="#">Masuk</a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="f-left">KelolaKos <span>Kelola kos lebih rapi.</span></div>
+      <nav class="f-links">
+        <a href="#jaringan">Jaringan</a>
+        <a href="#kamar">Kamar</a>
+        <a href="#pengurus">Pengurus</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div>Yogyakarta · 0812-0000-0000</div>
+    </footer>
+    <div class="f-bottom">© 2026 KelolaKos · Data pada halaman ini adalah data demo.</div>
+
+  </div>
+
+  <!-- PHONE -->
+  <div class="phone-section">
+    <div class="phone-label">Pratinjau HP · 375px</div>
+    <div class="phone">
+      <div class="phone-screen">
+        <div class="m-nav">
+          <div class="m-brand"><span class="m-mark">K</span>KelolaKos</div>
+          <div class="m-burger"><i></i><i></i><i></i></div>
+        </div>
+        <div class="m-body">
+          <div class="m-eyebrow">Kos &amp; penghuni · 6 kota</div>
+          <h3>Cari kamar.<br>Kelola kos.<br><em>Satu tempat.</em></h3>
+          <p class="m-sub">Kamar kosong, tagihan, dan bukti bayar dalam satu alur.</p>
+
+          <div class="m-search">
+            <div class="m-field"><span>Kota</span><b>Semua kota</b></div>
+            <div class="m-field"><span>Harga maks</span><b>Rp1.000.000</b></div>
+            <div class="m-cta">Cari kamar</div>
+          </div>
+
+          <div class="m-map">
+            <svg class="id-map" viewBox="0 0 760 340" aria-hidden="true">
+              <g fill="rgba(28,25,23,.12)" stroke="rgba(12,10,9,.18)" stroke-width="1.5" stroke-linejoin="round">
+                <path d="M96 58 C108 54 120 64 130 78 L178 144 C194 166 208 188 213 203 C217 214 211 222 202 223 C192 224 184 216 177 205 L129 144 C116 127 100 110 90 94 C82 81 84 63 96 58 Z"/>
+                <path d="M212 254 C232 247 256 250 282 255 C310 260 338 266 364 264 C382 263 396 259 404 263 C411 267 410 275 401 278 C380 284 352 280 322 276 C292 272 260 268 238 265 C226 263 218 261 212 254 Z"/>
+                <path d="M300 116 C316 102 340 96 362 100 C384 104 396 118 408 130 C422 143 436 150 438 164 C441 180 431 193 415 199 C399 205 382 199 368 191 C352 183 336 189 321 181 C305 172 297 157 295 141 C293 130 294 122 300 116 Z"/>
+                <path d="M472 126 C482 118 494 120 498 130 C502 140 496 150 488 157 C482 162 481 172 487 181 C494 192 500 202 495 211 C490 220 478 217 473 207 C467 194 461 182 453 172 C445 162 443 148 451 139 C457 132 466 129 472 126 Z"/>
+                <path d="M624 166 C636 150 656 143 676 148 C696 153 710 164 722 178 C736 194 740 206 732 214 C724 222 712 219 704 211 C696 203 686 204 678 213 C669 223 655 230 643 226 C631 222 627 210 629 198 C631 186 617 178 624 166 Z"/>
+              </g>
+            </svg>
+            <span class="m-pin" style="left:42.8%;top:79.4%"></span>
+            <span class="m-pin" style="left:54.5%;top:82.9%"></span>
+            <span class="m-pin" style="left:62.9%;top:65.9%"></span>
+            <span class="m-map-label">6 KOTA · 8 KOS</span>
+          </div>
+
+          <div class="m-card">
+            <div class="m-photo"><span class="m-price">Rp1,05 jt</span></div>
+            <div class="m-card-body"><b>A6 · VIP · Kos Melati</b><p>KM dalam · kasur · lemari · WiFi</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

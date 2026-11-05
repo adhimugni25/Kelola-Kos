@@ -1,0 +1,274 @@
+<h2>Hitam–putih: seberapa tinggi kontrasnya?</h2>
+<p class="subtitle">
+  Tiga perlakuan monokrom untuk layar yang sama. Kedalaman datang dari perbedaan kontras
+  (hitam, grafit, abu, putih) dan opasitas panel — bukan dari warna. Perhatikan juga baris
+  status di tiap kartu: lunas dibuat penuh, menunggu bergaris, belum bayar abu muda.
+</p>
+
+<style>
+  .cards.bw-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.1rem; }
+  @media (max-width: 1000px) { .cards.bw-grid { grid-template-columns: 1fr; } }
+
+  .card-image.bw-shot {
+    aspect-ratio: 4 / 3;
+    display: block;
+    padding: 14px;
+    background: var(--scene);
+  }
+
+  .bw-app {
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+    border-radius: 12px;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 8px;
+    line-height: 1.35;
+    background: var(--app-bg);
+    border: 1px solid var(--app-border);
+    backdrop-filter: blur(var(--app-blur, 0px));
+    color: var(--text);
+    box-shadow: var(--app-shadow, 0 10px 24px rgba(9, 9, 11, .12));
+  }
+
+  .bw-side {
+    width: 27%;
+    padding: 9px 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: var(--side-bg);
+    border-right: 1px solid var(--side-border);
+    backdrop-filter: blur(var(--side-blur, 0px));
+  }
+
+  .bw-logo { display: flex; align-items: center; gap: 5px; margin-bottom: 3px; }
+  .bw-logo-mark {
+    width: 13px; height: 13px; border-radius: 4px;
+    background: var(--brand); color: var(--logo-ink, #fff);
+    font-size: 7px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .bw-logo-text { font-size: 7px; font-weight: 700; color: var(--strong); letter-spacing: -.2px; }
+
+  .bw-nav { height: 9px; border-radius: 3px; background: var(--nav-idle); width: 90%; }
+  .bw-nav.short { width: 66%; }
+  .bw-nav.active { background: var(--nav-active); }
+  .bw-nav.active::after {
+    content: ""; display: block; width: 60%; height: 2px;
+    margin: 3.5px 0 0 4px; border-radius: 2px; background: var(--brand);
+  }
+
+  .bw-main { flex: 1; min-width: 0; padding: 9px 10px; display: flex; flex-direction: column; gap: 7px; }
+  .bw-topbar { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+  .bw-title { font-size: 9px; font-weight: 700; color: var(--strong); letter-spacing: -.3px; }
+  .bw-avatar { width: 11px; height: 11px; border-radius: 50%; background: var(--nav-active); border: 1px solid var(--panel-border); }
+  .bw-btn {
+    font-size: 5.5px; font-weight: 700; padding: 2.5px 6px; border-radius: 999px;
+    background: var(--btn-bg); color: var(--btn-text); white-space: nowrap;
+  }
+
+  .bw-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+  .bw-stat {
+    background: var(--panel); border: 1px solid var(--panel-border);
+    border-radius: 7px; padding: 5px 5px 4px;
+    backdrop-filter: blur(var(--panel-blur, 0px));
+  }
+  .bw-stat-label { font-size: 5.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .3px; }
+  .bw-stat-value { font-size: 10px; font-weight: 700; color: var(--strong); margin-top: 1px; letter-spacing: -.3px; }
+  .bw-bar { height: 2px; border-radius: 2px; background: var(--nav-idle); margin-top: 3px; overflow: hidden; }
+  .bw-bar span { display: block; width: 62%; height: 100%; background: var(--brand); }
+
+  .bw-panel {
+    flex: 1; background: var(--panel); border: 1px solid var(--panel-border);
+    border-radius: 7px; padding: 5px 6px; backdrop-filter: blur(var(--panel-blur, 0px));
+  }
+  .bw-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 6px;
+    padding: 3.5px 0; border-bottom: 1px solid var(--row-border);
+  }
+  .bw-row:last-child { border-bottom: 0; }
+  .bw-line { height: 3px; border-radius: 2px; background: var(--muted-soft); width: 42%; }
+  .bw-line.short { width: 26%; }
+  .bw-badge {
+    font-size: 5.5px; font-weight: 700; padding: 1.5px 4px; border-radius: 999px;
+    background: var(--badge-bg); color: var(--badge-text);
+  }
+  .bw-badge.ghost { background: transparent; color: var(--strong); border: 1px solid var(--badge-text); }
+  .bw-badge.soft { background: var(--nav-idle); color: var(--text); }
+
+  /* 1 — Lembut */
+  .bw-lembut {
+    --scene: linear-gradient(160deg, #FFFFFF, #F4F4F5 60%, #EDEDEF);
+    --app-bg: rgba(255, 255, 255, .55); --app-border: #E4E4E7; --app-blur: 4px;
+    --side-bg: rgba(255, 255, 255, .5); --side-border: #EDEDEF; --side-blur: 4px;
+    --panel: rgba(255, 255, 255, .72); --panel-border: #EDEDEF; --panel-blur: 4px;
+    --row-border: #F1F1F3; --nav-idle: #F1F1F3; --nav-active: #E4E4E7;
+    --text: #52525B; --strong: #18181B; --muted: #8A8A93; --muted-soft: #E4E4E7;
+    --brand: #18181B; --badge-bg: #18181B; --badge-text: #FFFFFF;
+    --btn-bg: #18181B; --btn-text: #FFFFFF;
+    --app-shadow: 0 6px 18px rgba(9, 9, 11, .06);
+  }
+
+  /* 2 — Seimbang */
+  .bw-seimbang {
+    --scene: radial-gradient(circle at 78% 8%, #FFFFFF 0%, transparent 42%),
+             linear-gradient(150deg, #F4F4F5, #E4E4E7 70%, #D4D4D8);
+    --app-bg: rgba(255, 255, 255, .38); --app-border: rgba(255, 255, 255, .9); --app-blur: 7px;
+    --side-bg: rgba(255, 255, 255, .5); --side-border: rgba(255, 255, 255, .75); --side-blur: 8px;
+    --panel: rgba(255, 255, 255, .78); --panel-border: rgba(255, 255, 255, .95); --panel-blur: 8px;
+    --row-border: rgba(9, 9, 11, .07); --nav-idle: rgba(255, 255, 255, .55); --nav-active: rgba(9, 9, 11, .09);
+    --text: #3F3F46; --strong: #09090B; --muted: #71717A; --muted-soft: rgba(9, 9, 11, .14);
+    --brand: #09090B; --badge-bg: #09090B; --badge-text: #FFFFFF;
+    --btn-bg: #09090B; --btn-text: #FFFFFF;
+    --app-shadow: 0 12px 28px rgba(9, 9, 11, .16);
+  }
+
+  /* 3 — Kontras tinggi (gelap) */
+  .bw-kontras {
+    --scene: radial-gradient(circle at 20% 10%, #3F3F46 0%, transparent 45%),
+             radial-gradient(circle at 85% 88%, #27272A 0%, transparent 40%),
+             #09090B;
+    --app-bg: rgba(255, 255, 255, .04); --app-border: rgba(255, 255, 255, .14); --app-blur: 6px;
+    --side-bg: rgba(255, 255, 255, .05); --side-border: rgba(255, 255, 255, .1); --side-blur: 8px;
+    --panel: rgba(255, 255, 255, .07); --panel-border: rgba(255, 255, 255, .14); --panel-blur: 8px;
+    --row-border: rgba(255, 255, 255, .12); --nav-idle: rgba(255, 255, 255, .1); --nav-active: rgba(255, 255, 255, .18);
+    --text: #D4D4D8; --strong: #FAFAFA; --muted: #A1A1AA; --muted-soft: rgba(255, 255, 255, .2);
+    --brand: #FAFAFA; --logo-ink: #09090B;
+    --badge-bg: #FAFAFA; --badge-text: #09090B;
+    --btn-bg: #FAFAFA; --btn-text: #09090B;
+    --app-shadow: 0 14px 32px rgba(0, 0, 0, .5);
+  }
+  .bw-kontras .bw-badge.ghost { color: #FAFAFA; border-color: rgba(255, 255, 255, .55); }
+  .bw-kontras .bw-badge.soft { color: #D4D4D8; }
+
+  .card-body { padding: .9rem 1rem 1rem; }
+  .card-body h3 { font-size: .98rem; margin-bottom: .2rem; }
+  .card-body p { font-size: .82rem; line-height: 1.45; }
+  .bw-where { margin-top: .5rem; font-size: .72rem; color: var(--text-secondary); }
+  .bw-where strong { color: var(--text-primary); }
+
+  .bw-swatches { display: flex; gap: 5px; margin-top: .6rem; }
+  .bw-swatch { width: 18px; height: 18px; border-radius: 5px; border: 1px solid rgba(0,0,0,.12); }
+
+  .bw-note { margin-top: 1.25rem; font-size: .82rem; color: var(--text-secondary); }
+  .bw-note strong { color: var(--text-primary); }
+</style>
+
+<div class="cards bw-grid">
+
+  <div class="card" data-choice="lembut" onclick="toggleSelect(this)">
+    <div class="card-image bw-shot bw-lembut">
+      <div class="bw-app">
+        <div class="bw-side">
+          <div class="bw-logo"><div class="bw-logo-mark">K</div><div class="bw-logo-text">KelolaKos</div></div>
+          <div class="bw-nav active"></div><div class="bw-nav"></div><div class="bw-nav short"></div><div class="bw-nav"></div>
+        </div>
+        <div class="bw-main">
+          <div class="bw-topbar"><span class="bw-title">Dashboard</span><span class="bw-btn">Buat tagihan</span></div>
+          <div class="bw-stats">
+            <div class="bw-stat"><div class="bw-stat-label">Terisi</div><div class="bw-stat-value">8</div><div class="bw-bar"><span></span></div></div>
+            <div class="bw-stat"><div class="bw-stat-label">Pendapatan</div><div class="bw-stat-value">7,2 jt</div><div class="bw-bar"><span></span></div></div>
+            <div class="bw-stat"><div class="bw-stat-label">Belum lunas</div><div class="bw-stat-value">3</div><div class="bw-bar"><span></span></div></div>
+          </div>
+          <div class="bw-panel">
+            <div class="bw-row"><div class="bw-line"></div><div class="bw-badge">Lunas</div></div>
+            <div class="bw-row"><div class="bw-line short"></div><div class="bw-badge ghost">Menunggu</div></div>
+            <div class="bw-row"><div class="bw-line"></div><div class="bw-badge soft">Belum bayar</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>1 · Lembut</h3>
+      <p>Putih dan abu muda, garis tipis, bayangan hampir hilang. Tenang dan bersih, tapi status kurang "menonjol".</p>
+      <div class="bw-where"><strong>Kontras:</strong> judul hitam, isi abu gelap, garis abu muda. <strong>Transparansi:</strong> rendah.</div>
+      <div class="bw-swatches">
+        <span class="bw-swatch" style="background:#18181B"></span>
+        <span class="bw-swatch" style="background:#52525B"></span>
+        <span class="bw-swatch" style="background:#A1A1AA"></span>
+        <span class="bw-swatch" style="background:#E4E4E7"></span>
+        <span class="bw-swatch" style="background:#FFFFFF"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="seimbang" onclick="toggleSelect(this)">
+    <div class="card-image bw-shot bw-seimbang">
+      <div class="bw-app">
+        <div class="bw-side">
+          <div class="bw-logo"><div class="bw-logo-mark">K</div><div class="bw-logo-text">KelolaKos</div></div>
+          <div class="bw-nav active"></div><div class="bw-nav"></div><div class="bw-nav short"></div><div class="bw-nav"></div>
+        </div>
+        <div class="bw-main">
+          <div class="bw-topbar"><span class="bw-title">Dashboard</span><span class="bw-btn">Buat tagihan</span></div>
+          <div class="bw-stats">
+            <div class="bw-stat"><div class="bw-stat-label">Terisi</div><div class="bw-stat-value">8</div><div class="bw-bar"><span></span></div></div>
+            <div class="bw-stat"><div class="bw-stat-label">Pendapatan</div><div class="bw-stat-value">7,2 jt</div><div class="bw-bar"><span></span></div></div>
+            <div class="bw-stat"><div class="bw-stat-label">Belum lunas</div><div class="bw-stat-value">3</div><div class="bw-bar"><span></span></div></div>
+          </div>
+          <div class="bw-panel">
+            <div class="bw-row"><div class="bw-line"></div><div class="bw-badge">Lunas</div></div>
+            <div class="bw-row"><div class="bw-line short"></div><div class="bw-badge ghost">Menunggu</div></div>
+            <div class="bw-row"><div class="bw-line"></div><div class="bw-badge soft">Belum bayar</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>2 · Seimbang <span style="font-size:.7rem;font-weight:600">(rekomendasi)</span></h3>
+      <p>Kaca putih di atas latar abu bergradasi. Ada kedalaman, angka tetap hitam pekat, dan status jelas lewat bentuk isian.</p>
+      <div class="bw-where"><strong>Kontras:</strong> hitam untuk angka & judul, abu untuk pendukung. <strong>Transparansi:</strong> sedang, hanya di panel.</div>
+      <div class="bw-swatches">
+        <span class="bw-swatch" style="background:#09090B"></span>
+        <span class="bw-swatch" style="background:#3F3F46"></span>
+        <span class="bw-swatch" style="background:#A1A1AA"></span>
+        <span class="bw-swatch" style="background:#E4E4E7"></span>
+        <span class="bw-swatch" style="background:#FFFFFF"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="kontras" onclick="toggleSelect(this)">
+    <div class="card-image bw-shot bw-kontras">
+      <div class="bw-app">
+        <div class="bw-side">
+          <div class="bw-logo"><div class="bw-logo-mark">K</div><div class="bw-logo-text">KelolaKos</div></div>
+          <div class="bw-nav active"></div><div class="bw-nav"></div><div class="bw-nav short"></div><div class="bw-nav"></div>
+        </div>
+        <div class="bw-main">
+          <div class="bw-topbar"><span class="bw-title">Dashboard</span><span class="bw-btn">Buat tagihan</span></div>
+          <div class="bw-stats">
+            <div class="bw-stat"><div class="bw-stat-label">Terisi</div><div class="bw-stat-value">8</div><div class="bw-bar"><span></span></div></div>
+            <div class="bw-stat"><div class="bw-stat-label">Pendapatan</div><div class="bw-stat-value">7,2 jt</div><div class="bw-bar"><span></span></div></div>
+            <div class="bw-stat"><div class="bw-stat-label">Belum lunas</div><div class="bw-stat-value">3</div><div class="bw-bar"><span></span></div></div>
+          </div>
+          <div class="bw-panel">
+            <div class="bw-row"><div class="bw-line"></div><div class="bw-badge">Lunas</div></div>
+            <div class="bw-row"><div class="bw-line short"></div><div class="bw-badge ghost">Menunggu</div></div>
+            <div class="bw-row"><div class="bw-line"></div><div class="bw-badge soft">Belum bayar</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>3 · Kontras Tinggi</h3>
+      <p>Latar hampir hitam dengan panel kaca putih tipis. Paling dramatis dan terasa premium, tetapi lebih berat untuk pemakaian lama.</p>
+      <div class="bw-where"><strong>Kontras:</strong> putih di atas hitam. <strong>Transparansi:</strong> tinggi, hampir semua panel.</div>
+      <div class="bw-swatches">
+        <span class="bw-swatch" style="background:#FAFAFA"></span>
+        <span class="bw-swatch" style="background:#A1A1AA"></span>
+        <span class="bw-swatch" style="background:#3F3F46"></span>
+        <span class="bw-swatch" style="background:#18181B"></span>
+        <span class="bw-swatch" style="background:#09090B"></span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<p class="bw-note">
+  Status dibedakan tanpa warna: <strong>lunas</strong> = isian hitam penuh, <strong>menunggu</strong> = garis,
+  <strong>belum bayar</strong> = abu muda. Klik pilihan Anda, lalu balas di terminal — termasuk apakah
+  warna fungsional (hijau/kuning/merah) boleh muncul khusus di status, atau tetap hitam-putih sepenuhnya.
+</p>

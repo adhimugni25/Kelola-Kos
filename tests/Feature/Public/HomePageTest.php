@@ -244,4 +244,34 @@ class HomePageTest extends TestCase
             ->assertOk()
             ->assertSee('Belum ada kamar kosong');
     }
+
+    public function test_homepage_has_labeled_dashboard_preview_faq_and_honest_cta(): void
+    {
+        config(['kelolakos.kontak_admin' => null]);
+
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('Angka penting, satu layar.')
+            ->assertSee('Contoh tampilan')
+            ->assertSee('bukan data produksi')
+            ->assertSee('Perlu akun untuk melihat kamar?')
+            ->assertSee('Bagaimana cara mengajukan sewa?')
+            ->assertSee('Format bukti bayar apa yang diterima?')
+            ->assertSee('Laporan bisa diunduh?')
+            ->assertSee('Siap merapikan kos?')
+            ->assertSee('Masuk sebagai pengurus')
+            ->assertSee('Buat akun penghuni')
+            ->assertDontSee('Daftar sebagai pengurus')
+            ->assertDontSee('0812-0000-0000');
+    }
+
+    public function test_homepage_uses_configured_admin_contact_for_pengurus_cta(): void
+    {
+        config(['kelolakos.kontak_admin' => 'admin@kelolakos.test']);
+
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('Hubungi admin')
+            ->assertSee('mailto:admin@kelolakos.test', false);
+    }
 }

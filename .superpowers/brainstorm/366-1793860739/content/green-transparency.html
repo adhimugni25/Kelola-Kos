@@ -1,0 +1,261 @@
+<h2>Hijau + putih: seberapa kuat lapisan transparansinya?</h2>
+<p class="subtitle">
+  Tiga intensitas untuk arah yang sama. Semua memakai hijau emerald dan putih; bedanya seberapa
+  banyak latar hijau yang "menembus" panel. Klik yang paling pas — nanti saya terapkan konsisten
+  ke kartu, tabel, sidebar, dan form.
+</p>
+
+<style>
+  .cards.tw-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.1rem; }
+  @media (max-width: 1000px) { .cards.tw-grid { grid-template-columns: 1fr; } }
+
+  .card-image.tw-shot {
+    aspect-ratio: 4 / 3;
+    display: block;
+    padding: 14px;
+    background: var(--scene);
+  }
+
+  .tw-app {
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+    border-radius: 12px;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 8px;
+    line-height: 1.35;
+    box-shadow: 0 10px 24px rgba(6, 78, 59, .18);
+    border: 1px solid var(--app-border);
+    background: var(--app-bg);
+    backdrop-filter: blur(var(--app-blur, 0px));
+    color: var(--text);
+  }
+
+  .tw-side {
+    width: 27%;
+    padding: 9px 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: var(--side-bg);
+    border-right: 1px solid var(--side-border);
+    backdrop-filter: blur(var(--side-blur, 0px));
+  }
+
+  .tw-logo { display: flex; align-items: center; gap: 5px; margin-bottom: 3px; }
+  .tw-logo-mark {
+    width: 13px; height: 13px; border-radius: 4px;
+    background: var(--brand); color: #fff;
+    font-size: 7px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .tw-logo-text { font-size: 7px; font-weight: 700; color: var(--strong); letter-spacing: -.2px; }
+
+  .tw-nav { height: 9px; border-radius: 3px; background: var(--nav-idle); width: 90%; }
+  .tw-nav.short { width: 66%; }
+  .tw-nav.active { background: var(--nav-active); }
+  .tw-nav.active::after {
+    content: ""; display: block; width: 60%; height: 2px;
+    margin: 3.5px 0 0 4px; border-radius: 2px; background: var(--brand);
+  }
+
+  .tw-main { flex: 1; min-width: 0; padding: 9px 10px; display: flex; flex-direction: column; gap: 7px; }
+  .tw-topbar { display: flex; align-items: center; justify-content: space-between; }
+  .tw-title { font-size: 9px; font-weight: 700; color: var(--strong); letter-spacing: -.2px; }
+  .tw-avatar { width: 11px; height: 11px; border-radius: 50%; background: var(--nav-active); border: 1px solid var(--brand); }
+
+  .tw-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+  .tw-stat {
+    background: var(--panel); border: 1px solid var(--panel-border);
+    border-radius: 7px; padding: 5px 5px 4px;
+    backdrop-filter: blur(var(--panel-blur, 0px));
+  }
+  .tw-stat-label { font-size: 5.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .3px; }
+  .tw-stat-value { font-size: 10px; font-weight: 700; color: var(--strong); margin-top: 1px; letter-spacing: -.3px; }
+  .tw-stat-value.accent { color: var(--brand); }
+  .tw-bar { height: 2px; border-radius: 2px; background: var(--nav-idle); margin-top: 3px; overflow: hidden; }
+  .tw-bar span { display: block; width: 62%; height: 100%; background: var(--brand); }
+
+  .tw-panel {
+    flex: 1; background: var(--panel); border: 1px solid var(--panel-border);
+    border-radius: 7px; padding: 5px 6px; backdrop-filter: blur(var(--panel-blur, 0px));
+  }
+  .tw-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 6px;
+    padding: 3.5px 0; border-bottom: 1px solid var(--row-border);
+  }
+  .tw-row:last-child { border-bottom: 0; }
+  .tw-line { height: 3px; border-radius: 2px; background: var(--muted-soft); width: 42%; }
+  .tw-line.short { width: 26%; }
+  .tw-badge {
+    font-size: 5.5px; font-weight: 700; padding: 1.5px 4px; border-radius: 999px;
+    background: var(--badge-bg); color: var(--badge-text);
+  }
+  .tw-badge.warn { background: #FEF3C7; color: #B45309; }
+
+  /* 1 — Bersih: putih pekat, hijau hanya aksen */
+  .tw-bersih {
+    --scene: linear-gradient(135deg, #ECFDF5, #D1FAE5);
+    --app-bg: #FFFFFF; --app-border: #E2E8F0; --app-blur: 0px;
+    --side-bg: #FFFFFF; --side-border: #EDF2F7; --side-blur: 0px;
+    --panel: #FFFFFF; --panel-border: #E6EDF5; --panel-blur: 0px;
+    --row-border: #F1F5F9; --nav-idle: #EEF4F1; --nav-active: #D1FAE5;
+    --text: #334155; --strong: #0F172A; --muted: #64748B; --muted-soft: #E2E8F0;
+    --brand: #059669; --badge-bg: #D1FAE5; --badge-text: #047857;
+  }
+
+  /* 2 — Berlapis: kaca putih di atas latar hijau lembut */
+  .tw-berlapis {
+    --scene: radial-gradient(circle at 20% 15%, #A7F3D0 0%, transparent 45%),
+             radial-gradient(circle at 90% 85%, #6EE7B7 0%, transparent 40%),
+             linear-gradient(135deg, #ECFDF5, #D1FAE5 60%, #A7F3D0);
+    --app-bg: rgba(255, 255, 255, .35); --app-border: rgba(255, 255, 255, .65); --app-blur: 6px;
+    --side-bg: rgba(255, 255, 255, .42); --side-border: rgba(255, 255, 255, .55); --side-blur: 8px;
+    --panel: rgba(255, 255, 255, .72); --panel-border: rgba(255, 255, 255, .85); --panel-blur: 8px;
+    --row-border: rgba(6, 78, 59, .08); --nav-idle: rgba(255, 255, 255, .55); --nav-active: rgba(5, 150, 105, .16);
+    --text: #1F3D33; --strong: #064E3B; --muted: #4B6B5F; --muted-soft: rgba(6, 78, 59, .18);
+    --brand: #059669; --badge-bg: rgba(5, 150, 105, .14); --badge-text: #047857;
+  }
+
+  /* 3 — Kaca hijau: panel hijau tembus pandang, teks putih */
+  .tw-kaca {
+    --scene: radial-gradient(circle at 25% 20%, #10B981 0%, transparent 50%),
+             radial-gradient(circle at 85% 80%, #0D9488 0%, transparent 45%),
+             linear-gradient(135deg, #064E3B, #047857 55%, #059669);
+    --app-bg: rgba(6, 78, 59, .35); --app-border: rgba(255, 255, 255, .22); --app-blur: 6px;
+    --side-bg: rgba(255, 255, 255, .08); --side-border: rgba(255, 255, 255, .16); --side-blur: 10px;
+    --panel: rgba(255, 255, 255, .14); --panel-border: rgba(255, 255, 255, .24); --panel-blur: 10px;
+    --row-border: rgba(255, 255, 255, .14); --nav-idle: rgba(255, 255, 255, .12); --nav-active: rgba(255, 255, 255, .24);
+    --text: #D1FAE5; --strong: #FFFFFF; --muted: #A7F3D0; --muted-soft: rgba(255, 255, 255, .22);
+    --brand: #6EE7B7; --badge-bg: rgba(255, 255, 255, .2); --badge-text: #FFFFFF;
+  }
+  .tw-kaca .tw-logo-mark { color: #064E3B; background: #FFFFFF; }
+
+  .card-body { padding: .9rem 1rem 1rem; }
+  .card-body h3 { font-size: .98rem; margin-bottom: .2rem; }
+  .card-body p { font-size: .82rem; line-height: 1.45; }
+  .tw-where { margin-top: .5rem; font-size: .72rem; color: var(--text-secondary); }
+  .tw-where strong { color: var(--text-primary); }
+
+  .tw-swatches { display: flex; gap: 5px; margin-top: .6rem; }
+  .tw-swatch { width: 18px; height: 18px; border-radius: 5px; border: 1px solid rgba(0,0,0,.08); }
+
+  .tw-note { margin-top: 1.25rem; font-size: .82rem; color: var(--text-secondary); }
+</style>
+
+<div class="cards tw-grid">
+
+  <div class="card" data-choice="bersih" onclick="toggleSelect(this)">
+    <div class="card-image tw-shot tw-bersih">
+      <div class="tw-app">
+        <div class="tw-side">
+          <div class="tw-logo"><div class="tw-logo-mark">K</div><div class="tw-logo-text">KelolaKos</div></div>
+          <div class="tw-nav active"></div><div class="tw-nav"></div><div class="tw-nav short"></div><div class="tw-nav"></div>
+        </div>
+        <div class="tw-main">
+          <div class="tw-topbar"><span class="tw-title">Dashboard</span><span class="tw-avatar"></span></div>
+          <div class="tw-stats">
+            <div class="tw-stat"><div class="tw-stat-label">Terisi</div><div class="tw-stat-value">8</div><div class="tw-bar"><span></span></div></div>
+            <div class="tw-stat"><div class="tw-stat-label">Pendapatan</div><div class="tw-stat-value accent">7,2 jt</div><div class="tw-bar"><span></span></div></div>
+            <div class="tw-stat"><div class="tw-stat-label">Belum lunas</div><div class="tw-stat-value">3</div><div class="tw-bar"><span></span></div></div>
+          </div>
+          <div class="tw-panel">
+            <div class="tw-row"><div class="tw-line"></div><div class="tw-badge">Lunas</div></div>
+            <div class="tw-row"><div class="tw-line short"></div><div class="tw-badge warn">Menunggu</div></div>
+            <div class="tw-row"><div class="tw-line"></div><div class="tw-badge">Lunas</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>1 · Bersih</h3>
+      <p>Putih pekat, hijau hanya di tombol, badge, dan grafik. Paling mudah dibaca dan paling aman saat presentasi.</p>
+      <div class="tw-where"><strong>Transparansi dipakai:</strong> hover tombol, badge, dan overlay dialog saja.</div>
+      <div class="tw-swatches">
+        <span class="tw-swatch" style="background:#059669"></span>
+        <span class="tw-swatch" style="background:#D1FAE5"></span>
+        <span class="tw-swatch" style="background:#ECFDF5"></span>
+        <span class="tw-swatch" style="background:#FFFFFF"></span>
+        <span class="tw-swatch" style="background:#0F172A"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="berlapis" onclick="toggleSelect(this)">
+    <div class="card-image tw-shot tw-berlapis">
+      <div class="tw-app">
+        <div class="tw-side">
+          <div class="tw-logo"><div class="tw-logo-mark">K</div><div class="tw-logo-text">KelolaKos</div></div>
+          <div class="tw-nav active"></div><div class="tw-nav"></div><div class="tw-nav short"></div><div class="tw-nav"></div>
+        </div>
+        <div class="tw-main">
+          <div class="tw-topbar"><span class="tw-title">Dashboard</span><span class="tw-avatar"></span></div>
+          <div class="tw-stats">
+            <div class="tw-stat"><div class="tw-stat-label">Terisi</div><div class="tw-stat-value">8</div><div class="tw-bar"><span></span></div></div>
+            <div class="tw-stat"><div class="tw-stat-label">Pendapatan</div><div class="tw-stat-value accent">7,2 jt</div><div class="tw-bar"><span></span></div></div>
+            <div class="tw-stat"><div class="tw-stat-label">Belum lunas</div><div class="tw-stat-value">3</div><div class="tw-bar"><span></span></div></div>
+          </div>
+          <div class="tw-panel">
+            <div class="tw-row"><div class="tw-line"></div><div class="tw-badge">Lunas</div></div>
+            <div class="tw-row"><div class="tw-line short"></div><div class="tw-badge warn">Menunggu</div></div>
+            <div class="tw-row"><div class="tw-line"></div><div class="tw-badge">Lunas</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>2 · Berlapis <span style="font-size:.7rem;color:#059669;font-weight:600">(rekomendasi)</span></h3>
+      <p>Panel putih 70–80% di atas gradien hijau lembut. Terasa modern dan berkedalaman, teks tetap gelap sehingga aman dibaca.</p>
+      <div class="tw-where"><strong>Transparansi dipakai:</strong> sidebar, kartu statistik, dan header. Tabel utama tetap lebih pekat.</div>
+      <div class="tw-swatches">
+        <span class="tw-swatch" style="background:#059669"></span>
+        <span class="tw-swatch" style="background:#A7F3D0"></span>
+        <span class="tw-swatch" style="background:#ECFDF5"></span>
+        <span class="tw-swatch" style="background:#FFFFFF"></span>
+        <span class="tw-swatch" style="background:#064E3B"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="kaca" onclick="toggleSelect(this)">
+    <div class="card-image tw-shot tw-kaca">
+      <div class="tw-app">
+        <div class="tw-side">
+          <div class="tw-logo"><div class="tw-logo-mark">K</div><div class="tw-logo-text">KelolaKos</div></div>
+          <div class="tw-nav active"></div><div class="tw-nav"></div><div class="tw-nav short"></div><div class="tw-nav"></div>
+        </div>
+        <div class="tw-main">
+          <div class="tw-topbar"><span class="tw-title">Dashboard</span><span class="tw-avatar"></span></div>
+          <div class="tw-stats">
+            <div class="tw-stat"><div class="tw-stat-label">Terisi</div><div class="tw-stat-value">8</div><div class="tw-bar"><span></span></div></div>
+            <div class="tw-stat"><div class="tw-stat-label">Pendapatan</div><div class="tw-stat-value accent">7,2 jt</div><div class="tw-bar"><span></span></div></div>
+            <div class="tw-stat"><div class="tw-stat-label">Belum lunas</div><div class="tw-stat-value">3</div><div class="tw-bar"><span></span></div></div>
+          </div>
+          <div class="tw-panel">
+            <div class="tw-row"><div class="tw-line"></div><div class="tw-badge">Lunas</div></div>
+            <div class="tw-row"><div class="tw-line short"></div><div class="tw-badge warn">Menunggu</div></div>
+            <div class="tw-row"><div class="tw-line"></div><div class="tw-badge">Lunas</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>3 · Kaca Hijau</h3>
+      <p>Panel hijau tembus pandang dengan teks putih di atas gradien pekat. Paling dramatis, tapi paling menuntut kontras dan ruang layar.</p>
+      <div class="tw-where"><strong>Transparansi dipakai:</strong> hampir semua permukaan. Perlu uji keterbacaan di HP.</div>
+      <div class="tw-swatches">
+        <span class="tw-swatch" style="background:#6EE7B7"></span>
+        <span class="tw-swatch" style="background:#10B981"></span>
+        <span class="tw-swatch" style="background:#047857"></span>
+        <span class="tw-swatch" style="background:#064E3B"></span>
+        <span class="tw-swatch" style="background:#FFFFFF"></span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<p class="tw-note">
+  Klik salah satu, lalu balas di terminal. Setelah ini saya akan menunjukkan bentuk responsifnya
+  (HP, tablet, desktop) dengan intensitas yang Anda pilih.
+</p>

@@ -74,6 +74,8 @@
 
             @yield('content')
         </main>
+
+        @include('public.partials.site-footer')
     </div>
 </body>
 </html>
