@@ -534,10 +534,10 @@
 
     .map-canvas {
         position: relative;
-        aspect-ratio: 760 / 340;
+        aspect-ratio: 760 / 360;
         border-radius: var(--radius-kos-lg);
         overflow: hidden;
-        background: linear-gradient(160deg, rgba(255,255,255,.62), rgba(255,255,255,.26));
+        background: rgba(255, 255, 255, .62);
         border: 1px solid rgba(255, 255, 255, .9);
     }
 
@@ -548,10 +548,8 @@
         height: 100%;
     }
 
-    .pin-slot {
-        position: absolute;
-        transform: translate(-50%, -50%);
-        z-index: 2;
+    .map-island {
+        filter: drop-shadow(0 2px 6px rgba(12, 10, 9, .04));
     }
 
     .pin-input {
@@ -561,17 +559,23 @@
         opacity: 0;
     }
 
+    .pin-slot {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+    }
+
     .pin {
         position: relative;
         display: block;
-        width: 44px;
-        height: 44px;
+        width: 48px;
+        height: 48px;
         cursor: pointer;
     }
 
     .pin-dot {
         position: absolute;
-        inset: 17px;
+        inset: 19px;
         border-radius: 50%;
         background: linear-gradient(145deg, #E9CE7E, #A16207 80%);
         box-shadow: 0 0 0 2px #fff, 0 3px 8px rgba(12,10,9,.28);
@@ -580,7 +584,7 @@
 
     .pin-ring {
         position: absolute;
-        inset: 0;
+        inset: 8px;
         border-radius: 50%;
         border: 1px solid rgba(161,98,7,.4);
         opacity: 0;
@@ -596,14 +600,14 @@
 
     .pin-tip {
         position: absolute;
-        bottom: calc(100% + 4px);
+        bottom: calc(100% + 2px);
         left: 50%;
         transform: translate(-50%, 3px);
         background: #0C0A09;
         color: #FAFAF9;
-        padding: 5px 9px;
+        padding: 6px 10px;
         border-radius: 7px;
-        font-size: 9px;
+        font-size: 10px;
         white-space: nowrap;
         opacity: 0;
         pointer-events: none;
@@ -621,10 +625,12 @@
     }
 
     .map-side {
-        padding: 10px 8px 4px 14px;
+        padding: 12px 10px 8px 16px;
         display: flex;
         flex-direction: column;
         min-width: 0;
+        background: rgba(255, 255, 255, .4);
+        border-radius: var(--radius-kos-md);
     }
 
     .map-info {
