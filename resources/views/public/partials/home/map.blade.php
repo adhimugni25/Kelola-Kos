@@ -6,7 +6,7 @@
             <div class="kicker">Jaringan kos</div>
             <h2>Sudah bergabung di {{ $jumlahKota }} kota</h2>
         </div>
-        <span class="head-hint">Klik titik emas</span>
+        <span class="head-hint">Klik titik emas · kartu bergeser</span>
     </div>
 
     @if ($petaKota->isEmpty())
@@ -18,7 +18,7 @@
             @endif
         </div>
     @else
-        <fieldset class="map-panel">
+        <fieldset class="map-panel" data-peta>
             <legend class="sr-only">Peta jaringan kos mitra</legend>
             <div class="map-canvas">
                 @include('public.partials.home.indonesia-map')
@@ -38,7 +38,7 @@
                 @endforeach
             </div>
 
-            <div class="map-cards" aria-live="polite">
+            <div class="map-cards" aria-live="off">
                 @foreach ($petaKota as $kota)
                     <div class="mc-group" data-kota="{{ $kota['slug'] }}">
                         @foreach ($kota['kos'] as $index => $kos)
@@ -74,11 +74,23 @@
                         </div>
 
                         @if (count($kota['kos']) > 1)
-                            <div class="mc-nav">
-                                @foreach ($kota['kos'] as $index => $kos)
-                                    <label class="mc-dot" for="c-{{ $kota['slug'] }}-{{ $index }}"
-                                           aria-label="Tampilkan {{ $kos['nama'] }}"></label>
-                                @endforeach
+                            <div class="mc-controls">
+                                <button type="button" class="mc-arrow" data-mc-prev aria-label="Kos sebelumnya" hidden>
+                                    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                                </button>
+                                <div class="mc-nav">
+                                    @foreach ($kota['kos'] as $index => $kos)
+                                        <label class="mc-dot" for="c-{{ $kota['slug'] }}-{{ $index }}"
+                                               aria-label="Tampilkan {{ $kos['nama'] }}"></label>
+                                    @endforeach
+                                </div>
+                                <button type="button" class="mc-arrow" data-mc-next aria-label="Kos berikutnya" hidden>
+                                    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                                </button>
+                                <button type="button" class="mc-pause" data-mc-pause aria-pressed="false" aria-label="Jeda pergeseran otomatis" hidden>
+                                    <svg class="mc-ico-pause" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" fill="currentColor"><rect x="7" y="5" width="3.5" height="14" rx="1"/><rect x="13.5" y="5" width="3.5" height="14" rx="1"/></svg>
+                                    <svg class="mc-ico-play" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                                </button>
                             </div>
                         @endif
                     </div>

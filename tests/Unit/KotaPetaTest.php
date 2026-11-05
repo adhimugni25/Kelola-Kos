@@ -10,9 +10,9 @@ class KotaPetaTest extends TestCase
 {
     public function test_maps_known_city_names_case_insensitively(): void
     {
-        $this->assertSame(['x' => 41.5, 'y' => 80.0], KotaPeta::koordinat(' Yogyakarta '));
-        $this->assertSame(['x' => 41.5, 'y' => 80.0], KotaPeta::koordinat('jogja'));
-        $this->assertSame(['x' => 49.5, 'y' => 79.0], KotaPeta::koordinat('SURABAYA'));
+        $this->assertSame(['x' => 33.2, 'y' => 81.3], KotaPeta::koordinat(' Yogyakarta '));
+        $this->assertSame(['x' => 33.2, 'y' => 81.3], KotaPeta::koordinat('jogja'));
+        $this->assertSame(['x' => 42.2, 'y' => 71.5], KotaPeta::koordinat('SURABAYA'));
     }
 
     public function test_returns_null_for_unknown_city(): void
