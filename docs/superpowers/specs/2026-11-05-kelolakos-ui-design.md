@@ -519,8 +519,9 @@ dalam tabel.
 | Berkas | Perubahan |
 |---|---|
 | `resources/css/app.css` | Token `@theme`, utility kaca, komponen nav/kartu/pill |
-| `resources/views/layouts/app.blade.php` | Nav sticky, pill tengah, drawer mobile, skip link |
-| `resources/views/layouts/guest.blade.php` | Latar dan kartu auth mengikuti token |
+| `resources/views/layouts/public.blade.php` | Layout publik baru: nav sticky, pill tengah, drawer mobile, skip link, footer |
+| `resources/views/layouts/app.blade.php` | Tahap kedua: nav aplikasi memakai token yang sama |
+| `resources/views/layouts/guest.blade.php` | Tahap kedua: latar dan kartu auth mengikuti token |
 | `resources/views/public/landing.blade.php` | Susunan ulang bagian homepage |
 | `resources/views/public/partials/home/*` | Hero, peta, kamar, dashboard, FAQ, CTA |
 | `app/Http/Controllers/Public/HomeController.php` | Query agregat dan data peta |
