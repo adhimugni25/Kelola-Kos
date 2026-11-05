@@ -1,66 +1,77 @@
 <!DOCTYPE html>
-<html lang="id" class="h-full bg-slate-50">
+<html lang="id">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'KelolaKos')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('styles')
 </head>
-<body class="h-full text-slate-800 antialiased">
-    <div class="min-h-full">
-        <header class="border-b border-slate-200 bg-white">
-            <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-                <a href="{{ route('home') }}" class="text-lg font-semibold text-emerald-700">KelolaKos</a>
+<body>
+    <div class="app-shell">
+        <a class="skip-link" href="#konten">Lewati ke konten</a>
+
+        <header class="app-header">
+            <div class="app-header-inner">
+                <a class="brand" href="{{ route('home') }}">
+                    <span class="brand-mark">K</span>KelolaKos
+                </a>
+
                 @auth
-                    <nav class="hidden items-center gap-4 text-sm text-slate-600 md:flex">
-                        @if (auth()->user()->isPengurus())
-                            <a href="{{ route('pengurus.kamar.index') }}" class="hover:text-emerald-700">Kamar</a>
-                            <a href="{{ route('pengurus.pemesanan.index') }}" class="hover:text-emerald-700">Pemesanan</a>
-                            <a href="{{ route('pengurus.tagihan.index') }}" class="hover:text-emerald-700">Tagihan</a>
-                            <a href="{{ route('pengurus.pembayaran.index') }}" class="hover:text-emerald-700">Pembayaran</a>
-                            <a href="{{ route('pengurus.metode-pembayaran.index') }}" class="hover:text-emerald-700">Metode</a>
-                            <a href="{{ route('pengurus.laporan.index') }}" class="hover:text-emerald-700">Laporan</a>
-                            <a href="{{ route('pengurus.impor.index') }}" class="hover:text-emerald-700">Impor</a>
-                        @elseif (auth()->user()->isPenghuni())
-                            <a href="{{ route('penghuni.pemesanan.index') }}" class="hover:text-emerald-700">Pengajuan</a>
-                            <a href="{{ route('penghuni.tagihan.index') }}" class="hover:text-emerald-700">Tagihan</a>
-                        @else
-                            <a href="{{ route('admin.kos.index') }}" class="hover:text-emerald-700">Kos</a>
-                            <a href="{{ route('admin.pengurus.index') }}" class="hover:text-emerald-700">Pengurus</a>
-                        @endif
+                    @php
+                        $user = auth()->user();
+                        $roleLabel = $user->isSuperAdmin() ? 'Super admin' : ($user->isPengurus() ? 'Pengurus' : 'Penghuni');
+                        $pilihanNav = $user->isSuperAdmin()
+                            ? [
+                                ['admin.kos.index', 'Kos'],
+                                ['admin.pengurus.index', 'Pengurus'],
+                            ]
+                            : ($user->isPengurus()
+                                ? [
+                                    ['pengurus.kamar.index', 'Kamar'],
+                                    ['pengurus.pemesanan.index', 'Pemesanan'],
+                                    ['pengurus.tagihan.index', 'Tagihan'],
+                                    ['pengurus.pembayaran.index', 'Pembayaran'],
+                                    ['pengurus.metode-pembayaran.index', 'Metode'],
+                                    ['pengurus.laporan.index', 'Laporan'],
+                                    ['pengurus.impor.index', 'Impor'],
+                                ]
+                                : [
+                                    ['penghuni.pemesanan.index', 'Pengajuan'],
+                                    ['penghuni.tagihan.index', 'Tagihan'],
+                                ]);
+                    @endphp
+                    <nav class="app-nav" aria-label="Navigasi aplikasi">
+                        @foreach ($pilihanNav as [$route, $label])
+                            <a href="{{ route($route) }}"
+                               @if (request()->route()->named($route)) class="is-active" aria-current="page" @endif>{{ $label }}</a>
+                        @endforeach
                     </nav>
 
-                    <div class="flex items-center gap-4 text-sm">
-                        <span class="text-slate-600">{{ auth()->user()->name }}</span>
+                    <div class="app-user">
+                        <span class="role-label">{{ ucfirst($user->kos?->nama ?? $roleLabel) }}</span>
+                        @php $dashboardKe = $user->isSuperAdmin() ? 'admin.dashboard' : ($user->isPengurus() ? 'pengurus.dashboard' : 'penghuni.dashboard'); @endphp
+                        <a class="btn-ghost btn-sm" href="{{ route($dashboardKe) }}">Dashboard</a>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button type="submit" class="rounded-md bg-slate-800 px-3 py-1.5 text-white hover:bg-slate-700">
-                                Keluar
-                            </button>
+                            <button type="submit" class="btn-primary btn-sm">Keluar</button>
                         </form>
                     </div>
                 @else
-                    <div class="flex items-center gap-3 text-sm">
-                        <a href="{{ route('login') }}" class="text-slate-600 hover:text-emerald-700">Masuk</a>
-                        <a href="{{ route('register') }}" class="rounded-md bg-emerald-600 px-3 py-1.5 text-white hover:bg-emerald-700">
-                            Daftar
-                        </a>
+                    <div class="app-user">
+                        <a class="btn-ghost btn-sm" href="{{ route('login') }}">Masuk</a>
+                        <a class="btn-primary btn-sm" href="{{ route('register') }}">Daftar</a>
                     </div>
                 @endauth
             </div>
         </header>
 
-        <main class="mx-auto max-w-6xl px-4 py-8">
+        <main id="konten" class="app-main">
             @if (session('status'))
-                <div class="mb-6 rounded-md border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
-                    {{ session('status') }}
-                </div>
+                <div class="alert alert-sukses" role="status">{{ session('status') }}</div>
             @endif
-
             @if (session('error'))
-                <div class="mb-6 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                    {{ session('error') }}
-                </div>
+                <div class="alert alert-gagal" role="alert">{{ session('error') }}</div>
             @endif
 
             @yield('content')

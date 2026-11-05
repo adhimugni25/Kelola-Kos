@@ -1304,10 +1304,36 @@
         }
     }
 
+    .alert {
+        max-width: 1200px;
+        margin: 16px auto 0;
+        padding: 12px 18px;
+        border-radius: var(--radius-kos-md);
+        font-size: 14px;
+    }
+
+    .alert-sukses {
+        background: var(--color-gold-soft);
+        border: 1px solid rgba(161, 98, 7, .26);
+        color: var(--color-gold-ink);
+    }
+
+    .alert-gagal {
+        background: #FEF2F2;
+        border: 1px solid #FECACA;
+        color: #B91C1C;
+    }
+
     .app-shell {
         min-height: 100vh;
         background: var(--color-paper-2);
         color: var(--color-ink);
+    }
+
+    .app-main {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 32px 22px;
     }
 
     .app-header {
@@ -1711,6 +1737,12 @@
 
         .app-user .role-label {
             display: none;
+        }
+    }
+
+    @media (max-width: 620px) {
+        .app-main {
+            padding: 24px 18px;
         }
     }
 }
