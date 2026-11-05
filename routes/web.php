@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Penghuni\PemesananController as PenghuniPemesananController;
 use App\Http\Controllers\Pengurus\KamarController;
+use App\Http\Controllers\Pengurus\PemesananController as PengurusPemesananController;
 use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\Public\KosPublicController;
 use App\Http\Controllers\SuperAdmin\DashboardController as AdminDashboardController;
@@ -25,10 +27,20 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 Route::middleware(['auth', 'role:pengurus'])->prefix('pengurus')->name('pengurus.')->group(function (): void {
     Route::get('/dashboard', fn () => view('pengurus.dashboard'))->name('dashboard');
     Route::resource('kamar', KamarController::class)->except('show');
+
+    Route::get('/pemesanan', [PengurusPemesananController::class, 'index'])->name('pemesanan.index');
+    Route::get('/pemesanan/{pemesanan}', [PengurusPemesananController::class, 'show'])->name('pemesanan.show');
+    Route::post('/pemesanan/{pemesanan}/setujui', [PengurusPemesananController::class, 'setujui'])->name('pemesanan.setujui');
+    Route::post('/pemesanan/{pemesanan}/tolak', [PengurusPemesananController::class, 'tolak'])->name('pemesanan.tolak');
+    Route::post('/pemesanan/{pemesanan}/selesai', [PengurusPemesananController::class, 'selesai'])->name('pemesanan.selesai');
 });
 
 Route::middleware(['auth', 'role:penghuni'])->prefix('penghuni')->name('penghuni.')->group(function (): void {
     Route::get('/dashboard', fn () => view('penghuni.dashboard'))->name('dashboard');
+    Route::get('/pemesanan', [PenghuniPemesananController::class, 'index'])->name('pemesanan.index');
+    Route::get('/pemesanan/create', [PenghuniPemesananController::class, 'create'])->name('pemesanan.create');
+    Route::post('/pemesanan', [PenghuniPemesananController::class, 'store'])->name('pemesanan.store');
+    Route::post('/pemesanan/{pemesanan}/batal', [PenghuniPemesananController::class, 'batal'])->name('pemesanan.batal');
 });
 
 Route::middleware(['auth', 'role:super_admin'])->prefix('admin')->name('admin.')->group(function (): void {
