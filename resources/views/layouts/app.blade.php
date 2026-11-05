@@ -12,6 +12,22 @@
             <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
                 <a href="{{ route('home') }}" class="text-lg font-semibold text-emerald-700">KelolaKos</a>
                 @auth
+                    <nav class="hidden items-center gap-4 text-sm text-slate-600 md:flex">
+                        @if (auth()->user()->isPengurus())
+                            <a href="{{ route('pengurus.kamar.index') }}" class="hover:text-emerald-700">Kamar</a>
+                            <a href="{{ route('pengurus.pemesanan.index') }}" class="hover:text-emerald-700">Pemesanan</a>
+                            <a href="{{ route('pengurus.tagihan.index') }}" class="hover:text-emerald-700">Tagihan</a>
+                            <a href="{{ route('pengurus.pembayaran.index') }}" class="hover:text-emerald-700">Pembayaran</a>
+                            <a href="{{ route('pengurus.metode-pembayaran.index') }}" class="hover:text-emerald-700">Metode</a>
+                        @elseif (auth()->user()->isPenghuni())
+                            <a href="{{ route('penghuni.pemesanan.index') }}" class="hover:text-emerald-700">Pengajuan</a>
+                            <a href="{{ route('penghuni.tagihan.index') }}" class="hover:text-emerald-700">Tagihan</a>
+                        @else
+                            <a href="{{ route('admin.kos.index') }}" class="hover:text-emerald-700">Kos</a>
+                            <a href="{{ route('admin.pengurus.index') }}" class="hover:text-emerald-700">Pengurus</a>
+                        @endif
+                    </nav>
+
                     <div class="flex items-center gap-4 text-sm">
                         <span class="text-slate-600">{{ auth()->user()->name }}</span>
                         <form method="POST" action="{{ route('logout') }}">

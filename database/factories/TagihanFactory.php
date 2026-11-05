@@ -16,8 +16,8 @@ class TagihanFactory extends Factory
         $nominal = 900000;
 
         return [
-            'kos_id' => fn (array $attributes): int => Pemesanan::findOrFail($attributes['pemesanan_id'])->kos_id,
             'pemesanan_id' => Pemesanan::factory()->aktif(),
+            'kos_id' => fn (array $attributes): int => Pemesanan::findOrFail($attributes['pemesanan_id'])->kos_id,
             'periode_bulan' => now()->month,
             'periode_tahun' => now()->year,
             'nominal_sewa' => $nominal,
