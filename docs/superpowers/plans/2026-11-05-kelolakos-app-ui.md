@@ -19,12 +19,12 @@ Token: sudah ada di `resources/css/app.css` (`ink`, `stone-*`, `gold`, dll).
 - Modify: `resources/css/app.css`
 - Test: suite penuh tetap hijau + `npm run build`
 
-- [ ] Kelas `.btn-primary/.btn-gold/.btn-outline/.btn-ghost/.btn-danger`, tinggi ≥ 44px.
-- [ ] Kelas `.field`, `.field-input`, `.field-error` (label di atas, 44px, fokus emas 2px, `aria-describedby`).
-- [ ] Kelas `.app-table` (sticky header `paper-2`, hover `stone-1`, `.td-num` rata kanan, `.date`).
-- [ ] Badge `.badge-kosong/.badge-terisi/.badge-perbaikan/.badge-lunas/.badge-belum-bayar/.badge-menunggu/.badge-ditolak` (teks, bukan warna saja).
-- [ ] `.empty-state-app` (ikon garis 32px: `app-empty-icon`), satu aksi utama.
-- [ ] Kelas `.app-shell`, `.app-header`, `.app-nav`, `.app-user` (mirip shell publik).
+- [x] Kelas `.btn-primary/.btn-gold/.btn-outline/.btn-ghost/.btn-danger`, tinggi ≥ 44px.
+- [x] Kelas `.field`, `.field-input`, `.field-error` (label di atas, 44px, fokus emas 2px, `aria-describedby`).
+- [x] Kelas `.app-table` (sticky header `paper-2`, hover `stone-1`, `.td-num` rata kanan, `.date`).
+- [x] Badge `.badge-kosong/.badge-terisi/.badge-perbaikan/.badge-lunas/.badge-belum-bayar/.badge-menunggu/.badge-ditolak` (teks, bukan warna saja).
+- [x] `.empty-state-app` (ikon garis 32px: `app-empty-icon`), satu aksi utama.
+- [x] Kelas `.app-shell`, `.app-header`, `.app-nav`, `.app-user` (mirip shell publik).
 
 ### Task 2: Shell halaman aplikasi (`layouts.app`)
 
