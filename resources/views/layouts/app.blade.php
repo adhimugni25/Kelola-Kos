@@ -21,6 +21,13 @@
                             </button>
                         </form>
                     </div>
+                @else
+                    <div class="flex items-center gap-3 text-sm">
+                        <a href="{{ route('login') }}" class="text-slate-600 hover:text-emerald-700">Masuk</a>
+                        <a href="{{ route('register') }}" class="rounded-md bg-emerald-600 px-3 py-1.5 text-white hover:bg-emerald-700">
+                            Daftar
+                        </a>
+                    </div>
                 @endauth
             </div>
         </header>

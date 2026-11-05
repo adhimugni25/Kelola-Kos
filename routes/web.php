@@ -2,14 +2,16 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Pengurus\KamarController;
+use App\Http\Controllers\Public\HomeController;
+use App\Http\Controllers\Public\KosPublicController;
 use App\Http\Controllers\SuperAdmin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\SuperAdmin\KosController as AdminKosController;
 use App\Http\Controllers\SuperAdmin\PengurusController as AdminPengurusController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/k/{slug}', [KosPublicController::class, 'show'])->name('public.kos');
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
