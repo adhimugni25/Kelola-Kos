@@ -5,6 +5,7 @@ use App\Http\Controllers\PembayaranController as PembayaranBuktiController;
 use App\Http\Controllers\Penghuni\PemesananController as PenghuniPemesananController;
 use App\Http\Controllers\Penghuni\TagihanController as PenghuniTagihanController;
 use App\Http\Controllers\Pengurus\DashboardController as PengurusDashboardController;
+use App\Http\Controllers\Pengurus\ImportController as PengurusImportController;
 use App\Http\Controllers\Pengurus\KamarController;
 use App\Http\Controllers\Pengurus\LaporanController;
 use App\Http\Controllers\Pengurus\MetodePembayaranController;
@@ -42,6 +43,16 @@ Route::middleware(['auth', 'role:pengurus'])->prefix('pengurus')->name('pengurus
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
     Route::get('/laporan/csv', [LaporanController::class, 'csv'])->name('laporan.csv');
     Route::get('/laporan/pdf', [LaporanController::class, 'pdf'])->name('laporan.pdf');
+
+    Route::get('/impor', [PengurusImportController::class, 'index'])->name('impor.index');
+    Route::get('/impor/kamar/template', [PengurusImportController::class, 'templateKamar'])->name('impor.kamar.template');
+    Route::post('/impor/kamar', [PengurusImportController::class, 'imporKamar'])
+        ->middleware('throttle:import')
+        ->name('impor.kamar');
+    Route::get('/impor/penghuni/template', [PengurusImportController::class, 'templatePenghuni'])->name('impor.penghuni.template');
+    Route::post('/impor/penghuni', [PengurusImportController::class, 'imporPenghuni'])
+        ->middleware('throttle:import')
+        ->name('impor.penghuni');
 
     Route::get('/pemesanan', [PengurusPemesananController::class, 'index'])->name('pemesanan.index');
     Route::get('/pemesanan/{pemesanan}', [PengurusPemesananController::class, 'show'])->name('pemesanan.show');

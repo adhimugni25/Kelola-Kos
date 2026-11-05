@@ -20,6 +20,7 @@
                             <a href="{{ route('pengurus.pembayaran.index') }}" class="hover:text-emerald-700">Pembayaran</a>
                             <a href="{{ route('pengurus.metode-pembayaran.index') }}" class="hover:text-emerald-700">Metode</a>
                             <a href="{{ route('pengurus.laporan.index') }}" class="hover:text-emerald-700">Laporan</a>
+                            <a href="{{ route('pengurus.impor.index') }}" class="hover:text-emerald-700">Impor</a>
                         @elseif (auth()->user()->isPenghuni())
                             <a href="{{ route('penghuni.pemesanan.index') }}" class="hover:text-emerald-700">Pengajuan</a>
                             <a href="{{ route('penghuni.tagihan.index') }}" class="hover:text-emerald-700">Tagihan</a>
