@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Pengurus\KamarController;
 use App\Http\Controllers\SuperAdmin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\SuperAdmin\KosController as AdminKosController;
 use App\Http\Controllers\SuperAdmin\PengurusController as AdminPengurusController;
@@ -21,6 +22,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 
 Route::middleware(['auth', 'role:pengurus'])->prefix('pengurus')->name('pengurus.')->group(function (): void {
     Route::get('/dashboard', fn () => view('pengurus.dashboard'))->name('dashboard');
+    Route::resource('kamar', KamarController::class)->except('show');
 });
 
 Route::middleware(['auth', 'role:penghuni'])->prefix('penghuni')->name('penghuni.')->group(function (): void {
