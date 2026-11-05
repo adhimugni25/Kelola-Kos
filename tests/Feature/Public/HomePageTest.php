@@ -166,4 +166,51 @@ class HomePageTest extends TestCase
             ->assertSee('Rp1.050.000')
             ->assertDontSee('<input type="search"', false);
     }
+
+    public function test_homepage_renders_interactive_map_with_city_pins(): void
+    {
+        $this->buatKos('Kos Melati', 'Yogyakarta', [
+            'A1' => ['terisi', 900000],
+            'A2' => ['kosong', 950000],
+        ]);
+        $this->buatKos('Kos Anggrek', 'Yogyakarta', [
+            'B1' => ['kosong', 1200000],
+        ]);
+        $this->buatKos('Kos Kenanga', 'Jakarta', [
+            'C1' => ['kosong', 800000],
+        ]);
+        $this->buatKos('Kos Antah', 'Kota Fiktif', [
+            'D1' => ['kosong', 700000],
+        ]);
+
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('Sudah bergabung di 3 kota')
+            ->assertSee('id="p-yogyakarta"', false)
+            ->assertSee('id="p-jakarta"', false)
+            ->assertSee('aria-label="Yogyakarta, 2 kos, 2 kamar kosong"', false)
+            ->assertSee('data-kota="yogyakarta"', false)
+            ->assertSee('Kota Fiktif')
+            ->assertDontSee('id="p-kota-fiktif"', false);
+    }
+
+    public function test_homepage_shows_map_empty_state_without_active_kos(): void
+    {
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('Jaringan sedang tumbuh');
+    }
+
+    public function test_homepage_lists_city_without_coordinate_instead_of_drawing_a_pin(): void
+    {
+        $this->buatKos('Kos Antah', 'Kota Fiktif', [
+            'D1' => ['kosong', 700000],
+        ]);
+
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('Jaringan sedang tumbuh')
+            ->assertSee('Kota Fiktif')
+            ->assertDontSee('id="p-kota-fiktif"', false);
+    }
 }
