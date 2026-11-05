@@ -81,7 +81,7 @@ tests/
 - Consumes: route `home`, `login`, `register`, `logout`; helper `auth()->user()->isSuperAdmin()`, `isPengurus()`.
 - Produces: layout `layouts.public` dengan `@yield('title')`, `@yield('content')`, `@stack('styles')`; token Tailwind `ink`, `ink-2`, `ink-3`, `paper`, `paper-2`, `stone-1..4`, `muted`, `muted-2`, `gold`, `gold-ink`, `gold-2`, `gold-soft`, `font-display`, `rounded-kos-xl/lg/md`, `shadow-kos-card/float`; kelas `.public-shell`, `.site-header`, `.brand-mark`, `.nav-pill`, `.nav-link`, `.pill-dark`, `.burger`, `.site-drawer`, `.skip-link`.
 
-- [ ] **Step 1: Write the failing layout test**
+- [x] **Step 1: Write the failing layout test**
 
 Tambahkan ke `tests/Feature/Public/HomePageTest.php`:
 
@@ -122,12 +122,12 @@ class HomePageTest extends TestCase
 }
 ```
 
-- [ ] **Step 2: Run the tests to verify they fail**
+- [x] **Step 2: Run the tests to verify they fail**
 
 Run: `php artisan test --compact tests/Feature/Public/HomePageTest.php`
 Expected: FAIL karena `Lewati ke konten` dan penanda drawer belum ada.
 
-- [ ] **Step 3: Add the token layer to `resources/css/app.css`**
+- [x] **Step 3: Add the token layer to `resources/css/app.css`**
 
 Tambahkan setelah `@source`:
 
@@ -166,7 +166,7 @@ Tambahkan juga `@layer base` untuk `.public-shell` (latar gradien `paper-2` ke `
 
 Untuk bentuk visual komponen (gradien header, blur, pill nav, tombol `pill-dark`, burger, skip link), mockup yang sudah disetujui adalah acuan: `.superpowers/brainstorm/366-1793860739/content/homepage-map.html` bagian `<style>`. Ambil nilai visualnya, tetapi tetap pakai nama kelas dan token di plan ini; jangan menyalin struktur demo atau data contoh dari mockup.
 
-- [ ] **Step 4: Create `resources/views/layouts/public.blade.php`**
+- [x] **Step 4: Create `resources/views/layouts/public.blade.php`**
 
 Struktur wajib:
 
@@ -252,7 +252,7 @@ Ganti isi `resources/views/public/landing.blade.php` sementara supaya memakai la
 
 Di dalam drawer, pakai cabang `@auth` yang sama seperti nav: pengguna yang sudah masuk melihat tautan Dashboard, bukan tautan Masuk. Jangan menampilkan tombol Keluar di dalam drawer karena tombol itu membutuhkan form `@csrf`; cukup arahkan ke Dashboard.
 
-- [ ] **Step 5: Add drawer JavaScript to `resources/js/app.js`**
+- [x] **Step 5: Add drawer JavaScript to `resources/js/app.js`**
 
 Tambahkan sebelum kode Chart.js:
 
@@ -293,12 +293,12 @@ if (tombolMenu !== null && menuPublik !== null) {
 }
 ```
 
-- [ ] **Step 6: Run the tests to verify they pass**
+- [x] **Step 6: Run the tests to verify they pass**
 
 Run: `php artisan test --compact tests/Feature/Public/HomePageTest.php`
 Expected: PASS (2 tests).
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add resources/css/app.css resources/js/app.js resources/views/layouts/public.blade.php resources/views/public/landing.blade.php tests/Feature/Public/HomePageTest.php
@@ -316,7 +316,7 @@ git commit -m "feat: add public design tokens, layout, and responsive navigation
 **Interfaces:**
 - Produces: `Rupiah::penuh(float|int|string|null $nilai): string` dan `Rupiah::ringkas(float|int|string|null $nilai): string`. Nilai null menghasilkan `—`.
 
-- [ ] **Step 1: Write the failing unit test**
+- [x] **Step 1: Write the failing unit test**
 
 ```php
 <?php
@@ -346,12 +346,12 @@ class RupiahTest extends TestCase
 }
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `php artisan test --compact tests/Unit/RupiahTest.php`
 Expected: FAIL karena kelas `App\Support\Rupiah` belum ada.
 
-- [ ] **Step 3: Implement `app/Support/Rupiah.php`**
+- [x] **Step 3: Implement `app/Support/Rupiah.php`**
 
 ```php
 <?php
@@ -390,12 +390,12 @@ final class Rupiah
 }
 ```
 
-- [ ] **Step 4: Run the test to verify it passes**
+- [x] **Step 4: Run the test to verify it passes**
 
 Run: `php artisan test --compact tests/Unit/RupiahTest.php`
 Expected: PASS (2 tests).
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add app/Support/Rupiah.php tests/Unit/RupiahTest.php
@@ -417,7 +417,7 @@ git commit -m "feat: add Indonesian rupiah formatting helper"
   - `KotaPeta::rangkum(Collection<int, Kos> $daftarKos): Collection<int, array{kota: string, slug: string, x: float, y: float, jumlah_kos: int, jumlah_kamar: int, jumlah_kosong: int, jumlah_penghuni: int, harga_min: float|null, harga_max: float|null, kos: array<int, array{nama: string, slug: string}>, jumlah_kos_lainnya: int}>`
 - Input `Kos` harus sudah punya atribut agregat `jumlah_kamar`, `jumlah_kosong`, `jumlah_penghuni`, `harga_min`, `harga_max`.
 
-- [ ] **Step 1: Write the failing coordinate test**
+- [x] **Step 1: Write the failing coordinate test**
 
 ```php
 <?php
@@ -498,12 +498,12 @@ class KotaPetaTest extends TestCase
 }
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `php artisan test --compact tests/Unit/KotaPetaTest.php`
 Expected: FAIL karena `App\Support\KotaPeta` belum ada.
 
-- [ ] **Step 3: Implement `app/Support/KotaPeta.php`**
+- [x] **Step 3: Implement `app/Support/KotaPeta.php`**
 
 Gunakan tabel koordinat dari spec bagian 8.2. Normalisasi: `strtolower(trim($kota))`, lalu alias `jogja`/`jogjakarta` → `yogyakarta`, `jakarta raya`/`dki jakarta` → `jakarta`, `denpasar bali` → `denpasar`. `rangkum()`:
 
@@ -514,12 +514,12 @@ Gunakan tabel koordinat dari spec bagian 8.2. Normalisasi: `strtolower(trim($kot
 5. `kos` berisi maksimal 3 `['nama' => ..., 'slug' => ...]`; `jumlah_kos_lainnya = max(0, total - 3)`.
 6. Urutkan `jumlah_kos` desc lalu `kota` asc, dan `values()`.
 
-- [ ] **Step 4: Run the test to verify it passes**
+- [x] **Step 4: Run the test to verify it passes**
 
 Run: `php artisan test --compact tests/Unit/KotaPetaTest.php`
 Expected: PASS (3 tests).
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add app/Support/KotaPeta.php tests/Unit/KotaPetaTest.php
@@ -538,7 +538,7 @@ git commit -m "feat: add stylized Indonesia city map data"
 - Produces view data: `jumlahKota:int`, `jumlahKos:int`, `jumlahKamar:int`, `jumlahKosong:int`, `ringkasanKamar:array{terisi:int,perbaikan:int,kosong:int}`, `hargaMin:float|null`, `hargaMax:float|null`, `kamarKosong:Collection<int,Kamar>`, `kotaUtama:string|null`.
 - `kamarKosong` berisi maksimal 3 kamar `kosong` dari kos aktif, urut harga lalu id.
 
-- [ ] **Step 1: Write the failing aggregate test**
+- [x] **Step 1: Write the failing aggregate test**
 
 Tambahkan import `Kamar`, `Kos`, `Pemesanan`, `User` dan test berikut:
 
@@ -635,12 +635,12 @@ private function buatKos(string $nama, string $kota, array $kamar, bool $aktif =
 }
 ```
 
-- [ ] **Step 2: Run the tests to verify they fail**
+- [x] **Step 2: Run the tests to verify they fail**
 
 Run: `php artisan test --compact tests/Feature/Public/HomePageTest.php`
 Expected: FAIL karena `jumlahKota`, `jumlahKamar`, dan `kamarKosong` belum dikirim.
 
-- [ ] **Step 3: Implement the queries in `HomeController::index()`**
+- [x] **Step 3: Implement the queries in `HomeController::index()`**
 
 Gunakan `Kos::query()->where('is_active', true)` dengan `withCount`/`withMin`/`withMax`. Impor `Illuminate\Database\Eloquent\Builder`. Setiap closure agregat **wajib** memanggil `withoutGlobalScope('kos_id')` agar pengurus yang membuka homepage tetap melihat seluruh jaringan:
 
@@ -680,14 +680,14 @@ $hargaMax = $hargaMax !== null ? (float) $hargaMax : null;
 
 `kotaUtama` = nama kota bila `jumlahKota === 1`, selain itu `'Indonesia'`. Kirim semua variabel ke view.
 
-- [ ] **Step 4: Run the tests to verify they pass**
+- [x] **Step 4: Run the tests to verify they pass**
 
 Run: `php artisan test --compact tests/Feature/Public/HomePageTest.php`
 Expected: PASS (5 tests).
 Run: `php artisan test --compact tests/Feature/Public/PublicKosTest.php`
 Expected: PASS, memastikan halaman publik kos tidak rusak.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add app/Http/Controllers/Public/HomeController.php tests/Feature/Public/HomePageTest.php
@@ -707,7 +707,7 @@ git commit -m "feat: load homepage aggregates from active kos data"
 - Produces view data: `petaKota:Collection`, `kotaTanpaPeta:Collection<int,string>`, `kotaUtama:string`.
 - `petaKota` sudah terurut: jumlah kos terbanyak lebih dulu, lalu nama kota.
 
-- [ ] **Step 1: Write the failing map-data test**
+- [x] **Step 1: Write the failing map-data test**
 
 ```php
 public function test_homepage_builds_map_data_and_lists_unknown_cities(): void
@@ -732,12 +732,12 @@ public function test_homepage_builds_map_data_and_lists_unknown_cities(): void
 }
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `php artisan test --compact tests/Feature/Public/HomePageTest.php --filter=builds_map_data`
 Expected: FAIL karena `petaKota` belum ada.
 
-- [ ] **Step 3: Add map data to the controller**
+- [x] **Step 3: Add map data to the controller**
 
 ```php
 $petaKota = KotaPeta::rangkum($kosAktif);
@@ -757,12 +757,12 @@ $kotaUtama = $jumlahKota === 1
 
 Kirim ketiganya ke view. Jangan mengubah `jumlahKota`: kota tanpa koordinat tetap dihitung di statistik.
 
-- [ ] **Step 4: Run the test to verify it passes**
+- [x] **Step 4: Run the test to verify it passes**
 
 Run: `php artisan test --compact tests/Feature/Public/HomePageTest.php`
 Expected: PASS (6 tests).
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add app/Http/Controllers/Public/HomeController.php tests/Feature/Public/HomePageTest.php
@@ -784,7 +784,7 @@ git commit -m "feat: prepare interactive map data with unknown-city fallback"
 - Produces: section `id="beranda"`; anchor `#kamar`; anchor `#pengurus`.
 - Blade memanggil helper dengan nama lengkap `\App\Support\Rupiah::ringkas(...)` / `::penuh(...)`, atau menambahkan `@php use App\Support\Rupiah; @endphp` di awal partial.
 
-- [ ] **Step 1: Write the failing hero test**
+- [x] **Step 1: Write the failing hero test**
 
 ```php
 public function test_homepage_hero_uses_real_data_instead_of_search_form(): void
@@ -807,12 +807,12 @@ public function test_homepage_hero_uses_real_data_instead_of_search_form(): void
 }
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `php artisan test --compact tests/Feature/Public/HomePageTest.php --filter=hero`
 Expected: FAIL karena hero baru belum ada.
 
-- [ ] **Step 3: Implement the hero partial and include it**
+- [x] **Step 3: Implement the hero partial and include it**
 
 `hero.blade.php` memuat:
 
@@ -826,12 +826,12 @@ Expected: FAIL karena hero baru belum ada.
 
 Tambahkan section ini ke `landing.blade.php` paling atas. Tambahkan CSS hero ke `@layer components` (grid `1.06fr .94fr`, breakpoint 900 px menjadi satu kolom, panel kaca, judul display, tombol emas). Jangan memakai form pencarian.
 
-- [ ] **Step 4: Run the test to verify it passes**
+- [x] **Step 4: Run the test to verify it passes**
 
 Run: `php artisan test --compact tests/Feature/Public/HomePageTest.php --filter=hero`
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add resources/views/public/partials/home/hero.blade.php resources/views/public/landing.blade.php resources/css/app.css tests/Feature/Public/HomePageTest.php
@@ -854,7 +854,7 @@ git commit -m "feat: rebuild homepage hero with real availability data"
 - Consumes: `$petaKota`, `$kotaTanpaPeta`, `$jumlahKota`, `Rupiah`.
 - Produces: section `id="jaringan"`; radio `id="p-{slug}"`; panel `data-kota="{slug}"`; chip `for="p-{slug}"`; fallback list `$kotaTanpaPeta`.
 
-- [ ] **Step 1: Write the failing map test**
+- [x] **Step 1: Write the failing map test**
 
 ```php
 public function test_homepage_renders_interactive_map_with_city_pins(): void
@@ -905,16 +905,16 @@ public function test_homepage_lists_city_without_coordinate_instead_of_drawing_a
 }
 ```
 
-- [ ] **Step 2: Run the tests to verify they fail**
+- [x] **Step 2: Run the tests to verify they fail**
 
 Run: `php artisan test --compact tests/Feature/Public/HomePageTest.php --filter=map`
 Expected: FAIL karena section peta belum ada.
 
-- [ ] **Step 3: Add the stylized SVG**
+- [x] **Step 3: Add the stylized SVG**
 
 Ambil blok `<svg class="id-map" viewBox="0 0 760 340" ...>` dari mockup yang disetujui di `.superpowers/brainstorm/366-1793860739/content/homepage-map.html`, lalu simpan sebagai `indonesia-map.blade.php` tanpa tag `<style>`. Pertahankan `aria-hidden="true"`, `viewBox`, path pulau, dan label SUMATRA/JAWA/KALIMANTAN/SULAWESI/PAPUA. Naikkan opasitas garis menjadi minimal `.26` agar terlihat.
 
-- [ ] **Step 4: Implement `map-styles.blade.php` dan `map.blade.php`**
+- [x] **Step 4: Implement `map-styles.blade.php` dan `map.blade.php`**
 
 Masukkan blok `<style>` di bawah ke `map-styles.blade.php`, lalu panggil dari `landing.blade.php` di level atas (sebelum `@section('content')`):
 
@@ -1027,18 +1027,18 @@ Ini memastikan CSS masuk ke `@stack('styles')` di head, bukan terlambat karena d
 
 Tambahkan CSS peta dari mockup: kanvas rasio `760 / 340`, grid halus, pin 44 px hit area dengan dot 10 px, tooltip, kartu info, chip 3 kolom, breakpoint 900 px dan 620 px. Pastikan `prefers-reduced-motion` mematikan `ping`/transisi.
 
-- [ ] **Step 5: Run the tests to verify they pass**
+- [x] **Step 5: Run the tests to verify they pass**
 
 Run: `php artisan test --compact tests/Feature/Public/HomePageTest.php --filter=map`
 Expected: PASS (2 tests).
 
-- [ ] **Step 6: Build and visually verify the map**
+- [x] **Step 6: Build and visually verify the map**
 
 Run: `npm run build`
 Expected: build sukses.
 Jalankan server lokal dan buka `/` pada lebar 1440 px dan 375 px. Expected: titik emas terlihat, klik/panah keyboard mengganti kartu informasi, chip kota aktif, tidak ada scroll horizontal.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add resources/views/public/partials/home/map.blade.php resources/views/public/partials/home/map-styles.blade.php resources/views/public/partials/home/indonesia-map.blade.php resources/views/public/landing.blade.php resources/css/app.css tests/Feature/Public/HomePageTest.php
@@ -1059,7 +1059,7 @@ git commit -m "feat: add interactive stylized Indonesia kos map"
 - Consumes: `$kamarKosong`, `$ringkasanKamar`, `$jumlahKosong`, `Rupiah`.
 - Produces: section `id="kamar"`; tautan `route('public.kos', $kamar->kos->slug)`.
 
-- [ ] **Step 1: Write the failing rooms test**
+- [x] **Step 1: Write the failing rooms test**
 
 ```php
 public function test_homepage_lists_available_rooms_with_placeholder_photo(): void
@@ -1093,12 +1093,12 @@ public function test_homepage_shows_rooms_empty_state(): void
 }
 ```
 
-- [ ] **Step 2: Run the tests to verify they fail**
+- [x] **Step 2: Run the tests to verify they fail**
 
 Run: `php artisan test --compact tests/Feature/Public/HomePageTest.php --filter=rooms`
 Expected: FAIL karena section kamar belum ada.
 
-- [ ] **Step 3: Implement `rooms.blade.php`**
+- [x] **Step 3: Implement `rooms.blade.php`**
 
 Section berisi:
 
@@ -1112,12 +1112,12 @@ Section berisi:
 
 Tambahkan ke `landing.blade.php` setelah peta. Tambahkan CSS kartu kamar, bar ketersediaan, tag, dan breakpoint 3 → 2 → 1 kolom.
 
-- [ ] **Step 4: Run the tests to verify they pass**
+- [x] **Step 4: Run the tests to verify they pass**
 
 Run: `php artisan test --compact tests/Feature/Public/HomePageTest.php --filter=rooms`
 Expected: PASS (2 tests).
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add resources/views/public/partials/home/rooms.blade.php resources/views/public/landing.blade.php resources/css/app.css tests/Feature/Public/HomePageTest.php
@@ -1143,7 +1143,7 @@ git commit -m "feat: add available rooms section from live kamar data"
 - Consumes: `config('kelolakos.kontak_admin')`, route `login`, `register`.
 - Produces: section `id="pengurus"`, `id="faq"`; footer.
 
-- [ ] **Step 1: Write the failing content test**
+- [x] **Step 1: Write the failing content test**
 
 ```php
 public function test_homepage_has_labeled_dashboard_preview_faq_and_honest_cta(): void
@@ -1177,12 +1177,12 @@ public function test_homepage_uses_configured_admin_contact_for_pengurus_cta(): 
 }
 ```
 
-- [ ] **Step 2: Run the tests to verify they fail**
+- [x] **Step 2: Run the tests to verify they fail**
 
 Run: `php artisan test --compact tests/Feature/Public/HomePageTest.php --filter='dashboard_preview|admin_contact'`
 Expected: FAIL karena section dan config belum ada.
 
-- [ ] **Step 3: Implement the three sections and footer**
+- [x] **Step 3: Implement the three sections and footer**
 
 `dashboard-preview.blade.php`:
 - Section `id="pengurus"`, blok gelap, kicker "Dashboard pengurus", judul "Angka penting, satu layar.", satu kalimat.
@@ -1214,12 +1214,12 @@ return [
 
 Sertakan footer di `layouts.public` setelah `<main>`. Tambahkan CSS section gelap, FAQ, CTA, dan footer.
 
-- [ ] **Step 4: Run the tests to verify they pass**
+- [x] **Step 4: Run the tests to verify they pass**
 
 Run: `php artisan test --compact tests/Feature/Public/HomePageTest.php`
 Expected: PASS (semua test homepage).
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add config/kelolakos.php resources/views/public/partials/home/dashboard-preview.blade.php resources/views/public/partials/home/faq.blade.php resources/views/public/partials/home/cta.blade.php resources/views/public/partials/site-footer.blade.php resources/views/layouts/public.blade.php resources/views/public/landing.blade.php resources/css/app.css tests/Feature/Public/HomePageTest.php
@@ -1239,7 +1239,7 @@ git commit -m "feat: complete homepage sections and public footer"
 - Consumes: semua section.
 - Produces: perilaku responsif final, fokus terlihat, reduced motion.
 
-- [ ] **Step 1: Write the failing accessibility test**
+- [x] **Step 1: Write the failing accessibility test**
 
 ```php
 public function test_homepage_has_accessible_labels_and_no_inline_handlers(): void
@@ -1258,12 +1258,12 @@ public function test_homepage_has_accessible_labels_and_no_inline_handlers(): vo
 }
 ```
 
-- [ ] **Step 2: Run the test to verify it fails or reveals a gap**
+- [x] **Step 2: Run the test to verify it fails or reveals a gap**
 
 Run: `php artisan test --compact tests/Feature/Public/HomePageTest.php --filter=accessible_labels`
 Expected: PASS bila label sudah benar; FAIL bila atribut belum lengkap. Perbaiki markup sampai PASS.
 
-- [ ] **Step 3: Add responsive and accessibility CSS**
+- [x] **Step 3: Add responsive and accessibility CSS**
 
 Tambahkan:
 
@@ -1275,19 +1275,19 @@ Tambahkan:
 - Pastikan target sentuh pin minimal 44 × 44 px meskipun dot visual 10 px.
 - `section[id]` scroll margin 72 px.
 
-- [ ] **Step 4: Run the full test suite**
+- [x] **Step 4: Run the full test suite**
 
 Run: `php artisan test --compact`
 Expected: seluruh test PASS (baseline 111 test + test baru).
 
-- [ ] **Step 5: Run Pint and build**
+- [x] **Step 5: Run Pint and build**
 
 Run: `vendor/bin/pint --dirty --format agent`
 Expected: tidak ada error.
 Run: `npm run build`
 Expected: build sukses.
 
-- [ ] **Step 6: Visual verification at three widths**
+- [x] **Step 6: Visual verification at three widths**
 
 Jalankan server lokal, lalu periksa `/` pada 1440, 768, dan 375 px. Expected:
 
@@ -1298,7 +1298,7 @@ Jalankan server lokal, lalu periksa `/` pada 1440, 768, dan 375 px. Expected:
 - Tidak ada scroll horizontal.
 - Footer tidak memuat kontak palsu.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add resources/css/app.css resources/views/layouts/public.blade.php tests/Feature/Public/HomePageTest.php
@@ -1309,14 +1309,14 @@ git commit -m "fix: polish homepage responsiveness and accessibility"
 
 ## Final Acceptance Checklist
 
-- [ ] `php artisan test --compact` lulus.
-- [ ] `vendor/bin/pint --dirty --format agent` bersih.
-- [ ] `npm run build` sukses.
-- [ ] Homepage memakai data `kos`/`kamar` aktif, bukan angka hardcode.
-- [ ] Pengurus yang login tetap melihat agregat seluruh jaringan.
-- [ ] Kota tanpa koordinat tidak menghasilkan pin, tetapi namanya tetap tampil.
-- [ ] Tidak ada kamar kosong / kos aktif: empty state muncul.
-- [ ] Kamar tanpa foto memakai placeholder, bukan gambar rusak.
-- [ ] Peta bisa diganti dengan klik dan keyboard; `prefers-reduced-motion` dihormati.
-- [ ] Tidak ada inline script, `onclick`, atau `onsubmit`.
-- [ ] Tidak ada testimoni, rating, atau nomor telepon karangan.
+- [x] `php artisan test --compact` lulus.
+- [x] `vendor/bin/pint --dirty --format agent` bersih.
+- [x] `npm run build` sukses.
+- [x] Homepage memakai data `kos`/`kamar` aktif, bukan angka hardcode.
+- [x] Pengurus yang login tetap melihat agregat seluruh jaringan.
+- [x] Kota tanpa koordinat tidak menghasilkan pin, tetapi namanya tetap tampil.
+- [x] Tidak ada kamar kosong / kos aktif: empty state muncul.
+- [x] Kamar tanpa foto memakai placeholder, bukan gambar rusak.
+- [x] Peta bisa diganti dengan klik dan keyboard; `prefers-reduced-motion` dihormati.
+- [x] Tidak ada inline script, `onclick`, atau `onsubmit`.
+- [x] Tidak ada testimoni, rating, atau nomor telepon karangan.
