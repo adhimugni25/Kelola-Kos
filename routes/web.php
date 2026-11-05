@@ -4,7 +4,9 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\PembayaranController as PembayaranBuktiController;
 use App\Http\Controllers\Penghuni\PemesananController as PenghuniPemesananController;
 use App\Http\Controllers\Penghuni\TagihanController as PenghuniTagihanController;
+use App\Http\Controllers\Pengurus\DashboardController as PengurusDashboardController;
 use App\Http\Controllers\Pengurus\KamarController;
+use App\Http\Controllers\Pengurus\LaporanController;
 use App\Http\Controllers\Pengurus\MetodePembayaranController;
 use App\Http\Controllers\Pengurus\PembayaranController as PengurusPembayaranController;
 use App\Http\Controllers\Pengurus\PemesananController as PengurusPemesananController;
@@ -34,8 +36,12 @@ Route::get('/pembayaran/{pembayaran}/bukti', [PembayaranBuktiController::class, 
     ->name('pembayaran.bukti');
 
 Route::middleware(['auth', 'role:pengurus'])->prefix('pengurus')->name('pengurus.')->group(function (): void {
-    Route::get('/dashboard', fn () => view('pengurus.dashboard'))->name('dashboard');
+    Route::get('/dashboard', [PengurusDashboardController::class, 'index'])->name('dashboard');
     Route::resource('kamar', KamarController::class)->except('show');
+
+    Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+    Route::get('/laporan/csv', [LaporanController::class, 'csv'])->name('laporan.csv');
+    Route::get('/laporan/pdf', [LaporanController::class, 'pdf'])->name('laporan.pdf');
 
     Route::get('/pemesanan', [PengurusPemesananController::class, 'index'])->name('pemesanan.index');
     Route::get('/pemesanan/{pemesanan}', [PengurusPemesananController::class, 'show'])->name('pemesanan.show');

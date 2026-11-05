@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'KelolaKos')</title>
-    @vite(['resources/css/app.css'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="h-full text-slate-800 antialiased">
     <div class="min-h-full">
@@ -19,6 +19,7 @@
                             <a href="{{ route('pengurus.tagihan.index') }}" class="hover:text-emerald-700">Tagihan</a>
                             <a href="{{ route('pengurus.pembayaran.index') }}" class="hover:text-emerald-700">Pembayaran</a>
                             <a href="{{ route('pengurus.metode-pembayaran.index') }}" class="hover:text-emerald-700">Metode</a>
+                            <a href="{{ route('pengurus.laporan.index') }}" class="hover:text-emerald-700">Laporan</a>
                         @elseif (auth()->user()->isPenghuni())
                             <a href="{{ route('penghuni.pemesanan.index') }}" class="hover:text-emerald-700">Pengajuan</a>
                             <a href="{{ route('penghuni.tagihan.index') }}" class="hover:text-emerald-700">Tagihan</a>
